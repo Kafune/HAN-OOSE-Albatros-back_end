@@ -18,6 +18,7 @@ Beschrijving
 
 ## Authors
 * **R. Boudewijn** - [nxttx](https://github.com/nxttx)
+* **M. Yasin**
 
 ## Software guidebook
 [Click Here](/software-guidebook/readme.md)
