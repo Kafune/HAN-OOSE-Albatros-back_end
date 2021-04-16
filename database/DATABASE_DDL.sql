@@ -1,7 +1,8 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     16-4-2021 13:02:34                           */
+/* Created on:     16-4-2021 14:06:58                           */
 /*==============================================================*/
+
 
 drop table if exists ACTIVITY;
 
@@ -54,8 +55,7 @@ create table IMAGE
    USERID               int not null,
    ACTIVITYID           int,
    FILENAME             varchar(120) not null,
-   DESCRIPTION          varchar(100),
-   unique key AK_KEY_1 (USERID)
+   DESCRIPTION          varchar(100)
 );
 
 /*==============================================================*/
@@ -68,7 +68,6 @@ create table POI
    DESCRIPTION          varchar(100),
    primary key (SEGMENTID, NAME)
 );
-
 /*==============================================================*/
 /* Table: ROUTE                                                 */
 /*==============================================================*/
@@ -145,3 +144,4 @@ alter table SEGMENTINROUTE add constraint FK_REFERENCE_4 foreign key (ROUTEID)
 
 alter table SEGMENTINROUTE add constraint FK_REFERENCE_7 foreign key (SEGMENTID)
       references SEGMENT (SEGMENTID) on delete cascade on update cascade;
+
