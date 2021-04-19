@@ -41,8 +41,8 @@ create table ACTIVITY
 create table COORDINATES
 (
    COORDINATESID        int not null auto_increment,
-   LATITUDE             point not null,
-   LONGITUDE            point not null,
+   LATITUDE             numeric(12, 9) not null,
+   LONGITUDE            numeric(12, 9) not null,
    ALTITUDE             int not null,
    primary key (COORDINATESID)
 );
