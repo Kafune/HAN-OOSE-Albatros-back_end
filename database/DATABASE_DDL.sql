@@ -86,7 +86,6 @@ create table SEGMENT
    SEGMENTID            int not null auto_increment,
    STARTCOORD           int not null,
    ENDCOORD             int not null,
-   PREVIOUSSEGMENT      int,
    primary key (SEGMENTID)
 );
 
@@ -97,6 +96,7 @@ create table SEGMENTINROUTE
 (
    ROUTEID              int not null,
    SEGMENTID            int not null,
+   PREVIOUSSEGMENT      int,
    primary key (ROUTEID, SEGMENTID)
 );
 
