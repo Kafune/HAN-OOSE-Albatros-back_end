@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     16-4-2021 14:06:58                           */
+/* Created on:     19-4-2021 15:14:38                           */
 /*==============================================================*/
 
 
@@ -41,8 +41,7 @@ create table ACTIVITY
 create table COORDINATES
 (
    COORDINATESID        int not null auto_increment,
-   LATITUDE             numeric(12, 9) not null,
-   LONGITUDE            numeric(12, 9) not null,
+   LOCATION             point not null,
    ALTITUDE             int not null,
    primary key (COORDINATESID)
 );
@@ -68,6 +67,7 @@ create table POI
    DESCRIPTION          varchar(100),
    primary key (SEGMENTID, NAME)
 );
+
 /*==============================================================*/
 /* Table: ROUTE                                                 */
 /*==============================================================*/
@@ -86,7 +86,6 @@ create table SEGMENT
    SEGMENTID            int not null auto_increment,
    STARTCOORD           int not null,
    ENDCOORD             int not null,
-   PREVIOUSSEGMENT      int,
    primary key (SEGMENTID)
 );
 
@@ -97,6 +96,7 @@ create table SEGMENTINROUTE
 (
    ROUTEID              int not null,
    SEGMENTID            int not null,
+   SEQUENCENR           int not null,
    primary key (ROUTEID, SEGMENTID)
 );
 
