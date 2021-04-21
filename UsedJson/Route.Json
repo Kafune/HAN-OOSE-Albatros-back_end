@@ -1,6 +1,6 @@
 {
   "name": "BosWandeling",
-  "routeID": 1,
+  "routeId": 1,
   "distance": 5,
   "segments": [
     {

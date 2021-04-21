@@ -18,7 +18,7 @@ public class Routes {
 
     @POST
     @Path("/")
-    public Response makeRoute(@QueryParam("token") String token, String RequestBody) {
+    public Response makeRoute(String RequestBody) {
         //build body to object
         RouteDTO newRouteDTO;
 
@@ -28,7 +28,7 @@ public class Routes {
 
         routesDAO.addNewRoute(newRoute);
 
-        return Response.status(200).entity(newRoute).build();
+        return Response.status(201).entity(newRoute).build();
     }
 
     @Inject

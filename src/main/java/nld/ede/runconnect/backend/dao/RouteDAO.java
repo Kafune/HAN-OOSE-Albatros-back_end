@@ -2,6 +2,7 @@ package nld.ede.runconnect.backend.dao;
 
 import nld.ede.runconnect.backend.domain.Coordinate;
 import nld.ede.runconnect.backend.domain.Route;
+import nld.ede.runconnect.backend.domain.Segment;
 
 import java.awt.*;
 import java.sql.*;
@@ -24,6 +25,10 @@ public class RouteDAO implements IRouteDAO {
 
     @Override
     public void addNewRoute(Route route) {
+
+        /*
+         * insert a route:
+         */
         String sql = "INSERT INTO route (NAME, DISTANCE) Values (?, ?)";
 
         String name = route.getName();
@@ -36,126 +41,36 @@ public class RouteDAO implements IRouteDAO {
             statement.setString(1, name);
             statement.setInt(2, distance);
             int affectedRows = statement.executeUpdate();
-//            if (affectedRows < 1) {
-//                throw new NoRowsAreEffectedException();
-//            }
         } catch (SQLException exception) {
-//            throw exception;
+            exception.printStackTrace();
         }
 
-        for(int incrementedid =0; incrementedid< route.getSegments().size(); incrementedid++)
-        route.getSegments().forEach(segment -> {
-            /*
-             * segment startcoord:
-             */
+        for(int incrementedid =0; incrementedid< route.getSegments().size(); incrementedid++) {
+            Segment segment = route.getSegments().get(incrementedid);
 
-            String sql1 = "INSERT INTO coordinates (LOCATION, ALTITUDE) Values (?,?)";
-            Coordinate startCoordinate = segment.getStartCoordinate();
-            String location = "ST_PointFromText('POINT(" + startCoordinate.getLatitude() + " " + startCoordinate.getLongitude() + ")')";
-            float altitude = startCoordinate.getAltitude();
+            String sql2 = "CALL spr_InsertSegements(?,?,?,?,?,?,?,?,?,?,?)";
+
 
             try (Connection connection = dataSource.getConnection()) {
-
-                PreparedStatement statement = connection.prepareStatement(sql1);
-                statement.setString(1, location);
-                statement.setFloat(2, altitude);
-                int affectedRows = statement.executeUpdate();
-//                    if (affectedRows < 1) {
-//                        throw new NoRowsAreEffectedException();
-//                    }
-            } catch (SQLException exception) {
-//                    throw exception;
-            }
-
-            /*
-             * segment endcoord:
-             */
-
-            String sql2 = "INSERT INTO coordinates (LOCATION, ALTITUDE) Values (?,?)";
-            Coordinate endCoordinate = segment.getEndCoordinate();
-            String location2 = "ST_PointFromText('POINT(" + endCoordinate.getLatitude() + " " + endCoordinate.getLongitude() + ")')";
-            float altitude2 = endCoordinate.getAltitude();
-
-            try (Connection connection = dataSource.getConnection()) {
-
                 PreparedStatement statement = connection.prepareStatement(sql2);
-                statement.setString(1, location2);
-                statement.setFloat(2, altitude2);
+                statement.setString(1, name);
+                statement.setInt(2, distance);
+                statement.setInt(3, incrementedid);
+                statement.setDouble(4, segment.getStartCoordinate().getLatitude());
+                statement.setDouble(5, segment.getStartCoordinate().getLongitude());
+                statement.setFloat(6, segment.getStartCoordinate().getAltitude());
+                statement.setDouble(7, segment.getEndCoordinate().getLatitude());
+                statement.setDouble(8, segment.getEndCoordinate().getLongitude());
+                statement.setFloat(9, segment.getEndCoordinate().getAltitude());
+                statement.setString(10, ((segment.getPoi() == null) ? "-1" : segment.getPoi().getName()));
+                statement.setString(11, ((segment.getPoi() == null) ? "-1" : segment.getPoi().getDescription()));
+
                 int affectedRows = statement.executeUpdate();
-//                    if (affectedRows < 1) {
-//                        throw new NoRowsAreEffectedException();
-//                    }
+
             } catch (SQLException exception) {
-//                    throw exception;
+                exception.printStackTrace();
             }
-
-            /*
-             * segment:
-             */
-
-            String sql3 = "INSERT INTO segment (STARTCOORD, ENDCOORD) Values ((SELECT COORDINATESID from coordinates " +
-                    "WHERE LOCATION = ? & ALTITUDE = ?),(SELECT COORDINATESID from coordinates where LOCATION = ? & ALTITUDE = ?))";
-
-            try (Connection connection = dataSource.getConnection()) {
-
-                PreparedStatement statement = connection.prepareStatement(sql3);
-                statement.setString(1, location);
-                statement.setFloat(2, altitude);
-                statement.setString(3, location2);
-                statement.setFloat(4, altitude2);
-                int affectedRows = statement.executeUpdate();
-//                    if (affectedRows < 1) {
-//                        throw new NoRowsAreEffectedException();
-//                    }
-            } catch (SQLException exception) {
-//                    throw exception;
-            }
-
-            /*
-             * segment in route:
-             */
-
-
-            String sql4 = "INSERT INTO segmentinroute (SEGMENTID, SEQUENCENR) Values ((SELECT SEGMENTID from segment " +
-                    "WHERE STARTCOORD = (SELECT COORDINATESID from coordinates WHERE LOCATION = ? & ALTITUDE = ?) & ENDCOORD = (SELECT COORDINATESID from coordinates WHERE LOCATION = ? & ALTITUDE = ?)),?)";
-
-            try (Connection connection = dataSource.getConnection()) {
-
-                PreparedStatement statement = connection.prepareStatement(sql4);
-                statement.setString(1, location);
-                statement.setFloat(2, altitude);
-                statement.setString(3, location2);
-                statement.setFloat(4, altitude2);
-                statement.setInt(5,incrementedid );
-                int affectedRows = statement.executeUpdate();
-//                    if (affectedRows < 1) {
-//                        throw new NoRowsAreEffectedException();
-//                    }
-            } catch (SQLException exception) {
-//                    throw exception;
-            }
-
-
-        });
-
-
-        sql = "INSERT INTO route (NAME, ROUTEID, DISTANCE) Values (?,(SELECT id from users where Token = ?))";
-
-        String name = playlistName;
-
-        try (Connection connection = dataSource.getConnection()) {
-
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, name);
-            statement.setString(2, token);
-            int affectedRows = statement.executeUpdate();
-            if (affectedRows < 1) {
-                throw new NoRowsAreEffectedException();
-            }
-        } catch (SQLException exception) {
-            throw exception;
         }
-
     }
 
     public void setDataSource(DataSource dataSource) {
