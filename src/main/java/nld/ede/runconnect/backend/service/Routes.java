@@ -2,6 +2,7 @@ package nld.ede.runconnect.backend.service;
 //custom imports
 
 import nld.ede.runconnect.backend.dao.IRouteDAO;
+import nld.ede.runconnect.backend.domain.Route;
 import nld.ede.runconnect.backend.service.dto.DTOconverter;
 import nld.ede.runconnect.backend.service.dto.RouteDTO;
 
@@ -19,9 +20,11 @@ public class Routes {
     @Path("/")
     public Response makeRoute(@QueryParam("token") String token, String RequestBody) {
         //build body to object
-        RouteDTO newRoute;
+        RouteDTO newRouteDTO;
 
-        newRoute = DTOconverter.JSONToRouteDTO(RequestBody);
+        newRouteDTO = DTOconverter.JSONToRouteDTO(RequestBody);
+
+        Route newRoute = DTOconverter.RouteDTOToDomainRoute(newRouteDTO);
 
 
         return Response.status(200).entity(newRoute).build();

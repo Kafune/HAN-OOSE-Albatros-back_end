@@ -1,6 +1,6 @@
 
 -- Route 1 
-INSERT INTO ROUTE (NAME, DISTANCE) VALUES ("KerkRondje",10);
+INSERT INTO ROUTE (NAME, DISTANCE) VALUES ('KerkRondje',10);
 
 INSERT INTO COORDINATES (LOCATION, ALTITUDE) VALUES (ST_PointFromText('POINT(52.030944 5.674306)'), 28),
                                                     (ST_PointFromText('POINT(52.030033 5.675282)'), 27),
@@ -18,7 +18,7 @@ INSERT INTO SEGMENTINROUTE VALUES (1, 1, 1),
 INSERT INTO POI VALUES (1, 'Connectkerk', 'Kerk');
 
 -- Route 2 
-INSERT INTO ROUTE (NAME ,DISTANCE) VALUES ("Rival Foods",7);
+INSERT INTO ROUTE (NAME ,DISTANCE) VALUES ('Rival Foods',7);
 
 INSERT INTO COORDINATES (LOCATION, ALTITUDE) VALUES (ST_PointFromText('POINT(52.033273 5.676709)'), 23),
                                                     (ST_PointFromText('POINT(52.030025 5.675867)'), 21),
