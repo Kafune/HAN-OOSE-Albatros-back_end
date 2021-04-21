@@ -4,6 +4,7 @@ public class Segment {
     private int id;
     private Coordinate startCoordinate;
     private Coordinate endCoordinate;
+    private POI poi;
 
     public int getId() {
         return id;
@@ -29,5 +30,12 @@ public class Segment {
         this.endCoordinate = endCoordinate;
     }
 
+    public POI getPoi() {
+        return poi;
+    }
+
+    public void setPoi(POI poi) {
+        this.poi = poi;
+    }
 
 }

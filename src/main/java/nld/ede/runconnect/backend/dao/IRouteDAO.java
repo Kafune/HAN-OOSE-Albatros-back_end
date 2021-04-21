@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface IRouteDAO {
     List<Route> findAllRoutes();
+
+    void addNewRoute(Route newRoute);
 }

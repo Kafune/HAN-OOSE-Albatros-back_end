@@ -26,6 +26,7 @@ public class Routes {
 
         Route newRoute = DTOconverter.RouteDTOToDomainRoute(newRouteDTO);
 
+        routesDAO.addNewRoute(newRoute);
 
         return Response.status(200).entity(newRoute).build();
     }

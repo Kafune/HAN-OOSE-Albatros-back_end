@@ -4,4 +4,5 @@ public class SegmentDTO {
         public int id;
         public CoordinateDTO startCoordinate;
         public CoordinateDTO endCoordinate;
+        public POIDTO poi;
 }
