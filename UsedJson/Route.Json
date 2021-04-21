@@ -1,0 +1,68 @@
+{
+  "Name": "BosWandeling",
+  "RouteID": 1,
+  "Distance": 5,
+  "Segments": [
+    {
+      "SegmentID": 5,
+      "StartCoordinates": {
+        "Longitude": 12,
+        "Latitude": 45,
+        "Altitude": 0
+      },
+      "EndCoordinates": {
+        "Longitude": 13,
+        "Latitude": 45.1,
+        "Altitude": -2
+      }
+    },
+    {
+      "SegmentID": 6,
+      "StartCoordinates": {
+        "Longitude": 13,
+        "Latitude": 45.1,
+        "Altitude": -2
+      },
+      "EndCoordinates": {
+        "Longitude": 14,
+        "Latitude": 44,
+        "Altitude": 3
+      }
+    }
+  ]
+}
+
+
+{
+  "Name": "BosWandeling",                       //String
+  "RouteID": 1,                                 //Number
+  "Distance": 5,                                //Number
+  "Segments": [
+    {
+      "SegmentID": 5,                           //Number
+      "StartCoordinates": {
+        "Longitude": 12,                        //Number
+        "Latitude": 45,                         //Number
+        "Altitude": 0                           //Number
+      },
+      "EndCoordinates": {
+        "Longitude": 13,                        //Number
+        "Latitude": 45.1,                       //Number
+        "Altitude": -2                          //Number
+      }
+    },
+    {
+      "SegmentID": 6,                           //Number
+      "StartCoordinates": {
+        "Longitude": 13,                        //Number
+        "Latitude": 45.1,                       //Number
+        "Altitude": -2                          //Number
+      },
+      "EndCoordinates": {
+        "Longitude": 14,                        //Number
+        "Latitude": 44,                         //Number
+        "Altitude": 3                           //Number
+      }
+    }
+  ]
+}
