@@ -7,6 +7,7 @@ import nld.ede.runconnect.backend.domain.POI;
 import nld.ede.runconnect.backend.domain.Route;
 import nld.ede.runconnect.backend.domain.Segment;
 
+import javax.validation.constraints.Null;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +39,9 @@ public class DTOconverter {
         segment.setId(segmentDTO.id);
         segment.setStartCoordinate(CoordinateDTOToDomainCoordinate(segmentDTO.startCoordinate));
         segment.setEndCoordinate(CoordinateDTOToDomainCoordinate(segmentDTO.endCoordinate));
-        segment.setPoi(POIDTOToDomainPOI(segmentDTO.poi));
+        if (!(segmentDTO.poi == null)) {
+            segment.setPoi(POIDTOToDomainPOI(segmentDTO.poi));
+        }
         return segment;
     }
 

@@ -20,21 +20,21 @@ public class RouteDAO implements IRouteDAO {
 
     @Override
     public void addNewRoute(Route newRoute) {
-        String sql = "INSERT INTO route (NAME, ROUTEID, DISTANCE) Values (?,(SELECT id from users where Token = ?))";
-
-        String name = playlistName;
-
-        try (Connection connection = dataSource.getConnection()) {
-
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, name);
-            statement.setString(2, token);
-            int affectedRows = statement.executeUpdate();
-            if (affectedRows < 1) {
-                throw new NoRowsAreEffectedException();
-            }
-        } catch (SQLException exception) {
-            throw exception;
-        }
+//        String sql = "INSERT INTO route (NAME, ROUTEID, DISTANCE) Values (?,(SELECT id from users where Token = ?))";
+//
+//        String name = playlistName;
+//
+//        try (Connection connection = dataSource.getConnection()) {
+//
+//            PreparedStatement statement = connection.prepareStatement(sql);
+//            statement.setString(1, name);
+//            statement.setString(2, token);
+//            int affectedRows = statement.executeUpdate();
+//            if (affectedRows < 1) {
+//                throw new NoRowsAreEffectedException();
+//            }
+//        } catch (SQLException exception) {
+//            throw exception;
+//        }
     }
 }
