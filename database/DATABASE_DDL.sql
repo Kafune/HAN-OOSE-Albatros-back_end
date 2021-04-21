@@ -3,22 +3,21 @@
 /* Created on:     19-4-2021 15:14:38                           */
 /*==============================================================*/
 
-
-drop table if exists ACTIVITY;
-
-drop table if exists COORDINATES;
-
-drop table if exists IMAGE;
-
 drop table if exists POI;
-
-drop table if exists ROUTE;
-
-drop table if exists SEGMENT;
 
 drop table if exists SEGMENTINROUTE;
 
+drop table if exists COORDINATES;
+
+drop table if exists SEGMENT;
+
+drop table if exists ACTIVITY;
+
+drop table if exists IMAGE;
+
 drop table if exists `USER`;
+
+drop table if exists ROUTE;
 
 /*==============================================================*/
 /* Table: ACTIVITY                                              */
