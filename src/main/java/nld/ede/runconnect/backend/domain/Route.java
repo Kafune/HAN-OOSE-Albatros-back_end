@@ -7,7 +7,7 @@ import nld.ede.runconnect.backend.domain.Segment;
 
 
 public class Route {
-
+    private String name;
     private int routeId;
     private int distance;
     private List<Segment> segments = new ArrayList<>();
