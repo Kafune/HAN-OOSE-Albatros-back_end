@@ -74,7 +74,8 @@ create table POI
 create table ROUTE
 (
    ROUTEID              int not null auto_increment,
-   AFSTAND              int not null,
+   NAME                 VARCHAR(150) not null,
+   DISTANCE             int not null,
    primary key (ROUTEID)
 );
 
