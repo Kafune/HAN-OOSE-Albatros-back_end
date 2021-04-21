@@ -7,13 +7,13 @@ drop table if exists POI;
 
 drop table if exists SEGMENTINROUTE;
 
-drop table if exists COORDINATES;
-
 drop table if exists SEGMENT;
 
-drop table if exists ACTIVITY;
+drop table if exists COORDINATES;
 
 drop table if exists IMAGE;
+
+drop table if exists ACTIVITY;
 
 drop table if exists `USER`;
 
@@ -40,7 +40,9 @@ create table ACTIVITY
 create table COORDINATES
 (
     COORDINATESID        int not null auto_increment,
-    LOCATION             point not null,
+    LOCATION             point null,
+    LATITUDE             double not null,
+    LONGITUDE            double not null,
     ALTITUDE             int not null,
     primary key (COORDINATESID)
 );
