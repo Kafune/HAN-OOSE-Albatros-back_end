@@ -24,7 +24,7 @@ public class Routes {
         newRoute = DTOconverter.JSONToRouteDTO(RequestBody);
 
 
-        return Response.status(200).build();
+        return Response.status(200).entity(newRoute).build();
     }
 
     @Inject
