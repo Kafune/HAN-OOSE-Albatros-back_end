@@ -37,7 +37,7 @@ public class RouteDAO implements IRouteDAO {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, name);
             statement.setInt(2, distance);
-            int affectedRows = statement.executeUpdate();
+            statement.executeUpdate();
         } catch (SQLException exception) {
             throw exception;
         }
@@ -64,7 +64,7 @@ public class RouteDAO implements IRouteDAO {
                // The database procedure checks whether it is -1 or a poi.
                 statement.setString(10, ((segment.getPoi() == null) ? "-1" : segment.getPoi().getName()));
                 statement.setString(11, ((segment.getPoi() == null) ? "-1" : segment.getPoi().getDescription()));
-                int affectedRows = statement.executeUpdate();
+                statement.executeUpdate();
             } catch (SQLException exception) {
                 throw exception;
             }
