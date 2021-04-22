@@ -1,7 +1,7 @@
 package nld.ede.runconnect.backend.dao;
 
 import nld.ede.runconnect.backend.domain.Coordinate;
-import nld.ede.runconnect.backend.domain.Route;
+import nld.ede.runconnect.backend.domain.Poi;
 import nld.ede.runconnect.backend.domain.Segment;
 
 import javax.annotation.Resource;
@@ -46,7 +46,19 @@ public class SegmentDAO implements ISegmentDAO {
         segment.setSequenceNr(resultSet.getInt(2));
         segment.setStartCoordinate(extractStartCoordinate(resultSet));
         segment.setEndCoordinate(extractEndCoordinate(resultSet));
+        segment.setPoi(extractPoi(resultSet));
         return segment;
+    }
+
+    private Poi extractPoi(ResultSet resultSet) throws SQLException {
+        Poi poi = new Poi();
+        if (resultSet.getString(9) != null) {
+            poi.setDescription(resultSet.getString(9));
+        }
+        if (resultSet.getString(10) != null) {
+            poi.setName(resultSet.getString(10));
+        }
+        return poi;
     }
 
     private Coordinate extractEndCoordinate(ResultSet resultSet) throws SQLException {

@@ -2,6 +2,7 @@ package nld.ede.runconnect.backend.service.dto;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import nld.ede.runconnect.backend.domain.Poi;
 import nld.ede.runconnect.backend.domain.Route;
 import nld.ede.runconnect.backend.domain.Segment;
 
@@ -30,12 +31,22 @@ public class DTOconverter {
     }
 
     public static SegmentDTO domainToSegmentDTO(Segment segment) {
-            SegmentDTO segmentDTO = new SegmentDTO();
-            segmentDTO.id = segment.getId();
-            segmentDTO.startCoordinate = domainToStartCoordinateDTO(segment);
-            segmentDTO.endCoordinate = domainToEndCoordinateDTO(segment);
+        SegmentDTO segmentDTO = new SegmentDTO();
+        segmentDTO.id = segment.getId();
+        segmentDTO.startCoordinate = domainToStartCoordinateDTO(segment);
+        segmentDTO.endCoordinate = domainToEndCoordinateDTO(segment);
+        segmentDTO.poi = domainTOPoiDTO(segment);
+
 
         return segmentDTO;
+    }
+
+    private static PoiDTO domainTOPoiDTO(Segment segment) {
+        PoiDTO poiDTO = new PoiDTO();
+        poiDTO.description = segment.getPoi().getDescription();
+        poiDTO.name = segment.getPoi().getName();
+        return poiDTO;
+
     }
 
     public static CoordinateDTO domainToEndCoordinateDTO(Segment item) {

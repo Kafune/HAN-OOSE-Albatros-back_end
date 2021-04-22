@@ -5,6 +5,7 @@ public class Segment {
     private int sequenceNr;
     private Coordinate startCoordinate;
     private Coordinate endCoordinate;
+    private Poi poi;
 
     public int getSequenceNr() {
         return sequenceNr;
@@ -36,5 +37,13 @@ public class Segment {
 
     public void setEndCoordinate(Coordinate endCoordinate) {
         this.endCoordinate = endCoordinate;
+    }
+
+    public Poi getPoi() {
+        return poi;
+    }
+
+    public void setPoi(Poi poi) {
+        this.poi = poi;
     }
 }
