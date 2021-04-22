@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import javax.ws.rs.core.Response;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,14 +18,14 @@ import static org.mockito.Mockito.*;
 
 public class RoutesTest {
 
-    private Routes sut;
+    private Routes routes;
     public static final int ID = 1;
     public static final int DISTANCE = 30;
     public static final String NAME = "nameTest";
 
     @BeforeEach
     public void setup() {
-        sut = new Routes();
+        routes = new Routes();
     }
 
     @Test
@@ -32,9 +33,9 @@ public class RoutesTest {
         int expectedStatus = 404;
         IRouteDAO routeDAOMock = mock(RouteDAO.class);
         when(routeDAOMock.getAllRoutes()).thenReturn(null);
-        sut.setRoutesDAO(routeDAOMock);
+        routes.setRoutesDAO(routeDAOMock);
 
-        Response response = sut.findAllRoutes();
+        Response response = routes.findAllRoutes();
         assertEquals(expectedStatus, response.getStatus());
     }
     @Test
@@ -43,9 +44,9 @@ public class RoutesTest {
 
         IRouteDAO routeDAOMock = mock(RouteDAO.class);
         when(routeDAOMock.getAllRoutes()).thenReturn(list);
-        sut.setRoutesDAO(routeDAOMock);
+        routes.setRoutesDAO(routeDAOMock);
 
-        Response response = sut.findAllRoutes();
+        Response response = routes.findAllRoutes();
         RouteDTO expectedRouteDTO = getRouteDTO();
         List<RouteDTO> actualRouteDTO = (List<RouteDTO>) response.getEntity();
 
@@ -71,6 +72,76 @@ public class RoutesTest {
         List<Route> list = new ArrayList<>();
         list.add(route);
         return list;
+    }
+
+    @Test
+    void makeRoute() {
+        // Arrange
+        int statusCodeExpected = 201;
+        String JSON = "{\n" +
+                "  \"name\": \"BosWandeling\",\n" +
+                "  \"routeID\": 1,\n" +
+                "  \"distance\": 5,\n" +
+                "  \"segments\": [\n" +
+                "    {\n" +
+                "      \"id\": 5,\n" +
+                "      \"startCoordinate\": {\n" +
+                "        \"longitude\": 12,\n" +
+                "        \"latitude\": 45,\n" +
+                "        \"altitude\": 0\n" +
+                "      },\n" +
+                "      \"endCoordinate\": {\n" +
+                "        \"longitude\": 13,\n" +
+                "        \"latitude\": 45.1,\n" +
+                "        \"altitude\": -2\n" +
+                "      },\n" +
+                "      \"poi\": {\n" +
+                "        \"id\": 5,\n" +
+                "        \"name\": \"\",\n" +
+                "        \"description\": \"\"\n" +
+                "      }\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"id\": 6,\n" +
+                "      \"startCoordinate\": {\n" +
+                "        \"longitude\": 13,\n" +
+                "        \"latitude\": 45.1,\n" +
+                "        \"altitude\": -2\n" +
+                "      },\n" +
+                "      \"endCoordinate\": {\n" +
+                "        \"longitude\": 14,\n" +
+                "        \"latitude\": 44,\n" +
+                "        \"altitude\": 3\n" +
+                "      }\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}";
+
+
+        //mock
+        var route = new Route();
+        RouteDAO RouteDAOMock = mock(RouteDAO.class);
+        try {
+            doNothing().when(RouteDAOMock).addNewRoute(route);
+        } catch (SQLException throwables) {
+            fail(throwables);
+        }
+        routes.setRoutesDAO(RouteDAOMock);
+
+        // Act
+        Response response = null;
+        try {
+            response = routes.makeRoute(JSON);
+        }catch(Exception throwables){
+            fail(throwables);
+        }
+        // Assert
+        assertEquals(statusCodeExpected, response.getStatus());
+
+        //test content
+
+        //no contents
+
     }
 
 }
