@@ -1,4 +1,4 @@
-package nld.ede.runconnect.backend.service.ExceptionMappers;
+package nld.ede.runconnect.backend.exceptions.ExceptionMappers;
 
 import org.junit.jupiter.api.Test;
 

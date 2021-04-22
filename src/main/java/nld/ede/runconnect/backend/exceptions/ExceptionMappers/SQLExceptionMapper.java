@@ -1,4 +1,4 @@
-package nld.ede.runconnect.backend.service.ExceptionMappers;
+package nld.ede.runconnect.backend.exceptions.ExceptionMappers;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
