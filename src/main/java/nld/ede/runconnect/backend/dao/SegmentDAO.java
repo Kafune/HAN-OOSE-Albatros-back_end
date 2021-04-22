@@ -77,4 +77,8 @@ public class SegmentDAO implements ISegmentDAO {
                 "LEFT JOIN poi p on s2.SEGMENTID = p.SEGMENTID " +
                 "WHERE s.ROUTEID = ?;";
     }
+
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 }

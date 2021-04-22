@@ -43,4 +43,8 @@ public class RouteDAO implements IRouteDAO {
         return null;
 
     }
+
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 }
