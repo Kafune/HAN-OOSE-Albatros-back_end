@@ -9,6 +9,7 @@ import nld.ede.runconnect.backend.service.dto.RouteDTO;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import java.sql.SQLException;
 
 @Path("routes")
 public class Routes {
@@ -18,17 +19,17 @@ public class Routes {
 
     @POST
     @Path("/")
-    public Response makeRoute(String RequestBody) {
+    public Response makeRoute(String RequestBody) throws SQLException {
         //build body to object
-        RouteDTO newRouteDTO;
+        RouteDTO newRouteDTO = DTOconverter.JSONToRouteDTO(RequestBody);
 
-        newRouteDTO = DTOconverter.JSONToRouteDTO(RequestBody);
-
+        //build dto to domain object
         Route newRoute = DTOconverter.RouteDTOToDomainRoute(newRouteDTO);
 
+        //add to the database
         routesDAO.addNewRoute(newRoute);
 
-        return Response.status(201).entity(newRoute).build();
+        return Response.status(201).build();
     }
 
     @Inject

@@ -24,7 +24,7 @@ public class RouteDAO implements IRouteDAO {
     }
 
     @Override
-    public void addNewRoute(Route route) {
+    public void addNewRoute(Route route) throws SQLException {
 
         /*
          * insert a route:
@@ -42,9 +42,12 @@ public class RouteDAO implements IRouteDAO {
             statement.setInt(2, distance);
             int affectedRows = statement.executeUpdate();
         } catch (SQLException exception) {
-            exception.printStackTrace();
+            throw exception;
         }
 
+        /*
+         * Insert every segment with a for loop and a custom made database procedure.
+         */
         for(int incrementedid =0; incrementedid< route.getSegments().size(); incrementedid++) {
             Segment segment = route.getSegments().get(incrementedid);
 
@@ -62,13 +65,16 @@ public class RouteDAO implements IRouteDAO {
                 statement.setDouble(7, segment.getEndCoordinate().getLatitude());
                 statement.setDouble(8, segment.getEndCoordinate().getLongitude());
                 statement.setFloat(9, segment.getEndCoordinate().getAltitude());
+
+               // -1 has been used here to indicate that this segment doesn't have a POI.
+               // The database procedure checks whether it is -1 or a poi.
                 statement.setString(10, ((segment.getPoi() == null) ? "-1" : segment.getPoi().getName()));
                 statement.setString(11, ((segment.getPoi() == null) ? "-1" : segment.getPoi().getDescription()));
 
                 int affectedRows = statement.executeUpdate();
 
             } catch (SQLException exception) {
-                exception.printStackTrace();
+                throw exception;
             }
         }
     }

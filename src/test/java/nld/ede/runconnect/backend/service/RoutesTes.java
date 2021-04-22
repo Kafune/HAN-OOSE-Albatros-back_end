@@ -8,7 +8,10 @@ import org.junit.jupiter.api.Test;
 
 import javax.ws.rs.core.Response;
 
+import java.sql.SQLException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 
@@ -68,12 +71,20 @@ class RoutesTes {
         //mock
         var route = new Route();
         RouteDAO RouteDAOMock = mock(RouteDAO.class);
-        doNothing().when(RouteDAOMock).addNewRoute(route);
+        try {
+            doNothing().when(RouteDAOMock).addNewRoute(route);
+        } catch (SQLException throwables) {
+            fail(throwables);
+        }
         routes.setRoutesDAO(RouteDAOMock);
 
         // Act
-        Response response = routes.makeRoute(JSON);
-
+        Response response = null;
+        try {
+            response = routes.makeRoute(JSON);
+        }catch(Exception throwables){
+            fail(throwables);
+        }
         // Assert
         assertEquals(statusCodeExpected, response.getStatus());
 
