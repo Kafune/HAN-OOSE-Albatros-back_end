@@ -5,5 +5,5 @@ import nld.ede.runconnect.backend.domain.Route;
 import java.util.List;
 
 public interface IRouteDAO {
-    List<Route> findAllRoutes();
+    List<Route> getAllRoutes();
 }

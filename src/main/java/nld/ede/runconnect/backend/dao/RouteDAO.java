@@ -19,7 +19,7 @@ public class RouteDAO implements IRouteDAO {
     private DataSource dataSource;
 
     @Override
-    public List<Route> findAllRoutes() {
+    public List<Route> getAllRoutes() {
         String sql = "SELECT * FROM ROUTE";
         try (Connection connection = dataSource.getConnection()) {
 
