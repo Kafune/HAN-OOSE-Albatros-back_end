@@ -21,30 +21,24 @@ public class DTOconverter {
     public static RouteDTO domainToRouteDTO(Route route) {
 
         // Maak een lijst of segmentDTO for deze route
-        List<SegmentDTO> segmentDTOList = new ArrayList<>();
-        segmentDTOList.add(domainToSegmentDTO(route));
         RouteDTO routeDTO = new RouteDTO();
         routeDTO.routeId = route.getRouteId();
         routeDTO.distance = route.getDistance();
         routeDTO.name = route.getName();
-        routeDTO.segments = segmentDTOList;
         return routeDTO;
 
     }
 
-    private static SegmentDTO domainToSegmentDTO(Route route) {
-        SegmentDTO segmentDTO = new SegmentDTO();
+    public static SegmentDTO domainToSegmentDTO(Segment segment) {
+            SegmentDTO segmentDTO = new SegmentDTO();
+            segmentDTO.id = segment.getId();
+            segmentDTO.startCoordinate = domainToStartCoordinateDTO(segment);
+            segmentDTO.endCoordinate = domainToEndCoordinateDTO(segment);
 
-        for (Segment item : route.getSegments()) {
-
-            segmentDTO.id = item.getId();
-            segmentDTO.startCoordinate = domainToStartCoordinateDTO(item);
-            segmentDTO.endCoordinate = domainToEndCoordinateDTO(item);
-        }
         return segmentDTO;
     }
 
-    private static CoordinateDTO domainToEndCoordinateDTO(Segment item) {
+    public static CoordinateDTO domainToEndCoordinateDTO(Segment item) {
         //End coordinate of segment
         CoordinateDTO endCoordinateDTO = new CoordinateDTO();
 
@@ -55,7 +49,7 @@ public class DTOconverter {
         return endCoordinateDTO;
     }
 
-    private static CoordinateDTO domainToStartCoordinateDTO(Segment item) {
+    public static CoordinateDTO domainToStartCoordinateDTO(Segment item) {
         //Start coordinate of segment
         CoordinateDTO startCoordinateDTO = new CoordinateDTO();
 

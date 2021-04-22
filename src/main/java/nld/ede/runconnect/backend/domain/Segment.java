@@ -2,8 +2,17 @@ package nld.ede.runconnect.backend.domain;
 
 public class Segment {
     private int id;
+    private int sequenceNr;
     private Coordinate startCoordinate;
     private Coordinate endCoordinate;
+
+    public int getSequenceNr() {
+        return sequenceNr;
+    }
+
+    public void setSequenceNr(int sequenceNr) {
+        this.sequenceNr = sequenceNr;
+    }
 
     public int getId() {
         return id;
