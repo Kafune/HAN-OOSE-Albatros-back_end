@@ -3,22 +3,21 @@
 /* Created on:     19-4-2021 15:14:38                           */
 /*==============================================================*/
 
+drop table if exists POI;
 
-drop table if exists ACTIVITY;
+drop table if exists SEGMENTINROUTE;
+
+drop table if exists SEGMENT;
 
 drop table if exists COORDINATES;
 
 drop table if exists IMAGE;
 
-drop table if exists POI;
-
-drop table if exists ROUTE;
-
-drop table if exists SEGMENT;
-
-drop table if exists SEGMENTINROUTE;
+drop table if exists ACTIVITY;
 
 drop table if exists `USER`;
+
+drop table if exists ROUTE;
 
 /*==============================================================*/
 /* Table: ACTIVITY                                              */
@@ -41,7 +40,9 @@ create table ACTIVITY
 create table COORDINATES
 (
    COORDINATESID        int not null auto_increment,
-   LOCATION             point not null,
+   LOCATION             point null,
+   LATITUDE             double not null,
+   LONGITUDE            double not null,
    ALTITUDE             int not null,
    primary key (COORDINATESID)
 );
@@ -74,7 +75,8 @@ create table POI
 create table ROUTE
 (
    ROUTEID              int not null auto_increment,
-   AFSTAND              int not null,
+   NAME                 VARCHAR(150) not null,
+   DISTANCE             int not null,
    primary key (ROUTEID)
 );
 
