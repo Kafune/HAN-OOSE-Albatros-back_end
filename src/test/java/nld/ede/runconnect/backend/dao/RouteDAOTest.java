@@ -71,13 +71,13 @@ public class RouteDAOTest {
         } catch (SQLException throwables) {
             fail(throwables);
         }
-        routeDAO.setDataSource(dataSource);
+        sut.setDataSource(dataSource);
 
         // Act / assert
 
         assertThrows(
                 SQLException.class,
-                () -> routeDAO.addNewRoute(new Route())
+                () -> sut.addNewRoute(new Route())
         );
     }
 

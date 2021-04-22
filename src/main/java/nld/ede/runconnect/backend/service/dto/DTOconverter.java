@@ -40,8 +40,8 @@ public class DTOconverter {
         return segmentDTO;
     }
 
-    private static PoiDTO domainTOPoiDTO(Segment segment) {
-        PoiDTO poiDTO = new PoiDTO();
+    private static POIDTO domainTOPoiDTO(Segment segment) {
+        POIDTO poiDTO = new POIDTO();
         poiDTO.description = segment.getPoi().getDescription();
         poiDTO.name = segment.getPoi().getName();
         return poiDTO;

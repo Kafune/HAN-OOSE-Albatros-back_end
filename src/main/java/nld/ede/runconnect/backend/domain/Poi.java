@@ -1,9 +1,17 @@
 package nld.ede.runconnect.backend.domain;
 
-public class Poi {
-
+public class POI {
+    private int id;
     private String name;
     private String description;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -20,4 +28,5 @@ public class Poi {
     public void setDescription(String description) {
         this.description = description;
     }
+
 }

@@ -107,7 +107,4 @@ public class RouteDAO implements IRouteDAO {
         }
     }
 
-    public void setDataSource(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
 }
