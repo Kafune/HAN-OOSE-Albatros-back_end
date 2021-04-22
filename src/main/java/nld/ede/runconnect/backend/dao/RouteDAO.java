@@ -39,7 +39,7 @@ public class RouteDAO implements IRouteDAO {
 
     }
 
-    private Route extractRoute(ResultSet resultSet) throws SQLException {
+    public Route extractRoute(ResultSet resultSet) throws SQLException {
         Route route = new Route();
         route.setRouteId(resultSet.getInt(1));
         route.setName(resultSet.getString(2));

@@ -81,4 +81,25 @@ public class RouteDAOTest {
         );
     }
 
+    @Test
+    public void extractRouteTest() {
+        int routeId = 2;
+        String name = "Test avv";
+        int distance = 3;
+        try {
+            ResultSet rs = mock(ResultSet.class);
+            when(rs.getInt(1)).thenReturn(routeId);
+            when(rs.getString(2)).thenReturn(name);
+            when(rs.getInt(3)).thenReturn(distance);
+
+            Route actualRoute = sut.extractRoute(rs);
+
+            assertEquals(routeId, actualRoute.getRouteId());
+            assertEquals(name, actualRoute.getName());
+            assertEquals(distance, actualRoute.getDistance());
+        } catch (SQLException e) {
+            fail();
+        }
+    }
+
 }

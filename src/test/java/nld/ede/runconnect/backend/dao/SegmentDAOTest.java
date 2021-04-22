@@ -9,6 +9,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -55,6 +56,53 @@ public class SegmentDAOTest {
 
         } catch (Exception e) {
             e.printStackTrace();
+            fail();
+        }
+    }
+    @Test
+    public void  extractSegmentTest() {
+        int id = 3;
+        int sequenceNr = 4;
+        int startAlt = 5;
+        double startLong = 7;
+        double startLat = 8;
+        int endAlt = 6;
+        double endLong = 23;
+        double endLat = 85;
+        String name = "test";
+        String description = "sabsdjhdsjhsd";
+
+        try {
+            ResultSet rs = mock(ResultSet.class);
+
+            when(rs.getInt(1)).thenReturn(id);
+            when(rs.getInt(2)).thenReturn(sequenceNr);
+            when(rs.getInt(3)).thenReturn(startAlt);
+            when(rs.getDouble(4)).thenReturn(startLong);
+            when(rs.getDouble(5)).thenReturn(startLat);
+            when(rs.getInt(6)).thenReturn(endAlt);
+            when(rs.getDouble(7)).thenReturn(endLong);
+            when(rs.getDouble(8)).thenReturn(endLat);
+            when(rs.getString(10)).thenReturn(name);
+            when(rs.getString(9)).thenReturn(description);
+
+            Segment actualSegment = sut.extractSegment(rs);
+
+            assertEquals(id, actualSegment.getId());
+            assertEquals(sequenceNr, actualSegment.getSequenceNr());
+
+            assertEquals(startAlt, actualSegment.getStartCoordinate().getAltitude());
+            assertEquals(startLong, actualSegment.getStartCoordinate().getLongitude());
+            assertEquals(startLat, actualSegment.getStartCoordinate().getLatitude());
+
+            assertEquals(endAlt, actualSegment.getEndCoordinate().getAltitude());
+            assertEquals(endLong, actualSegment.getEndCoordinate().getLongitude());
+            assertEquals(endLat, actualSegment.getEndCoordinate().getLatitude());
+
+            assertEquals(name, actualSegment.getPOI().getName());
+            assertEquals(description, actualSegment.getPOI().getDescription());
+
+        } catch (SQLException s) {
             fail();
         }
     }

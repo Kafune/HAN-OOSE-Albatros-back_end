@@ -3,10 +3,10 @@ package nld.ede.runconnect.backend.service;
 import nld.ede.runconnect.backend.dao.ISegmentDAO;
 import nld.ede.runconnect.backend.dao.SegmentDAO;
 import nld.ede.runconnect.backend.domain.Coordinate;
-import nld.ede.runconnect.backend.domain.Route;
+import nld.ede.runconnect.backend.domain.POI;
 import nld.ede.runconnect.backend.domain.Segment;
 import nld.ede.runconnect.backend.service.dto.CoordinateDTO;
-import nld.ede.runconnect.backend.service.dto.RouteDTO;
+import nld.ede.runconnect.backend.service.dto.POIDTO;
 import nld.ede.runconnect.backend.service.dto.SegmentDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,6 +31,8 @@ public class SegmentsTest {
     public static final int START_ALT = 222;
     public static final int START_LAT = 333;
     public static final int START_LON = 444;
+    public static final String POI_NAME = "NameTest";
+    public static final String POI_DESCRIPTION = "description test";
 
     private Segments sut;
     private ISegmentDAO segmentDAOMock;
@@ -73,13 +75,20 @@ public class SegmentsTest {
         assertEquals(expectedSegmentDTO.startCoordinate.longitude, actualSegmentDTO.get(0).startCoordinate.longitude);
         assertEquals(expectedSegmentDTO.startCoordinate.latitude, actualSegmentDTO.get(0).startCoordinate.latitude);
         assertEquals(expectedSegmentDTO.startCoordinate.altitude, actualSegmentDTO.get(0).startCoordinate.altitude);
+
+        assertEquals(expectedSegmentDTO.poi.name, actualSegmentDTO.get(0).poi.name);
+        assertEquals(expectedSegmentDTO.poi.description, actualSegmentDTO.get(0).poi.description);
     }
 
     private SegmentDTO getSegmentDTO() {
         SegmentDTO segmentDTO = new SegmentDTO();
+        POIDTO poiDTO = new POIDTO();
+        poiDTO.description = POI_DESCRIPTION;
+        poiDTO.name = POI_NAME;
         segmentDTO.id = SEGMENT_ID;
         segmentDTO.startCoordinate =  getCoordinateDTO(START_ALT, START_LAT, START_LON);
         segmentDTO.endCoordinate = getCoordinateDTO(END_ALT, END_LAT, END_LON);
+        segmentDTO.poi = poiDTO;
         return segmentDTO;
     }
 
@@ -93,10 +102,15 @@ public class SegmentsTest {
 
     private List<Segment> getSegmentList() {
         Segment segment = new Segment();
+        POI poi = new POI();
+        poi.setName(POI_NAME);
+        poi.setDescription(POI_DESCRIPTION);
+
         segment.setId(SEGMENT_ID);
         segment.setSequenceNr(SEQUENCE_NR);
         segment.setEndCoordinate(getCoordinatie(END_ALT, END_LAT, END_LON));
         segment.setStartCoordinate(getCoordinatie(START_ALT, START_LAT, START_LON));
+        segment.setPOI(poi);
         List<Segment> list = new ArrayList<>();
         list.add(segment);
         return list;

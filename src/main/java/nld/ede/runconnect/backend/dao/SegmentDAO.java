@@ -40,7 +40,7 @@ public class SegmentDAO implements ISegmentDAO {
         return null;
     }
 
-    private Segment extractSegment(ResultSet resultSet) throws SQLException {
+    public Segment extractSegment(ResultSet resultSet) throws SQLException {
         Segment segment = new Segment();
         segment.setId(resultSet.getInt(1));
         segment.setSequenceNr(resultSet.getInt(2));
