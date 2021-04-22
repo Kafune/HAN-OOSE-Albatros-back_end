@@ -39,11 +39,11 @@ public class Segment {
         this.endCoordinate = endCoordinate;
     }
 
-    public POI getPoi() {
+    public POI getPOI() {
         return poi;
     }
 
-    public void setPoi(POI poi) {
+    public void setPOI(POI poi) {
         this.poi = poi;
     }
 

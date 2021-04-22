@@ -1,6 +1,5 @@
 package nld.ede.runconnect.backend.dao;
 
-import nld.ede.runconnect.backend.domain.Coordinate;
 import nld.ede.runconnect.backend.domain.Route;
 import nld.ede.runconnect.backend.domain.Segment;
 
@@ -11,14 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.awt.*;
-import java.sql.*;
 import java.util.List;
-
-import javax.annotation.Resource;
-import javax.enterprise.inject.Default;
-import javax.inject.Inject;
-import javax.sql.DataSource;
 
 public class RouteDAO implements IRouteDAO {
 
@@ -98,8 +90,8 @@ public class RouteDAO implements IRouteDAO {
                 statement.setFloat(9, segment.getEndCoordinate().getAltitude());
                // -1 has been used here to indicate that this segment doesn't have a POI.
                // The database procedure checks whether it is -1 or a poi.
-                statement.setString(10, ((segment.getPoi() == null) ? "-1" : segment.getPoi().getName()));
-                statement.setString(11, ((segment.getPoi() == null) ? "-1" : segment.getPoi().getDescription()));
+                statement.setString(10, ((segment.getPOI() == null) ? "-1" : segment.getPOI().getName()));
+                statement.setString(11, ((segment.getPOI() == null) ? "-1" : segment.getPOI().getDescription()));
                 statement.executeUpdate();
             } catch (SQLException exception) {
                 throw exception;

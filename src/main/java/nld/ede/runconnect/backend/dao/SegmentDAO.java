@@ -46,7 +46,7 @@ public class SegmentDAO implements ISegmentDAO {
         segment.setSequenceNr(resultSet.getInt(2));
         segment.setStartCoordinate(extractStartCoordinate(resultSet));
         segment.setEndCoordinate(extractEndCoordinate(resultSet));
-        segment.setPoi(extractPoi(resultSet));
+        segment.setPOI(extractPoi(resultSet));
         return segment;
     }
 

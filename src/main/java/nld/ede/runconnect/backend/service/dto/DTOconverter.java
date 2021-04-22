@@ -7,7 +7,6 @@ import nld.ede.runconnect.backend.domain.POI;
 import nld.ede.runconnect.backend.domain.Route;
 import nld.ede.runconnect.backend.domain.Segment;
 
-import javax.validation.constraints.Null;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,8 +41,10 @@ public class DTOconverter {
 
     private static POIDTO domainTOPoiDTO(Segment segment) {
         POIDTO poiDTO = new POIDTO();
-        poiDTO.description = segment.getPoi().getDescription();
-        poiDTO.name = segment.getPoi().getName();
+        if(segment.getPOI().getDescription() != null) {
+            poiDTO.description = segment.getPOI().getDescription();
+            poiDTO.name = segment.getPOI().getName();
+        }
         return poiDTO;
 
     }
@@ -88,7 +89,7 @@ public class DTOconverter {
         segment.setStartCoordinate(CoordinateDTOToDomainCoordinate(segmentDTO.startCoordinate));
         segment.setEndCoordinate(CoordinateDTOToDomainCoordinate(segmentDTO.endCoordinate));
         if (!(segmentDTO.poi == null)) {
-            segment.setPoi(POIDTOToDomainPOI(segmentDTO.poi));
+            segment.setPOI(POIDTOToDomainPOI(segmentDTO.poi));
         }
         return segment;
     }
