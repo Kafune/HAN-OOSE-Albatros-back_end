@@ -20,14 +20,11 @@ public class DTOconverter {
     }
 
     public static RouteDTO domainToRouteDTO(Route route) {
-
-        // Maak een lijst of segmentDTO for deze route
         RouteDTO routeDTO = new RouteDTO();
         routeDTO.routeId = route.getRouteId();
         routeDTO.distance = route.getDistance();
         routeDTO.name = route.getName();
         return routeDTO;
-
     }
 
     public static SegmentDTO domainToSegmentDTO(Segment segment) {

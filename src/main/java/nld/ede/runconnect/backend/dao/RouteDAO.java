@@ -28,11 +28,7 @@ public class RouteDAO implements IRouteDAO {
 
             List<Route> routeList = new ArrayList<>();
             while (resultSet.next()) {
-                Route route = new Route();
-                route.setRouteId(resultSet.getInt(1));
-                route.setName(resultSet.getString(2));
-                route.setDistance(resultSet.getInt(3));
-                routeList.add(route);
+                routeList.add(extractRoute(resultSet));
             }
             return routeList;
 
@@ -42,6 +38,14 @@ public class RouteDAO implements IRouteDAO {
 
         return null;
 
+    }
+
+    private Route extractRoute(ResultSet resultSet) throws SQLException {
+        Route route = new Route();
+        route.setRouteId(resultSet.getInt(1));
+        route.setName(resultSet.getString(2));
+        route.setDistance(resultSet.getInt(3));
+        return route;
     }
 
     public void setDataSource(DataSource dataSource) {

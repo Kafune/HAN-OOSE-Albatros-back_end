@@ -16,7 +16,7 @@ import java.util.List;
 @Path("routes")
 public class Routes {
 
-    IRouteDAO routesDAO;
+    private IRouteDAO routesDAO;
 
 
     @POST
