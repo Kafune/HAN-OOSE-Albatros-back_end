@@ -52,7 +52,7 @@ The client will expect the following respond codes to be used
 ### Endpoints
 The following endpoints are implemented
 
-#### Login
+#### helloworld
 
 ```
 url:    /hello
