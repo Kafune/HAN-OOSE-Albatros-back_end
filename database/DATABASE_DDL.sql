@@ -39,12 +39,12 @@ create table ACTIVITY
 /*==============================================================*/
 create table COORDINATES
 (
-    COORDINATESID        int not null auto_increment,
-    LOCATION             point null,
-    LATITUDE             double not null,
-    LONGITUDE            double not null,
-    ALTITUDE             int not null,
-    primary key (COORDINATESID)
+   COORDINATESID        int not null auto_increment,
+   LOCATION             point null,
+   LATITUDE             double not null,
+   LONGITUDE            double not null,
+   ALTITUDE             int not null,
+   primary key (COORDINATESID)
 );
 
 /*==============================================================*/

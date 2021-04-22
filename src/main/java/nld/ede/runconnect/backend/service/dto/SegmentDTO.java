@@ -6,5 +6,5 @@ public class SegmentDTO {
         public int id;
         public CoordinateDTO startCoordinate;
         public CoordinateDTO endCoordinate;
-        public PoiDTO poi;
+        public POIDTO poi;
 }

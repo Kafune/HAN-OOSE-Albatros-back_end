@@ -12,6 +12,15 @@ public class Route {
     private int distance;
     private List<Segment> segments = new ArrayList<>();
 
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public int getRouteId() {
         return routeId;
     }

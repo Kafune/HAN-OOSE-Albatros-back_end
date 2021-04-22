@@ -12,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.SQLException;
 
 @Path("routes")
 public class Routes {
@@ -21,14 +22,17 @@ public class Routes {
 
     @POST
     @Path("/")
-    public Response makeRoute(@QueryParam("token") String token, String RequestBody) {
+    public Response makeRoute(String RequestBody) throws SQLException {
         //build body to object
-        RouteDTO newRoute;
+        RouteDTO newRouteDTO = DTOconverter.JSONToRouteDTO(RequestBody);
 
-        newRoute = DTOconverter.JSONToRouteDTO(RequestBody);
+        //build dto to domain object
+        Route newRoute = DTOconverter.RouteDTOToDomainRoute(newRouteDTO);
 
+        //add to the database
+        routesDAO.addNewRoute(newRoute);
 
-        return Response.status(200).entity(newRoute).build();
+        return Response.status(201).build();
     }
 
     @GET
