@@ -30,13 +30,10 @@ public class RouteDAO implements IRouteDAO {
          * insert a route:
          */
         String sql = "INSERT INTO route (NAME, DISTANCE) Values (?, ?)";
-
         String name = route.getName();
         int distance = route.getDistance();
 
-
         try (Connection connection = dataSource.getConnection()) {
-
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, name);
             statement.setInt(2, distance);
@@ -52,8 +49,6 @@ public class RouteDAO implements IRouteDAO {
             Segment segment = route.getSegments().get(incrementedid);
 
             String sql2 = "CALL spr_InsertSegements(?,?,?,?,?,?,?,?,?,?,?)";
-
-
             try (Connection connection = dataSource.getConnection()) {
                 PreparedStatement statement = connection.prepareStatement(sql2);
                 statement.setString(1, name);
@@ -65,14 +60,11 @@ public class RouteDAO implements IRouteDAO {
                 statement.setDouble(7, segment.getEndCoordinate().getLatitude());
                 statement.setDouble(8, segment.getEndCoordinate().getLongitude());
                 statement.setFloat(9, segment.getEndCoordinate().getAltitude());
-
                // -1 has been used here to indicate that this segment doesn't have a POI.
                // The database procedure checks whether it is -1 or a poi.
                 statement.setString(10, ((segment.getPoi() == null) ? "-1" : segment.getPoi().getName()));
                 statement.setString(11, ((segment.getPoi() == null) ? "-1" : segment.getPoi().getDescription()));
-
                 int affectedRows = statement.executeUpdate();
-
             } catch (SQLException exception) {
                 throw exception;
             }
