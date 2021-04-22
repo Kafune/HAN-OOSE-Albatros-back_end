@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface IRouteDAO {
-    List<Route> findAllRoutes();
-
+    List<Route> getAllRoutes();
     void addNewRoute(Route newRoute) throws SQLException;
 }

@@ -17,11 +17,7 @@ public class Route {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getRouteId() {
+       public int getRouteId() {
         return routeId;
     }
 
@@ -43,5 +39,9 @@ public class Route {
 
     public void setSegments(List<Segment> segments) {
         this.segments = segments;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

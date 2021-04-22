@@ -1,19 +1,10 @@
 package nld.ede.runconnect.backend.service.dto;
 
-import nld.ede.runconnect.backend.dao.RouteDAO;
-import nld.ede.runconnect.backend.domain.Coordinate;
-import nld.ede.runconnect.backend.domain.POI;
 import nld.ede.runconnect.backend.domain.Route;
-import nld.ede.runconnect.backend.service.Routes;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import javax.ws.rs.core.Response;
-
-import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 
 class DTOconverterTest {
@@ -216,9 +207,9 @@ class DTOconverterTest {
         assertEquals(endCoordinate1.latitude, response.getSegments().get(0).getEndCoordinate().getLatitude());
         assertEquals(endCoordinate1.altitude, response.getSegments().get(0).getEndCoordinate().getAltitude());
 
-        assertEquals(poi.id, response.getSegments().get(0).getPoi().getId());
-        assertEquals(poi.description, response.getSegments().get(0).getPoi().getDescription());
-        assertEquals(poi.name, response.getSegments().get(0).getPoi().getName());
+        assertEquals(poi.id, response.getSegments().get(0).getPOI().getId());
+        assertEquals(poi.description, response.getSegments().get(0).getPOI().getDescription());
+        assertEquals(poi.name, response.getSegments().get(0).getPOI().getName());
 
         assertEquals(segmentDTO1.id, response.getSegments().get(0).getId());
 

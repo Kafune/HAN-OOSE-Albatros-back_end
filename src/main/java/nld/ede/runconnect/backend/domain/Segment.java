@@ -2,9 +2,18 @@ package nld.ede.runconnect.backend.domain;
 
 public class Segment {
     private int id;
+    private int sequenceNr;
     private Coordinate startCoordinate;
     private Coordinate endCoordinate;
     private POI poi;
+
+    public int getSequenceNr() {
+        return sequenceNr;
+    }
+
+    public void setSequenceNr(int sequenceNr) {
+        this.sequenceNr = sequenceNr;
+    }
 
     public int getId() {
         return id;
@@ -30,11 +39,11 @@ public class Segment {
         this.endCoordinate = endCoordinate;
     }
 
-    public POI getPoi() {
+    public POI getPOI() {
         return poi;
     }
 
-    public void setPoi(POI poi) {
+    public void setPOI(POI poi) {
         this.poi = poi;
     }
 

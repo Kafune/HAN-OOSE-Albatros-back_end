@@ -29,6 +29,4 @@ public class Coordinate {
     public void setAltitude(float altitude) {
         this.altitude = altitude;
     }
-
-
 }
