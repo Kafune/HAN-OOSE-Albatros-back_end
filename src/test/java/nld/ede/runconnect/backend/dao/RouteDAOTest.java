@@ -86,11 +86,13 @@ public class RouteDAOTest {
         int routeId = 2;
         String name = "Test avv";
         int distance = 3;
+        String description = "Test beschrijving test";
         try {
             ResultSet rs = mock(ResultSet.class);
             when(rs.getInt(1)).thenReturn(routeId);
             when(rs.getString(2)).thenReturn(name);
-            when(rs.getInt(3)).thenReturn(distance);
+            when(rs.getString(3)).thenReturn(description);
+            when(rs.getInt(4)).thenReturn(distance);
 
             Route actualRoute = sut.extractRoute(rs);
 

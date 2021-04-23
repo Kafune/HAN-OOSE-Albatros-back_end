@@ -22,6 +22,7 @@ public class RoutesTest {
     public static final int ID = 1;
     public static final int DISTANCE = 30;
     public static final String NAME = "nameTest";
+    public static final String DESCRIPTION = " beschrijving ";
 
     @BeforeEach
     public void setup() {
@@ -53,6 +54,7 @@ public class RoutesTest {
         assertEquals(expectedRouteDTO.routeId, actualRouteDTO.get(0).routeId);
         assertEquals(expectedRouteDTO.distance, actualRouteDTO.get(0).distance);
         assertEquals(expectedRouteDTO.name, actualRouteDTO.get(0).name);
+        assertEquals(expectedRouteDTO.description, actualRouteDTO.get(0).description);
         assertEquals(0, actualRouteDTO.get(0).segments.size());
     }
 
@@ -61,6 +63,7 @@ public class RoutesTest {
         routeDTO.routeId = ID;
         routeDTO.name = NAME;
         routeDTO.distance = DISTANCE;
+        routeDTO.description = DESCRIPTION;
         return routeDTO;
     }
 
@@ -69,6 +72,7 @@ public class RoutesTest {
         route.setRouteId(ID);
         route.setDistance(DISTANCE);
         route.setName(NAME);
+        route.setDescription(DESCRIPTION);
         List<Route> list = new ArrayList<>();
         list.add(route);
         return list;

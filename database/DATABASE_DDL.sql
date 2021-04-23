@@ -76,6 +76,7 @@ create table ROUTE
 (
     ROUTEID              int not null auto_increment,
     NAME                 VARCHAR(150) not null,
+    DESCRIPTION          VARCHAR(150) NOT NULL,
     DISTANCE             int not null,
     primary key (ROUTEID)
 );

@@ -7,5 +7,6 @@ public class RouteDTO {
     public String name;
     public int routeId;
     public int distance;
+    public String description;
     public List<SegmentDTO> segments = new ArrayList<>();
 }

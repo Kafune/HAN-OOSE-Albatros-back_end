@@ -25,6 +25,7 @@ public class DTOconverter {
         routeDTO.routeId = route.getRouteId();
         routeDTO.distance = route.getDistance();
         routeDTO.name = route.getName();
+        routeDTO.description = route.getDescription();
         return routeDTO;
     }
 
@@ -75,6 +76,7 @@ public class DTOconverter {
         route.setName(routeDTO.name);
         route.setRouteId(routeDTO.routeId);
         route.setDistance(routeDTO.distance);
+        route.setDescription(routeDTO.description);
         List<Segment> segments = new ArrayList<>();
         for(SegmentDTO segmentDTO : routeDTO.segments){
             segments.add(SegmentDTOToDomainSegment(segmentDTO));
