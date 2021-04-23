@@ -83,10 +83,10 @@ public class SegmentDAO implements ISegmentDAO {
                 "s.SEQUENCENR, c2.ALTITUDE AS STARTALTITUDE, c2.LONGITUDE AS STARTLONGITUDE, " +
                 "c2.LATITUDE AS STARTLATITUDE, c.ALTITUDE AS ENDALTITUDE, c.LONGITUDE AS ENDLONGITUDE, " +
                 "c.LATITUDE AS ENDLATITUDE, p.DESCRIPTION, p.NAME " +
-                "FROM segmentinroute s INNER JOIN segment s2 on s.SEGMENTID = s2.SEGMENTID\n" +
-                "INNER JOIN coordinates c on s2.ENDCOORD = c.COORDINATESID " +
-                "INNER JOIN coordinates c2 on s2.STARTCOORD = c2.COORDINATESID " +
-                "LEFT JOIN poi p on s2.SEGMENTID = p.SEGMENTID " +
+                "FROM SEGMENTINROUTE s INNER JOIN SEGMENT s2 on s.SEGMENTID = s2.SEGMENTID\n" +
+                "INNER JOIN COORDINATES c on s2.ENDCOORD = c.COORDINATESID " +
+                "INNER JOIN COORDINATES c2 on s2.STARTCOORD = c2.COORDINATESID " +
+                "LEFT JOIN POI p on s2.SEGMENTID = p.SEGMENTID " +
                 "WHERE s.ROUTEID = ?;";
     }
 

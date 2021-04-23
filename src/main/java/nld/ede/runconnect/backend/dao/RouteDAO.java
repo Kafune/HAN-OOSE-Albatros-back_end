@@ -58,7 +58,7 @@ public class RouteDAO implements IRouteDAO {
         /*
          * insert a route:
          */
-        String sql = "INSERT INTO route (NAME, DESCRIPTION,  DISTANCE) Values (?, ?, ?)";
+        String sql = "INSERT INTO ROUTE (NAME, DESCRIPTION,  DISTANCE) Values (?, ?, ?)";
         String name = route.getName();
         int distance = route.getDistance();
         String description = route.getDescription();
