@@ -17,8 +17,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class SegmentsTest {
@@ -66,27 +65,32 @@ public class SegmentsTest {
 
         try {
             when(segmentDAOMock.getSegmentsOfRoute(ROUTE_ID)).thenReturn(list);
-            sut.setSegmentDAO(segmentDAOMock);
-
-            Response response = sut.findSegmentsOfRoute(ROUTE_ID);
-            SegmentDTO expectedSegmentDTO = getSegmentDTO();
-            List<SegmentDTO> actualSegmentDTO = (List<SegmentDTO>) response.getEntity();
-            
-            assertEquals(expectedSegmentDTO.id, actualSegmentDTO.get(0).id);
-
-            assertEquals(expectedSegmentDTO.endCoordinate.altitude, actualSegmentDTO.get(0).endCoordinate.altitude);
-            assertEquals(expectedSegmentDTO.endCoordinate.latitude, actualSegmentDTO.get(0).endCoordinate.latitude);
-            assertEquals(expectedSegmentDTO.endCoordinate.longitude, actualSegmentDTO.get(0).endCoordinate.longitude);
-
-            assertEquals(expectedSegmentDTO.startCoordinate.longitude, actualSegmentDTO.get(0).startCoordinate.longitude);
-            assertEquals(expectedSegmentDTO.startCoordinate.latitude, actualSegmentDTO.get(0).startCoordinate.latitude);
-            assertEquals(expectedSegmentDTO.startCoordinate.altitude, actualSegmentDTO.get(0).startCoordinate.altitude);
-
-            assertEquals(expectedSegmentDTO.poi.name, actualSegmentDTO.get(0).poi.name);
-            assertEquals(expectedSegmentDTO.poi.description, actualSegmentDTO.get(0).poi.description);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            fail();
         }
+        sut.setSegmentDAO(segmentDAOMock);
+        Response response = null;
+        try {
+            response = sut.findSegmentsOfRoute(ROUTE_ID);
+        } catch (SQLException e) {
+            fail();
+        }
+        SegmentDTO expectedSegmentDTO = getSegmentDTO();
+        assertNotNull(response);
+        List<SegmentDTO> actualSegmentDTO = (List<SegmentDTO>) response.getEntity();
+
+        assertEquals(expectedSegmentDTO.id, actualSegmentDTO.get(0).id);
+
+        assertEquals(expectedSegmentDTO.endCoordinate.altitude, actualSegmentDTO.get(0).endCoordinate.altitude);
+        assertEquals(expectedSegmentDTO.endCoordinate.latitude, actualSegmentDTO.get(0).endCoordinate.latitude);
+        assertEquals(expectedSegmentDTO.endCoordinate.longitude, actualSegmentDTO.get(0).endCoordinate.longitude);
+
+        assertEquals(expectedSegmentDTO.startCoordinate.longitude, actualSegmentDTO.get(0).startCoordinate.longitude);
+        assertEquals(expectedSegmentDTO.startCoordinate.latitude, actualSegmentDTO.get(0).startCoordinate.latitude);
+        assertEquals(expectedSegmentDTO.startCoordinate.altitude, actualSegmentDTO.get(0).startCoordinate.altitude);
+
+        assertEquals(expectedSegmentDTO.poi.name, actualSegmentDTO.get(0).poi.name);
+        assertEquals(expectedSegmentDTO.poi.description, actualSegmentDTO.get(0).poi.description);
 
 
     }

@@ -54,8 +54,7 @@ public class SegmentDAOTest {
             assertEquals(0, segment.size());
 
         } catch (Exception e) {
-            e.printStackTrace();
-            fail();
+            fail(e);
         }
     }
     @Test
@@ -102,7 +101,7 @@ public class SegmentDAOTest {
             assertEquals(description, actualSegment.getPOI().getDescription());
 
         } catch (SQLException s) {
-            fail();
+            fail(s);
         }
     }
     private String getSelectStatement() {

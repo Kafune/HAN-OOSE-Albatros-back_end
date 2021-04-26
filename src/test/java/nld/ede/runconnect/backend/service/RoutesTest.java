@@ -36,7 +36,7 @@ public class RoutesTest {
         try {
             when(routeDAOMock.getAllRoutes()).thenReturn(null);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            fail(throwables);
         }
         routes.setRoutesDAO(routeDAOMock);
 
@@ -44,7 +44,7 @@ public class RoutesTest {
         try {
             response = routes.findAllRoutes();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            fail(throwables);
         }
 
         assertNotNull(response);
@@ -58,7 +58,7 @@ public class RoutesTest {
         try {
             when(routeDAOMock.getAllRoutes()).thenReturn(list);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            fail(throwables);
         }
         routes.setRoutesDAO(routeDAOMock);
 
@@ -66,7 +66,7 @@ public class RoutesTest {
         try {
             response = routes.findAllRoutes();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            fail(throwables);
         }
         RouteDTO expectedRouteDTO = getRouteDTO();
         assertNotNull(response);
