@@ -33,10 +33,21 @@ public class RoutesTest {
     public void findAllRoutesCallsMethodeInDAOTest() {
         int expectedStatus = 404;
         IRouteDAO routeDAOMock = mock(RouteDAO.class);
-        when(routeDAOMock.getAllRoutes()).thenReturn(null);
+        try {
+            when(routeDAOMock.getAllRoutes()).thenReturn(null);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
         routes.setRoutesDAO(routeDAOMock);
 
-        Response response = routes.findAllRoutes();
+        Response response = null;
+        try {
+            response = routes.findAllRoutes();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        assertNotNull(response);
         assertEquals(expectedStatus, response.getStatus());
     }
     @Test
@@ -44,11 +55,21 @@ public class RoutesTest {
         List<Route> list = getRouteList();
 
         IRouteDAO routeDAOMock = mock(RouteDAO.class);
-        when(routeDAOMock.getAllRoutes()).thenReturn(list);
+        try {
+            when(routeDAOMock.getAllRoutes()).thenReturn(list);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
         routes.setRoutesDAO(routeDAOMock);
 
-        Response response = routes.findAllRoutes();
+        Response response = null;
+        try {
+            response = routes.findAllRoutes();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
         RouteDTO expectedRouteDTO = getRouteDTO();
+        assertNotNull(response);
         List<RouteDTO> actualRouteDTO = (List<RouteDTO>) response.getEntity();
 
         assertEquals(expectedRouteDTO.routeId, actualRouteDTO.get(0).routeId);

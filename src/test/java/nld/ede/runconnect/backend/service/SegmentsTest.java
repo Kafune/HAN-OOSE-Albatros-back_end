@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import javax.ws.rs.core.Response;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,44 +41,54 @@ public class SegmentsTest {
     @BeforeEach
     public void setSut() {
         sut = new Segments();
-         segmentDAOMock = mock(SegmentDAO.class);
+        segmentDAOMock = mock(SegmentDAO.class);
     }
 
     @Test
     public void findSegmentsOfRouteCallsMethodeInDAO() {
+        try {
+            when(segmentDAOMock.getSegmentsOfRoute(ROUTE_ID)).thenReturn(null);
+            sut.setSegmentDAO(segmentDAOMock);
 
+            Response response = sut.findSegmentsOfRoute(ROUTE_ID);
+            verify(segmentDAOMock).getSegmentsOfRoute(ROUTE_ID);
+            assertEquals(404, response.getStatus());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
 
-        when(segmentDAOMock.getSegmentsOfRoute(ROUTE_ID)).thenReturn(null);
-        sut.setSegmentDAO(segmentDAOMock);
-
-        Response response = sut.findSegmentsOfRoute(ROUTE_ID);
-        verify(segmentDAOMock).getSegmentsOfRoute(ROUTE_ID);
-        assertEquals(404, response.getStatus());
     }
+
     @Test
     public void findSegmentsOfRouteReturnsCorrectObject() {
 
         List<Segment> list = getSegmentList();
 
-        when(segmentDAOMock.getSegmentsOfRoute(ROUTE_ID)).thenReturn(list);
-        sut.setSegmentDAO(segmentDAOMock);
+        try {
+            when(segmentDAOMock.getSegmentsOfRoute(ROUTE_ID)).thenReturn(list);
+            sut.setSegmentDAO(segmentDAOMock);
 
-        Response response = sut.findSegmentsOfRoute(ROUTE_ID);
-        SegmentDTO expectedSegmentDTO = getSegmentDTO();
-        List<SegmentDTO> actualSegmentDTO = (List<SegmentDTO>) response.getEntity();
+            Response response = sut.findSegmentsOfRoute(ROUTE_ID);
+            SegmentDTO expectedSegmentDTO = getSegmentDTO();
+            List<SegmentDTO> actualSegmentDTO = (List<SegmentDTO>) response.getEntity();
+            
+            assertEquals(expectedSegmentDTO.id, actualSegmentDTO.get(0).id);
 
-        assertEquals(expectedSegmentDTO.id, actualSegmentDTO.get(0).id);
+            assertEquals(expectedSegmentDTO.endCoordinate.altitude, actualSegmentDTO.get(0).endCoordinate.altitude);
+            assertEquals(expectedSegmentDTO.endCoordinate.latitude, actualSegmentDTO.get(0).endCoordinate.latitude);
+            assertEquals(expectedSegmentDTO.endCoordinate.longitude, actualSegmentDTO.get(0).endCoordinate.longitude);
 
-        assertEquals(expectedSegmentDTO.endCoordinate.altitude, actualSegmentDTO.get(0).endCoordinate.altitude);
-        assertEquals(expectedSegmentDTO.endCoordinate.latitude, actualSegmentDTO.get(0).endCoordinate.latitude);
-        assertEquals(expectedSegmentDTO.endCoordinate.longitude, actualSegmentDTO.get(0).endCoordinate.longitude);
+            assertEquals(expectedSegmentDTO.startCoordinate.longitude, actualSegmentDTO.get(0).startCoordinate.longitude);
+            assertEquals(expectedSegmentDTO.startCoordinate.latitude, actualSegmentDTO.get(0).startCoordinate.latitude);
+            assertEquals(expectedSegmentDTO.startCoordinate.altitude, actualSegmentDTO.get(0).startCoordinate.altitude);
 
-        assertEquals(expectedSegmentDTO.startCoordinate.longitude, actualSegmentDTO.get(0).startCoordinate.longitude);
-        assertEquals(expectedSegmentDTO.startCoordinate.latitude, actualSegmentDTO.get(0).startCoordinate.latitude);
-        assertEquals(expectedSegmentDTO.startCoordinate.altitude, actualSegmentDTO.get(0).startCoordinate.altitude);
+            assertEquals(expectedSegmentDTO.poi.name, actualSegmentDTO.get(0).poi.name);
+            assertEquals(expectedSegmentDTO.poi.description, actualSegmentDTO.get(0).poi.description);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
 
-        assertEquals(expectedSegmentDTO.poi.name, actualSegmentDTO.get(0).poi.name);
-        assertEquals(expectedSegmentDTO.poi.description, actualSegmentDTO.get(0).poi.description);
+
     }
 
     private SegmentDTO getSegmentDTO() {
@@ -86,7 +97,7 @@ public class SegmentsTest {
         poiDTO.description = POI_DESCRIPTION;
         poiDTO.name = POI_NAME;
         segmentDTO.id = SEGMENT_ID;
-        segmentDTO.startCoordinate =  getCoordinateDTO(START_ALT, START_LAT, START_LON);
+        segmentDTO.startCoordinate = getCoordinateDTO(START_ALT, START_LAT, START_LON);
         segmentDTO.endCoordinate = getCoordinateDTO(END_ALT, END_LAT, END_LON);
         segmentDTO.poi = poiDTO;
         return segmentDTO;

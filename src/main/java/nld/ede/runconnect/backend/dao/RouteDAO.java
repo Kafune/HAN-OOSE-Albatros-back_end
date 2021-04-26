@@ -18,7 +18,7 @@ public class RouteDAO implements IRouteDAO {
     private DataSource dataSource;
 
     @Override
-    public List<Route> getAllRoutes() {
+    public List<Route> getAllRoutes() throws SQLException {
         String sql = "SELECT * FROM ROUTE";
         try (Connection connection = dataSource.getConnection()) {
 
@@ -32,10 +32,8 @@ public class RouteDAO implements IRouteDAO {
             return routeList;
 
         } catch (SQLException exception) {
-            exception.printStackTrace();
+            throw exception;
         }
-
-        return null;
 
     }
 

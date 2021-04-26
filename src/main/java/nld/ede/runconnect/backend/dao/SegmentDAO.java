@@ -19,7 +19,7 @@ public class SegmentDAO implements ISegmentDAO {
     private DataSource dataSource;
 
     @Override
-    public List<Segment> getSegmentsOfRoute(int id) {
+    public List<Segment> getSegmentsOfRoute(int id) throws SQLException {
         String sql = getSelectStatement();
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -34,10 +34,8 @@ public class SegmentDAO implements ISegmentDAO {
             return segmentList;
 
         } catch (SQLException exception) {
-            exception.printStackTrace();
+            throw exception;
         }
-
-        return null;
     }
 
     public Segment extractSegment(ResultSet resultSet) throws SQLException {
