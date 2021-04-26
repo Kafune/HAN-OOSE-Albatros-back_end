@@ -14,6 +14,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class Segments {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response findSegmentsOfRoute(@PathParam("id") int id) {
+    public Response findSegmentsOfRoute(@PathParam("id") int id) throws SQLException {
         List<Segment> segmentListInDatabase = segmentDAO.getSegmentsOfRoute(id);
 
         if (segmentListInDatabase == null) {

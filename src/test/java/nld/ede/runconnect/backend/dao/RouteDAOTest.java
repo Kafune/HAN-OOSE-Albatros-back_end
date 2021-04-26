@@ -56,7 +56,7 @@ public class RouteDAOTest {
             assertEquals(0, route.size());
 
         } catch (Exception e) {
-            fail();
+            fail(e);
         }
     }
 
@@ -100,7 +100,7 @@ public class RouteDAOTest {
             assertEquals(name, actualRoute.getName());
             assertEquals(distance, actualRoute.getDistance());
         } catch (SQLException e) {
-            fail();
+            fail(e);
         }
     }
 

@@ -1,6 +1,5 @@
 package nld.ede.runconnect.backend.dao;
 
-import nld.ede.runconnect.backend.domain.Route;
 import nld.ede.runconnect.backend.domain.Segment;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,7 +25,7 @@ public class SegmentDAOTest {
     }
 
     @Test
-    public void getAllRoutesTest() {
+    public void getSegmentsOfRouteTest() {
         int id = 1;
         String sql = getSelectStatement();
         try {
@@ -55,8 +54,7 @@ public class SegmentDAOTest {
             assertEquals(0, segment.size());
 
         } catch (Exception e) {
-            e.printStackTrace();
-            fail();
+            fail(e);
         }
     }
     @Test
@@ -103,7 +101,7 @@ public class SegmentDAOTest {
             assertEquals(description, actualSegment.getPOI().getDescription());
 
         } catch (SQLException s) {
-            fail();
+            fail(s);
         }
     }
     private String getSelectStatement() {
@@ -111,10 +109,10 @@ public class SegmentDAOTest {
                 "s.SEQUENCENR, c2.ALTITUDE AS STARTALTITUDE, c2.LONGITUDE AS STARTLONGITUDE, " +
                 "c2.LATITUDE AS STARTLATITUDE, c.ALTITUDE AS ENDALTITUDE, c.LONGITUDE AS ENDLONGITUDE, " +
                 "c.LATITUDE AS ENDLATITUDE, p.DESCRIPTION, p.NAME " +
-                "FROM segmentinroute s INNER JOIN segment s2 on s.SEGMENTID = s2.SEGMENTID\n" +
-                "INNER JOIN coordinates c on s2.ENDCOORD = c.COORDINATESID " +
-                "INNER JOIN coordinates c2 on s2.STARTCOORD = c2.COORDINATESID " +
-                "LEFT JOIN poi p on s2.SEGMENTID = p.SEGMENTID " +
+                "FROM SEGMENTINROUTE s INNER JOIN SEGMENT s2 on s.SEGMENTID = s2.SEGMENTID\n" +
+                "INNER JOIN COORDINATES c on s2.ENDCOORD = c.COORDINATESID " +
+                "INNER JOIN COORDINATES c2 on s2.STARTCOORD = c2.COORDINATESID " +
+                "LEFT JOIN POI p on s2.SEGMENTID = p.SEGMENTID " +
                 "WHERE s.ROUTEID = ?;";
     }
 

@@ -13,11 +13,11 @@ import org.junit.jupiter.api.Test;
 
 import javax.ws.rs.core.Response;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class SegmentsTest {
@@ -40,30 +40,43 @@ public class SegmentsTest {
     @BeforeEach
     public void setSut() {
         sut = new Segments();
-         segmentDAOMock = mock(SegmentDAO.class);
+        segmentDAOMock = mock(SegmentDAO.class);
     }
 
     @Test
     public void findSegmentsOfRouteCallsMethodeInDAO() {
+        try {
+            when(segmentDAOMock.getSegmentsOfRoute(ROUTE_ID)).thenReturn(null);
+            sut.setSegmentDAO(segmentDAOMock);
 
+            Response response = sut.findSegmentsOfRoute(ROUTE_ID);
+            verify(segmentDAOMock).getSegmentsOfRoute(ROUTE_ID);
+            assertEquals(404, response.getStatus());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
 
-        when(segmentDAOMock.getSegmentsOfRoute(ROUTE_ID)).thenReturn(null);
-        sut.setSegmentDAO(segmentDAOMock);
-
-        Response response = sut.findSegmentsOfRoute(ROUTE_ID);
-        verify(segmentDAOMock).getSegmentsOfRoute(ROUTE_ID);
-        assertEquals(404, response.getStatus());
     }
+
     @Test
     public void findSegmentsOfRouteReturnsCorrectObject() {
 
         List<Segment> list = getSegmentList();
 
-        when(segmentDAOMock.getSegmentsOfRoute(ROUTE_ID)).thenReturn(list);
+        try {
+            when(segmentDAOMock.getSegmentsOfRoute(ROUTE_ID)).thenReturn(list);
+        } catch (SQLException e) {
+            fail();
+        }
         sut.setSegmentDAO(segmentDAOMock);
-
-        Response response = sut.findSegmentsOfRoute(ROUTE_ID);
+        Response response = null;
+        try {
+            response = sut.findSegmentsOfRoute(ROUTE_ID);
+        } catch (SQLException e) {
+            fail();
+        }
         SegmentDTO expectedSegmentDTO = getSegmentDTO();
+        assertNotNull(response);
         List<SegmentDTO> actualSegmentDTO = (List<SegmentDTO>) response.getEntity();
 
         assertEquals(expectedSegmentDTO.id, actualSegmentDTO.get(0).id);
@@ -78,6 +91,8 @@ public class SegmentsTest {
 
         assertEquals(expectedSegmentDTO.poi.name, actualSegmentDTO.get(0).poi.name);
         assertEquals(expectedSegmentDTO.poi.description, actualSegmentDTO.get(0).poi.description);
+
+
     }
 
     private SegmentDTO getSegmentDTO() {
@@ -86,7 +101,7 @@ public class SegmentsTest {
         poiDTO.description = POI_DESCRIPTION;
         poiDTO.name = POI_NAME;
         segmentDTO.id = SEGMENT_ID;
-        segmentDTO.startCoordinate =  getCoordinateDTO(START_ALT, START_LAT, START_LON);
+        segmentDTO.startCoordinate = getCoordinateDTO(START_ALT, START_LAT, START_LON);
         segmentDTO.endCoordinate = getCoordinateDTO(END_ALT, END_LAT, END_LON);
         segmentDTO.poi = poiDTO;
         return segmentDTO;

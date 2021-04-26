@@ -37,7 +37,8 @@ public class Routes {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response findAllRoutes() {
+    public Response findAllRoutes() throws SQLException {
+
         List<Route> routesInDatabase = routesDAO.getAllRoutes();
 
         if (routesInDatabase == null) {
