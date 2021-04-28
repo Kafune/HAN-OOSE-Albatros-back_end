@@ -28,18 +28,18 @@
     <!--
     <Manager pathname="" />
     -->
-	
-	<Resource
-      name="jdbc/starwars"
-      auth="Container"
-      type="javax.sql.DataSource"
-      maxActive="100"
-      maxIdle="30"
-      maxWait="10000"
-      driverClassName="com.mysql.cj.jdbc.Driver"
-      url="jdbc:mysql://localhost:3306/starwars"
-      username="root"
-      password=""
+
+    <Resource
+            name="jdbc/Run_Connect"
+            auth="Container"
+            type="javax.sql.DataSource"
+            maxActive="100"
+            maxIdle="30"
+            maxWait="10000"
+            driverClassName="com.mysql.cj.jdbc.Driver"
+            url="jdbc:mysql://localhost:3306/Run_connect"
+            username="root"
+            password=""
     />
 	
 </Context>

@@ -7,7 +7,7 @@ Beschrijving
 
 ## table of contents
 1. [Authors](#authors)
-2. [Software Guidebook](#software-guidebook)
+2. [setup](#setup)
 3. [API](#API)<br>
     3.1 [Methods used](#Methods-used)<br>
     3.2 [Response codes](#Response-codes)<br>
@@ -19,9 +19,13 @@ Beschrijving
 ## Authors
 * **R. Boudewijn** - [nxttx](https://github.com/nxttx)
 * **M. Yasin**
+* **K. Li** - [Kafune](https://github.com/Kafune)
 
-## Software guidebook
-[Click Here](/software-guidebook/readme.md)
+## setup
+To get the database working run the following scripts:
+1. DATABASE_DDL
+2. DATABASE_DML
+3. DATABASE_SP
 
 ## API
 
@@ -49,30 +53,159 @@ The client will expect the following respond codes to be used
 ### Endpoints
 The following endpoints are implemented
 
-#### Login
+#### helloworld
 
 ```
-url:    /login 
-method: POST
-```
-
-It will perform a request with an object in the body of the form
-
-```
-{
-  "user":     "meron", 
-  "password": "MySuperSecretPassword12341"
-}
+url:    /hello
+method: get
 ```
 
 It will expect a response containing an object of the form
 
 ```
 {
-  "token":  "1234-1234-1234", 
-  "user":   "Meron Brouwer"
+  "text": "hello world!",
+  "time": "1619082760084"
 }
 ```
 
-This token is then stored in LocalStorage and used for each following
-request.
+#### Routes
+
+Adds a route.
+```
+url:    /routes
+method: POST
+```
+
+
+It will expect a body containing an object of the form
+
+```
+{
+  "name": "BosWandeling",
+  "routeId": 1,
+  "distance": 5,
+  "segments": [
+    {
+      "id": 5,
+      "startCoordinate": {
+        "longitude": 12,
+        "latitude": 45,
+        "altitude": 0
+      },
+      "endCoordinate": {
+        "longitude": 13,
+        "latitude": 45.1,
+        "altitude": -2
+      },
+      "poi": {
+        "id": 5,
+        "name": "Kerk",
+        "description": "Een mooie middeleeuwse kerk."
+      }
+    },
+    {
+      "id": 6,
+      "startCoordinate": {
+        "longitude": 13,
+        "latitude": 45.1,
+        "altitude": -2
+      },
+      "endCoordinate": {
+        "longitude": 14,
+        "latitude": 44,
+        "altitude": 3
+      }
+    }
+  ]
+}
+```
+
+Get all routes.
+```
+url:    /routes
+method: GET
+```
+
+It will perform a body containing a complete list of routes
+
+```
+[
+    {
+        "description": "Grote kerk",
+        "distance": 10,
+        "name": "KerkRondje",
+        "routeId": 1,
+        "segments": []
+    },
+    {
+        "description": "Restaurant",
+        "distance": 7,
+        "name": "Rival Foods",
+        "routeId": 2,
+        "segments": []
+    }
+]
+```
+Get all segments that belong to a route.
+```
+url:    /segments/:id
+method: GET
+```
+
+It will perform a body containing a complete list of segments that belong to a route
+
+```
+[
+    {
+        "endCoordinate": {
+            "altitude": 27.0,
+            "latitude": 52.030033,
+            "longitude": 5.675282
+        },
+        "id": 1,
+        "poi": {
+            "description": "Kerk",
+            "id": 0,
+            "name": "Connectkerk"
+        },
+        "startCoordinate": {
+            "altitude": 28.0,
+            "latitude": 52.030944,
+            "longitude": 5.674306
+        }
+    },
+    {
+        "endCoordinate": {
+            "altitude": 26.0,
+            "latitude": 52.030257,
+            "longitude": 5.679166
+        },
+        "id": 2,
+        "poi": {
+            "id": 0
+        },
+        "startCoordinate": {
+            "altitude": 27.0,
+            "latitude": 52.030033,
+            "longitude": 5.675282
+        }
+    },
+    {
+        "endCoordinate": {
+            "altitude": 27.0,
+            "latitude": 52.034237,
+            "longitude": 5.679981
+        },
+        "id": 3,
+        "poi": {
+            "id": 0
+        },
+        "startCoordinate": {
+            "altitude": 26.0,
+            "latitude": 52.030257,
+            "longitude": 5.679166
+        }
+    }
+]
+```
