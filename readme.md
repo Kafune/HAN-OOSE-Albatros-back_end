@@ -209,3 +209,24 @@ It will perform a body containing a complete list of segments that belong to a r
     }
 ]
 ```
+Adds a route.
+```
+url:    /registration
+method: POST
+```
+
+
+It will expect a body containing an object of the form
+
+```
+{ 
+  "userId": 3,
+  "firstname": "User test",
+  "lastname": " Lastname test",
+  "emailAddress": "M@",
+  "username": "Username om in te loggen", 
+  "birthdate": "2021-01-25",
+}
+
+Note: birthdate moet in de format: yyyy-mm-dd.
+```
