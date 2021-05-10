@@ -9,24 +9,50 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class RegistrationDAO implements IRegistrationDAO{
+public class RegistrationDAO implements IRegistrationDAO {
 
     @Resource(name = "jdbc/Run_Connect")
     private DataSource dataSource;
 
+    @Override
+    public User findUser(String googleId) throws SQLException {
+        String sql = "SELECT * FROM User WHERE GOOGLE_ID_HASH = ?";
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, googleId);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                User user = new User();
+                user.setUserId(rs.getInt(1));
+                user.setFirstname(rs.getString(2));
+                user.setLastname(rs.getString(3));
+                user.setEmailAddress(rs.getString(4));
+                user.setUsername(rs.getString(5));
+                user.setTotalScore(rs.getInt(6));
+                user.setGoogleId(rs.getString(7));
+                user.setAfbeeldingUrl(rs.getString(8));
+                return user;
+            }
+        } catch (SQLException exception) {
+            throw exception;
+        }
+        return null;
+    }
 
     @Override
     public boolean registerUser(User user) throws SQLException {
-        if (!isExistingUser(user.getUserId())) {
-            String sql = "insert into User values (?, ?, ?, ?, ?, ?)";
+        if (!isExistingUser(user.getGoogleId())) {
+            String sql = "insert into User values (?, ?, ?, ?, ?, ?, ?, ?)";
             try (Connection connection = dataSource.getConnection()) {
                 PreparedStatement statement = connection.prepareStatement(sql);
-                statement.setString(1, user.getUserId());
+                statement.setInt(1, user.getUserId());
                 statement.setString(2, user.getFirstname());
                 statement.setString(3, user.getLastname());
                 statement.setString(4, user.getEmailAddress());
                 statement.setString(5, user.getUsername());
                 statement.setInt(6, user.getTotalScore());
+                statement.setString(7, user.getGoogleId());
+                statement.setString(8, user.getAfbeeldingUrl());
                 statement.executeUpdate();
                 return true;
             } catch (SQLException exception) {
@@ -36,18 +62,20 @@ public class RegistrationDAO implements IRegistrationDAO{
         return false;
     }
 
-    public boolean isExistingUser(String userId) throws SQLException {
-        String sql = "SELECT count(*) AS rowcount FROM User where userId = ?";
+
+
+    public boolean isExistingUser(String googleId) throws SQLException {
+        String sql = "SELECT count(*) AS rowcount FROM User where GOOGLE_ID_HASH = ?";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, userId);
+            statement.setString(1, googleId);
             ResultSet rs = statement.executeQuery();
             rs.next();
             if (rs.getInt(1) == 0) {
                 return false;
             }
         } catch (SQLException exception) {
-                throw exception;
+            throw exception;
         }
         return true;
     }

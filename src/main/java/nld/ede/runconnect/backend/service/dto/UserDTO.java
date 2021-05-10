@@ -1,8 +1,6 @@
-package nld.ede.runconnect.backend.domain;
+package nld.ede.runconnect.backend.service.dto;
 
-
-
-public class User {
+public class UserDTO {
 
     private int userId;
     private String firstname;

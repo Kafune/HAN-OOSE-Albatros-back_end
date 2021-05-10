@@ -2,10 +2,7 @@ package nld.ede.runconnect.backend.service.dto;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import nld.ede.runconnect.backend.domain.Coordinate;
-import nld.ede.runconnect.backend.domain.POI;
-import nld.ede.runconnect.backend.domain.Route;
-import nld.ede.runconnect.backend.domain.Segment;
+import nld.ede.runconnect.backend.domain.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -113,4 +110,17 @@ public class DTOconverter {
     }
 
 
+    public static UserDTO domainToUserDTO(User userInDatabase) {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUserId(userInDatabase.getUserId());
+        userDTO.setFirstname(userInDatabase.getFirstname());
+        userDTO.setLastname(userInDatabase.getLastname());
+        userDTO.setEmailAddress(userInDatabase.getEmailAddress());
+        userDTO.setUsername(userInDatabase.getUsername());
+        userDTO.setTotalScore(userInDatabase.getTotalScore());
+        userDTO.setGoogleId(userInDatabase.getGoogleId());
+        userDTO.setAfbeeldingUrl(userInDatabase.getAfbeeldingUrl());
+
+        return userDTO;
+    }
 }

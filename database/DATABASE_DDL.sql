@@ -1,7 +1,9 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     10-5-2021 15:32:44                           */
+/* Created on:     10-5-2021 16:57:21                           */
 /*==============================================================*/
+
+
 drop table if exists IMAGE;
 
 drop table if exists ACTIVITY;
@@ -18,7 +20,6 @@ drop table if exists SEGMENT;
 
 drop table if exists COORDINATES;
 
-
 /*==============================================================*/
 /* Table: ACTIVITY                                              */
 /*==============================================================*/
@@ -26,13 +27,14 @@ create table ACTIVITY
 (
     ACTIVITYID           int not null auto_increment,
     ROUTEID              int not null,
-    USERID               char(255) not null,
+    USERID               int not null,
     POINT                int not null,
     DURATION             bigint,
     TEMPO                int,
     DISTANCE             int,
     primary key (ACTIVITYID)
 );
+
 
 /*==============================================================*/
 /* Table: COORDINATES                                           */
@@ -43,8 +45,8 @@ create table COORDINATES
     LATITUDE             double not null,
     LONGITUDE            double not null,
     ALTITUDE             int not null,
-    LOCATION             point,
-    primary key (COORDINATESID)
+    primary key (COORDINATESID),
+    unique key AK_KEY_2 (LATITUDE, LONGITUDE, ALTITUDE)
 );
 
 /*==============================================================*/
@@ -52,12 +54,12 @@ create table COORDINATES
 /*==============================================================*/
 create table IMAGE
 (
-    USERID               char(255) not null,
-    ACTIVITYID           int,
+    USERID               int not null,
+    ACTIVITYID           int not null,
     FILENAME             varchar(120) not null,
-    DESCRIPTION          varchar(100)
+    DESCRIPTION          varchar(100),
+    primary key (USERID, ACTIVITYID, FILENAME)
 );
-
 
 /*==============================================================*/
 /* Table: POI                                                   */
@@ -81,7 +83,6 @@ create table ROUTE
     primary key (ROUTEID)
 );
 
-
 /*==============================================================*/
 /* Table: SEGMENT                                               */
 /*==============================================================*/
@@ -92,7 +93,6 @@ create table SEGMENT
     ENDCOORD             int not null,
     primary key (SEGMENTID)
 );
-
 
 /*==============================================================*/
 /* Table: SEGMENTINROUTE                                        */
@@ -105,23 +105,24 @@ create table SEGMENTINROUTE
     primary key (ROUTEID, SEGMENTID)
 );
 
-
 /*==============================================================*/
 /* Table: USER                                                  */
 /*==============================================================*/
 create table `USER`
 (
-    USERID               char(255) not null,
+    USERID               int not null auto_increment,
     FIRSTNAME            varchar(60) not null,
     LASTNAME             varchar(60) not null,
-    E_MAILADRES          varchar(100) not null,
-    USERNAME             varchar(20) not null,
+    E_MAILADRES          varchar(254) not null,
+    USERNAME             varchar(150) not null,
     TOTALSCORE           int not null default 0,
+    GOOGLE_ID_HASH         varchar(65535) not null,
+    PHOTOURL             varchar(2083),
     primary key (USERID),
     unique key AK_KEY_2 (E_MAILADRES),
-    unique key AK_KEY_3 (USERNAME)
+    unique key AK_KEY_3 (USERNAME),
+    unique key AK_KEY_4 (GOOGLE_ID_HASH)
 );
-
 
 alter table ACTIVITY add constraint FK_REFERENCE_1 foreign key (USERID)
     references `USER` (USERID) on delete cascade on update cascade;

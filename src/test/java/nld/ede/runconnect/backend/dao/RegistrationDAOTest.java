@@ -25,13 +25,13 @@ public class RegistrationDAOTest {
 
     @Test
     public void registerUserReturnsTrueIfUserAddedTest() {
-        String userId = "3";
+        String googleId = "3";
         User user = new User();
-        user.setUserId(userId);
+        user.setGoogleId(googleId);
         String sql = "insert into User values (?, ?, ?, ?, ?, ?)";
         try {
             RegistrationDAO sutSpy = spy(sut);
-            doReturn(false).when(sutSpy).isExistingUser(userId);
+            doReturn(false).when(sutSpy).isExistingUser(googleId);
 
             DataSource dataSource = mock(DataSource.class);
             Connection connection = mock(Connection.class);
@@ -53,12 +53,12 @@ public class RegistrationDAOTest {
     }
     @Test
     public void registerUserReturnsFalseIfUserExistsTest() {
-        String userId = "3";
+        String googleId = "3";
         User user = new User();
-        user.setUserId(userId);
+        user.setGoogleId(googleId);
         try {
             RegistrationDAO sutSpy = spy(sut);
-            doReturn(true).when(sutSpy).isExistingUser(userId);
+            doReturn(true).when(sutSpy).isExistingUser(googleId);
 
             boolean isRegistered = sutSpy.registerUser(user);
 
@@ -72,7 +72,7 @@ public class RegistrationDAOTest {
     public void isExistingUserReturnsTrueIfUserFoundTest() {
         String userId = "3";
         User user = new User();
-        user.setUserId(userId);
+        user.setGoogleId(userId);
         String sql = "SELECT count(*) AS rowcount FROM User where userId = ?";
         try {
 
@@ -102,7 +102,7 @@ public class RegistrationDAOTest {
     public void isExistingUserReturnsFalseIfUserNotFoundTest() {
         String userId = "3";
         User user = new User();
-        user.setUserId(userId);
+        user.setGoogleId(userId);
         String sql = "SELECT count(*) AS rowcount FROM User where userId = ?";
         try {
 
