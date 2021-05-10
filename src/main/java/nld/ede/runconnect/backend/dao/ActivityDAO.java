@@ -3,6 +3,7 @@ package nld.ede.runconnect.backend.dao;
 import nld.ede.runconnect.backend.domain.Activity;
 
 import javax.annotation.Resource;
+import javax.inject.Inject;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -50,6 +51,7 @@ public class ActivityDAO implements IActivityDAO {
         }
     }
 
+    @Inject
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
     }

@@ -34,7 +34,6 @@ public class ActivitiesTest {
                 "}";
 
         //mock
-        var activity = new Activity();
         ActivityDAO activityDAO = mock(ActivityDAO.class);
 
         activities.setActivityDAO(activityDAO);
