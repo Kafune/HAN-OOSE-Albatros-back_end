@@ -16,6 +16,7 @@ import static org.mockito.Mockito.mock;
 
 public class RegistrationDAOTest {
 
+    private static final String GOOGLE_ID = "as22121as";
     private RegistrationDAO sut;
 
     @BeforeEach
@@ -25,13 +26,12 @@ public class RegistrationDAOTest {
 
     @Test
     public void registerUserReturnsTrueIfUserAddedTest() {
-        String googleId = "3";
         User user = new User();
-        user.setGoogleId(googleId);
-        String sql = "insert into User values (?, ?, ?, ?, ?, ?)";
+        user.setGoogleId(GOOGLE_ID);
+        String sql = "insert into User values (?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             RegistrationDAO sutSpy = spy(sut);
-            doReturn(false).when(sutSpy).isExistingUser(googleId);
+            doReturn(false).when(sutSpy).isExistingUser(GOOGLE_ID);
 
             DataSource dataSource = mock(DataSource.class);
             Connection connection = mock(Connection.class);
@@ -51,14 +51,14 @@ public class RegistrationDAOTest {
             fail();
         }
     }
+
     @Test
     public void registerUserReturnsFalseIfUserExistsTest() {
-        String googleId = "3";
         User user = new User();
-        user.setGoogleId(googleId);
+        user.setGoogleId(GOOGLE_ID);
         try {
             RegistrationDAO sutSpy = spy(sut);
-            doReturn(true).when(sutSpy).isExistingUser(googleId);
+            doReturn(true).when(sutSpy).isExistingUser(GOOGLE_ID);
 
             boolean isRegistered = sutSpy.registerUser(user);
 
@@ -68,12 +68,12 @@ public class RegistrationDAOTest {
             fail();
         }
     }
+
     @Test
     public void isExistingUserReturnsTrueIfUserFoundTest() {
-        String userId = "3";
         User user = new User();
-        user.setGoogleId(userId);
-        String sql = "SELECT count(*) AS rowcount FROM User where userId = ?";
+        user.setGoogleId(GOOGLE_ID);
+        String sql = "SELECT count(*) AS rowcount FROM User where GOOGLE_ID_HASH = ?";
         try {
 
             DataSource dataSource = mock(DataSource.class);
@@ -88,7 +88,7 @@ public class RegistrationDAOTest {
             when(resultSet.getInt(1)).thenReturn(3);
 
             sut.setDatasource(dataSource);
-            boolean exist = sut.isExistingUser(userId);
+            boolean exist = sut.isExistingUser(GOOGLE_ID);
 
             verify(connection).prepareStatement(sql);
             verify(preparedStatement).executeQuery();
@@ -98,12 +98,12 @@ public class RegistrationDAOTest {
             fail();
         }
     }
+
     @Test
     public void isExistingUserReturnsFalseIfUserNotFoundTest() {
-        String userId = "3";
         User user = new User();
-        user.setGoogleId(userId);
-        String sql = "SELECT count(*) AS rowcount FROM User where userId = ?";
+        user.setGoogleId(GOOGLE_ID);
+        String sql = "SELECT count(*) AS rowcount FROM User where GOOGLE_ID_HASH = ?";
         try {
 
             DataSource dataSource = mock(DataSource.class);
@@ -118,7 +118,7 @@ public class RegistrationDAOTest {
             when(resultSet.getInt(1)).thenReturn(0);
 
             sut.setDatasource(dataSource);
-            boolean exist = sut.isExistingUser(userId);
+            boolean exist = sut.isExistingUser(GOOGLE_ID);
 
             verify(connection).prepareStatement(sql);
             verify(preparedStatement).executeQuery();
@@ -127,5 +127,62 @@ public class RegistrationDAOTest {
         } catch (SQLException e) {
             fail();
         }
+    }
+
+    @Test
+    public void findUserTest() {
+        try {
+            String expectedSQL = "SELECT * FROM User WHERE GOOGLE_ID_HASH = ?";
+
+            DataSource dataSource = mock(DataSource.class);
+            Connection connection = mock(Connection.class);
+            PreparedStatement preparedStatement = mock(PreparedStatement.class);
+            ResultSet resultSet = mock(ResultSet.class);
+
+            // instruct Mocks
+            when(dataSource.getConnection()).thenReturn(connection);
+            when(connection.prepareStatement(expectedSQL)).thenReturn(preparedStatement);
+            when(preparedStatement.executeQuery()).thenReturn(resultSet);
+            when(resultSet.next()).thenReturn(false);
+
+            sut.setDatasource(dataSource);
+
+            User actualUser = sut.findUser(GOOGLE_ID);
+
+            verify(connection).prepareStatement(expectedSQL);
+            verify(preparedStatement).setString(1, GOOGLE_ID);
+            verify(preparedStatement).executeQuery();
+            assertNull(actualUser);
+        } catch (SQLException e) {
+            fail();
+        }
+    }
+
+    @Test public void extractUserTest() {
+        ResultSet rs = mock(ResultSet.class);
+        try {
+            when(rs.getInt(1)).thenReturn(2);
+            when(rs.getString(2)).thenReturn("first name");
+            when(rs.getString(3)).thenReturn("lastname");
+            when(rs.getString(4)).thenReturn("emailaddress");
+            when(rs.getString(5)).thenReturn("username");
+            when(rs.getInt(6)).thenReturn(5);
+            when(rs.getString(7)).thenReturn(GOOGLE_ID);
+            when(rs.getString(8)).thenReturn("url");
+
+            User user = sut.extractUser(rs);
+            assertEquals(2, user.getUserId());
+            assertEquals("first name", user.getFirstname());
+            assertEquals("lastname", user.getLastname());
+            assertEquals("emailaddress", user.getEmailAddress());
+            assertEquals("username",user.getUsername());
+            assertEquals(5, user.getTotalScore());
+            assertEquals(GOOGLE_ID, user.getGoogleId());
+            assertEquals("url",user.getAfbeeldingUrl());
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 }

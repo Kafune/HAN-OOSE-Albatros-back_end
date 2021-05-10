@@ -22,16 +22,7 @@ public class RegistrationDAO implements IRegistrationDAO {
             statement.setString(1, googleId);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                User user = new User();
-                user.setUserId(rs.getInt(1));
-                user.setFirstname(rs.getString(2));
-                user.setLastname(rs.getString(3));
-                user.setEmailAddress(rs.getString(4));
-                user.setUsername(rs.getString(5));
-                user.setTotalScore(rs.getInt(6));
-                user.setGoogleId(rs.getString(7));
-                user.setAfbeeldingUrl(rs.getString(8));
-                return user;
+                return extractUser(rs);
             }
         } catch (SQLException exception) {
             throw exception;
@@ -78,6 +69,19 @@ public class RegistrationDAO implements IRegistrationDAO {
             throw exception;
         }
         return true;
+    }
+
+    public User extractUser(ResultSet rs) throws SQLException {
+        User user = new User();
+        user.setUserId(rs.getInt(1));
+        user.setFirstname(rs.getString(2));
+        user.setLastname(rs.getString(3));
+        user.setEmailAddress(rs.getString(4));
+        user.setUsername(rs.getString(5));
+        user.setTotalScore(rs.getInt(6));
+        user.setGoogleId(rs.getString(7));
+        user.setAfbeeldingUrl(rs.getString(8));
+        return user;
     }
 
     public void setDatasource(DataSource dataSource) {
