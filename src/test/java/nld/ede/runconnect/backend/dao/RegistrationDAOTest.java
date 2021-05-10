@@ -25,7 +25,7 @@ public class RegistrationDAOTest {
 
     @Test
     public void registerUserReturnsTrueIfUserAddedTest() {
-        int userId = 3;
+        String userId = "3";
         User user = new User();
         user.setUserId(userId);
         String sql = "insert into User values (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -53,7 +53,7 @@ public class RegistrationDAOTest {
     }
     @Test
     public void registerUserReturnsFalseIfUserExistsTest() {
-        int userId = 3;
+        String userId = "3";
         User user = new User();
         user.setUserId(userId);
         try {
@@ -70,7 +70,7 @@ public class RegistrationDAOTest {
     }
     @Test
     public void isExistingUserReturnsTrueIfUserFoundTest() {
-        int userId = 3;
+        String userId = "3";
         User user = new User();
         user.setUserId(userId);
         String sql = "SELECT count(*) AS rowcount FROM User where userId = ?";
@@ -100,7 +100,7 @@ public class RegistrationDAOTest {
     }
     @Test
     public void isExistingUserReturnsFalseIfUserNotFoundTest() {
-        int userId = 3;
+        String userId = "3";
         User user = new User();
         user.setUserId(userId);
         String sql = "SELECT count(*) AS rowcount FROM User where userId = ?";

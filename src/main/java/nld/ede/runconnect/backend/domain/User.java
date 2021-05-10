@@ -4,19 +4,19 @@ import java.sql.Date;
 
 public class User {
 
-    private int userId;
+    private String userId;
     private String firstname;
     private String lastname;
     private String emailAddress;
     private String username;
-    private Date birthdate;
     private int totalScore;
+    private String afbeelding;
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
@@ -52,19 +52,19 @@ public class User {
         this.username = username;
     }
 
-    public Date getBirthdate() {
-        return birthdate;
-    }
-
-    public void setBirthdate(Date birthdate) {
-        this.birthdate = birthdate;
-    }
-
     public int getTotalScore() {
         return totalScore;
     }
 
     public void setTotalScore(int totalScore) {
         this.totalScore = totalScore;
+    }
+
+    public String getAfbeelding() {
+        return afbeelding;
+    }
+
+    public void setAfbeelding(String afbeelding) {
+        this.afbeelding = afbeelding;
     }
 }

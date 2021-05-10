@@ -18,17 +18,15 @@ public class RegistrationDAO implements IRegistrationDAO{
     @Override
     public boolean registerUser(User user) throws SQLException {
         if (!isExistingUser(user.getUserId())) {
-            String sql = "insert into User values (?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "insert into User values (?, ?, ?, ?, ?, ?)";
             try (Connection connection = dataSource.getConnection()) {
                 PreparedStatement statement = connection.prepareStatement(sql);
-                statement.setInt(1, user.getUserId());
+                statement.setString(1, user.getUserId());
                 statement.setString(2, user.getFirstname());
                 statement.setString(3, user.getLastname());
                 statement.setString(4, user.getEmailAddress());
                 statement.setString(5, user.getUsername());
-                statement.setString(6, "12");
-                statement.setDate(7, user.getBirthdate());
-                statement.setInt(8, user.getTotalScore());
+                statement.setInt(6, user.getTotalScore());
                 statement.executeUpdate();
                 return true;
             } catch (SQLException exception) {
@@ -38,11 +36,11 @@ public class RegistrationDAO implements IRegistrationDAO{
         return false;
     }
 
-    public boolean isExistingUser(int userId) throws SQLException {
+    public boolean isExistingUser(String userId) throws SQLException {
         String sql = "SELECT count(*) AS rowcount FROM User where userId = ?";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, userId);
+            statement.setString(1, userId);
             ResultSet rs = statement.executeQuery();
             rs.next();
             if (rs.getInt(1) == 0) {
