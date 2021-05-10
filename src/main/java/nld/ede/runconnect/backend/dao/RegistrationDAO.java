@@ -35,7 +35,7 @@ public class RegistrationDAO implements IRegistrationDAO{
                 throw exception;
             }
         }
-        else return false;
+        return false;
     }
 
     private boolean bestaandeUser(int userId) throws SQLException {
@@ -44,12 +44,12 @@ public class RegistrationDAO implements IRegistrationDAO{
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, userId);
             ResultSet rs = statement.executeQuery();
-            int rowCount = rs.getInt("rowcount");
-            if (rowCount == 0) {
+            rs.next();
+            if (rs.getInt(1) == 0) {
                 return false;
             }
         } catch (SQLException exception) {
-            throw exception;
+            exception.printStackTrace();
         }
         return true;
     }

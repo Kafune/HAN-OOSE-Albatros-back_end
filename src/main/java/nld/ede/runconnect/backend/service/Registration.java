@@ -20,12 +20,12 @@ public class Registration {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response registerUser(User user) throws SQLException {
-
         boolean registered = registrationDAO.registerUser(user);
-        if (registered)
+        if (registered) {
             return Response.status(201).build();
-        else
+        } else {
             return Response.ok().build();
+        }
     }
 
     @Inject
