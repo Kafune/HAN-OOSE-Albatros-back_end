@@ -6,6 +6,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface IActivityDAO {
-    List<Activity> getAllActivitiesFromUser() throws SQLException;
+    List<Activity> getAllActivitiesFromUser(int userId) throws SQLException;
     void addNewActivity(Activity activity) throws SQLException;
 }

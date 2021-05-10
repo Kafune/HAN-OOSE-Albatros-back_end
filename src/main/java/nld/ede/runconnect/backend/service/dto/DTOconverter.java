@@ -2,10 +2,7 @@ package nld.ede.runconnect.backend.service.dto;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import nld.ede.runconnect.backend.domain.Coordinate;
-import nld.ede.runconnect.backend.domain.POI;
-import nld.ede.runconnect.backend.domain.Route;
-import nld.ede.runconnect.backend.domain.Segment;
+import nld.ede.runconnect.backend.domain.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,4 +113,13 @@ public class DTOconverter {
         return poi;
     }
 
+    public static Activity ActivityDTOToDomainActivity(ActivityDTO activityDTO) {
+        Activity activity = new Activity();
+        activity.setRouteId(activityDTO.routeId);
+        activity.setUserId(activityDTO.userId);
+        activity.setPoint(activityDTO.point);
+        activity.setDuration(activityDTO.duration);
+        activity.setTempo(activityDTO.tempo);
+        return activity;
+    }
 }

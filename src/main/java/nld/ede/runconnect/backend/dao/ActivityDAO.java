@@ -14,7 +14,7 @@ public class ActivityDAO implements IActivityDAO {
     private DataSource dataSource;
 
     @Override
-    public List<Activity> getActivityOfRoute(int routeId) throws SQLException {
+    public List<Activity> getAllActivitiesFromUser(int userId) throws SQLException {
 //        //todo: get activities based on the logged in user, receive user id from token or something
 //        String sql = "SELECT * FROM Activities";
 //        try {
@@ -29,9 +29,21 @@ public class ActivityDAO implements IActivityDAO {
     public void addNewActivity(Activity activity) throws SQLException {
         //todo: save activity based on logged in user, for now use an existing user?
         String sql = "INSERT INTO ACTIVITIES (ROUTEID, USERID, POINT, DURATION, TEMPO, DISTANCE) Values (?, ?, ?, ?, ?, ?)";
+        int routeId = activity.getRouteId();
+        int userId = activity.getUserId();
+        int point = activity.getPoint();
+        long duration = activity.getDuration();
+        int tempo = activity.getTempo();
+        int distance = activity.getDistance();
+
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
-
+            statement.setInt(1, routeId);
+            statement.setInt(2, userId);
+            statement.setInt(3, point);
+            statement.setLong(4, duration);
+            statement.setInt(5, tempo);
+            statement.setInt(6, distance);
             statement.executeUpdate();
         } catch (SQLException exception) {
             throw exception;

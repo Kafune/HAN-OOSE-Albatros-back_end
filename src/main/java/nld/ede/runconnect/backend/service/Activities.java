@@ -9,6 +9,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.sql.SQLException;
 
 public class Activities {
 
@@ -17,12 +18,13 @@ public class Activities {
     @POST
 
     @Produces(MediaType.APPLICATION_JSON)
-    public Response makeActivity(String requestBody) {
+    public Response makeActivity(String requestBody) throws SQLException {
         ActivityDTO newActivityDTO = DTOconverter.JSONToActivityDTO(requestBody);
 
-        Activity activity =
+        Activity newActivity = DTOconverter.ActivityDTOToDomainActivity(newActivityDTO);
 
-        activityDAO.addNewActivity();
+        activityDAO.addNewActivity(newActivity);
+
         return Response.status(201).build();
     }
 
