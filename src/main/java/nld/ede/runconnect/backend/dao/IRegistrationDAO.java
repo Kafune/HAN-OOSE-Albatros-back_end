@@ -1,4 +1,8 @@
 package nld.ede.runconnect.backend.dao;
 
-public class IRegistrationDAO {
+import nld.ede.runconnect.backend.domain.User;
+
+public interface IRegistrationDAO {
+
+    void registerUser(User user);
 }
