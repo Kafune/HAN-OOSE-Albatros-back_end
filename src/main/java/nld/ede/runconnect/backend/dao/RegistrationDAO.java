@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class RegistrationDAO implements IRegistrationDAO{
@@ -15,21 +16,41 @@ public class RegistrationDAO implements IRegistrationDAO{
 
 
     @Override
-    public void registerUser(User user) throws SQLException {
-        String sql = "insert into User values (?, ?, ?, ?, ?, ?, ?, ?)";
+    public boolean registerUser(User user) throws SQLException {
+        if (!bestaandeUser(user.getUserId())) {
+            String sql = "insert into User values (?, ?, ?, ?, ?, ?, ?, ?)";
+            try (Connection connection = dataSource.getConnection()) {
+                PreparedStatement statement = connection.prepareStatement(sql);
+                statement.setInt(1, user.getUserId());
+                statement.setString(2, user.getFirstname());
+                statement.setString(3, user.getLastname());
+                statement.setString(4, user.getEmailAddress());
+                statement.setString(5, user.getUsername());
+                statement.setString(6, "12");
+                statement.setDate(7, user.getBirthdate());
+                statement.setInt(8, user.getTotalScore());
+                statement.executeUpdate();
+                return true;
+            } catch (SQLException exception) {
+                throw exception;
+            }
+        }
+        else return false;
+    }
+
+    private boolean bestaandeUser(int userId) throws SQLException {
+        String sql = "SELECT count(*) AS rowcount FROM User where userId = ?";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, user.getUserId());
-            statement.setString(2, user.getFirstname());
-            statement.setString(3, user.getLastname());
-            statement.setString(4, user.getEmailAddress());
-            statement.setString(5, user.getUsername());
-            statement.setString(6, "12");
-            statement.setDate(7, user.getBirthdate());
-            statement.setInt(8,user.getTotalScore());
-            statement.executeUpdate();
+            statement.setInt(1, userId);
+            ResultSet rs = statement.executeQuery();
+            int rowCount = rs.getInt("rowcount");
+            if (rowCount == 0) {
+                return false;
+            }
         } catch (SQLException exception) {
             throw exception;
         }
+        return true;
     }
 }

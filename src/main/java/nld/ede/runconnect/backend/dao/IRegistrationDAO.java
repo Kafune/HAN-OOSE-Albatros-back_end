@@ -6,5 +6,5 @@ import java.sql.SQLException;
 
 public interface IRegistrationDAO {
 
-    void registerUser(User user) throws SQLException;
+    boolean registerUser(User user) throws SQLException;
 }
