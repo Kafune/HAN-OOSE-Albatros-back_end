@@ -22,21 +22,8 @@ public class ActivityDAOTest {
 
     @Test
     public void saveActivity() {
-        String sql = "";
+        String sql = "INSERT INTO ACTIVITIES (ROUTEID, USERID, POINT, DURATION, TEMPO, DISTANCE) Values (?, ?, ?, ?, ?, ?)";
         try {
-            DataSource dataSource = mock(DataSource.class);
-            Connection connection = mock(Connection.class);
-            PreparedStatement preparedStatement = mock(PreparedStatement.class);
-            ResultSet resultSet = mock(ResultSet.class);
-
-            // instruct Mocks
-            when(dataSource.getConnection()).thenReturn(connection);
-            when(connection.prepareStatement(sql)).thenReturn(preparedStatement);
-            when(preparedStatement.executeQuery()).thenReturn(resultSet);
-            when(resultSet.next()).thenReturn(false);
-
-            // setup classes
-            sut.setDataSource(dataSource);
 
         } catch (Exception e) {
             fail(e);
