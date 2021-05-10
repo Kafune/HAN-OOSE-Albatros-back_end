@@ -1,23 +1,23 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     19-4-2021 15:14:38                           */
+/* Created on:     10-5-2021 15:32:44                           */
 /*==============================================================*/
-
-drop table if exists POI;
-
-drop table if exists SEGMENTINROUTE;
-
-drop table if exists SEGMENT;
-
-drop table if exists COORDINATES;
-
 drop table if exists IMAGE;
 
 drop table if exists ACTIVITY;
 
 drop table if exists `USER`;
 
+drop table if exists POI;
+
+drop table if exists SEGMENTINROUTE;
+
 drop table if exists ROUTE;
+
+drop table if exists SEGMENT;
+
+drop table if exists COORDINATES;
+
 
 /*==============================================================*/
 /* Table: ACTIVITY                                              */
@@ -26,7 +26,7 @@ create table ACTIVITY
 (
     ACTIVITYID           int not null auto_increment,
     ROUTEID              int not null,
-    USERID               int not null,
+    USERID               char(255) not null,
     POINT                int not null,
     DURATION             bigint,
     TEMPO                int,
@@ -39,12 +39,12 @@ create table ACTIVITY
 /*==============================================================*/
 create table COORDINATES
 (
-   COORDINATESID        int not null auto_increment,
-   LOCATION             point null,
-   LATITUDE             double not null,
-   LONGITUDE            double not null,
-   ALTITUDE             int not null,
-   primary key (COORDINATESID)
+    COORDINATESID        int not null auto_increment,
+    LATITUDE             double not null,
+    LONGITUDE            double not null,
+    ALTITUDE             int not null,
+    LOCATION             point,
+    primary key (COORDINATESID)
 );
 
 /*==============================================================*/
@@ -52,11 +52,12 @@ create table COORDINATES
 /*==============================================================*/
 create table IMAGE
 (
-    USERID               int not null,
+    USERID               char(255) not null,
     ACTIVITYID           int,
     FILENAME             varchar(120) not null,
     DESCRIPTION          varchar(100)
 );
+
 
 /*==============================================================*/
 /* Table: POI                                                   */
@@ -75,11 +76,11 @@ create table POI
 create table ROUTE
 (
     ROUTEID              int not null auto_increment,
-    NAME                 VARCHAR(150) not null,
-    DESCRIPTION          VARCHAR(150) NOT NULL,
     DISTANCE             int not null,
+    DESCRIPTION          varchar(150) not null,
     primary key (ROUTEID)
 );
+
 
 /*==============================================================*/
 /* Table: SEGMENT                                               */
@@ -92,6 +93,7 @@ create table SEGMENT
     primary key (SEGMENTID)
 );
 
+
 /*==============================================================*/
 /* Table: SEGMENTINROUTE                                        */
 /*==============================================================*/
@@ -103,23 +105,23 @@ create table SEGMENTINROUTE
     primary key (ROUTEID, SEGMENTID)
 );
 
+
 /*==============================================================*/
 /* Table: USER                                                  */
 /*==============================================================*/
 create table `USER`
 (
-    USERID               int not null auto_increment,
+    USERID               char(255) not null,
     FIRSTNAME            varchar(60) not null,
     LASTNAME             varchar(60) not null,
     E_MAILADRES          varchar(100) not null,
     USERNAME             varchar(20) not null,
-    PASSWORD             varchar(130) not null,
-    BIRTHDATE            date not null,
     TOTALSCORE           int not null default 0,
     primary key (USERID),
     unique key AK_KEY_2 (E_MAILADRES),
     unique key AK_KEY_3 (USERNAME)
 );
+
 
 alter table ACTIVITY add constraint FK_REFERENCE_1 foreign key (USERID)
     references `USER` (USERID) on delete cascade on update cascade;
