@@ -20,6 +20,10 @@ public class DTOconverter {
         return newRoute;
     }
 
+    public static ActivityDTO JSONToActivityDTO(String JSONObject) throws JsonSyntaxException {
+        return JSON.fromJson(JSONObject, ActivityDTO.class);
+    }
+
     public static RouteDTO domainToRouteDTO(Route route) {
         RouteDTO routeDTO = new RouteDTO();
         routeDTO.routeId = route.getRouteId();
@@ -111,6 +115,5 @@ public class DTOconverter {
         poi.setName(poiDTO.name);
         return poi;
     }
-
 
 }

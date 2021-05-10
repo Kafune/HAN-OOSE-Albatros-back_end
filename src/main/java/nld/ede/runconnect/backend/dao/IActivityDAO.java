@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface IActivityDAO {
     List<Activity> getAllActivitiesFromUser() throws SQLException;
-    void saveActivity() throws SQLException;
+    void addNewActivity(Activity activity) throws SQLException;
 }
