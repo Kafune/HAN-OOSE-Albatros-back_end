@@ -28,7 +28,7 @@ public class RegistrationDAOTest {
         String userId = "3";
         User user = new User();
         user.setUserId(userId);
-        String sql = "insert into User values (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "insert into User values (?, ?, ?, ?, ?, ?)";
         try {
             RegistrationDAO sutSpy = spy(sut);
             doReturn(false).when(sutSpy).isExistingUser(userId);
