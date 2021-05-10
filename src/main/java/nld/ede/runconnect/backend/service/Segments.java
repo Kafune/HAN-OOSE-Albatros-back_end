@@ -21,7 +21,7 @@ import java.util.List;
 @Path("segments")
 public class Segments {
 
-    ISegmentDAO segmentDAO;
+    private ISegmentDAO segmentDAO;
 
     @GET
     @Path("/{id}")
