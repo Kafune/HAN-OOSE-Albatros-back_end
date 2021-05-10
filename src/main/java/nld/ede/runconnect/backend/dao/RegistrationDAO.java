@@ -17,7 +17,7 @@ public class RegistrationDAO implements IRegistrationDAO{
 
     @Override
     public boolean registerUser(User user) throws SQLException {
-        if (!bestaandeUser(user.getUserId())) {
+        if (!isBestaandeUser(user.getUserId())) {
             String sql = "insert into User values (?, ?, ?, ?, ?, ?, ?, ?)";
             try (Connection connection = dataSource.getConnection()) {
                 PreparedStatement statement = connection.prepareStatement(sql);
@@ -38,7 +38,7 @@ public class RegistrationDAO implements IRegistrationDAO{
         return false;
     }
 
-    private boolean bestaandeUser(int userId) throws SQLException {
+    private boolean isBestaandeUser(int userId) throws SQLException {
         String sql = "SELECT count(*) AS rowcount FROM User where userId = ?";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);

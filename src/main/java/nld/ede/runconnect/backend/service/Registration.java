@@ -24,7 +24,7 @@ public class Registration {
         if (registered) {
             return Response.status(201).build();
         } else {
-            return Response.ok().build();
+            return Response.status(200).build();
         }
     }
 
