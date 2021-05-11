@@ -116,7 +116,7 @@ create table `USER`
     E_MAILADRES          varchar(254) not null,
     USERNAME             varchar(150) not null,
     TOTALSCORE           int not null default 0,
-    GOOGLE_ID_HASH         varchar(65535) not null,
+    GOOGLE_ID_HASH        mediumtext not null,
     PHOTOURL             varchar(2083),
     primary key (USERID),
     unique key AK_KEY_2 (E_MAILADRES),
