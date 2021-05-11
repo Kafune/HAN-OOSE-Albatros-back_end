@@ -110,16 +110,16 @@ public class DTOconverter {
     }
 
 
-    public static UserDTO domainToUserDTO(User userInDatabase) {
+    public static UserDTO domainToUserDTO(User user) {
         UserDTO userDTO = new UserDTO();
-        userDTO.setUserId(userInDatabase.getUserId());
-        userDTO.setFirstName(userInDatabase.getFirstName());
-        userDTO.setLastName(userInDatabase.getLastName());
-        userDTO.setEmailAddress(userInDatabase.getEmailAddress());
-        userDTO.setUsername(userInDatabase.getUsername());
-        userDTO.setTotalScore(userInDatabase.getTotalScore());
-        userDTO.setGoogleId(userInDatabase.getGoogleId());
-        userDTO.setImageUrl(userInDatabase.getImageUrl());
+        userDTO.setUserId(user.getUserId());
+        userDTO.setFirstName(user.getFirstName());
+        userDTO.setLastName(user.getLastName());
+        userDTO.setEmailAddress(user.getEmailAddress());
+        userDTO.setUsername(user.getUsername());
+        userDTO.setTotalScore(user.getTotalScore());
+        userDTO.setGoogleId(user.getGoogleId());
+        userDTO.setImageUrl(user.getImageUrl());
 
         return userDTO;
     }
