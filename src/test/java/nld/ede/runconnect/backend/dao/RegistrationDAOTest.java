@@ -31,7 +31,7 @@ public class RegistrationDAOTest {
         String sql = "insert into User (FIRSTNAME, LASTNAME, E_MAILADRES, USERNAME, GOOGLE_ID_HASH, PHOTOURL) values (?, ?, ?, ?, ?, ?)";
         try {
             RegistrationDAO sutSpy = spy(sut);
-            doReturn(false).when(sutSpy).isExistingUser(GOOGLE_ID);
+            doReturn(false).when(sutSpy).isExistingUser(user);
 
             DataSource dataSource = mock(DataSource.class);
             Connection connection = mock(Connection.class);
@@ -58,7 +58,7 @@ public class RegistrationDAOTest {
         user.setGoogleId(GOOGLE_ID);
         try {
             RegistrationDAO sutSpy = spy(sut);
-            doReturn(true).when(sutSpy).isExistingUser(GOOGLE_ID);
+            doReturn(true).when(sutSpy).isExistingUser(user);
 
             boolean isRegistered = sutSpy.registerUser(user);
 
@@ -73,7 +73,8 @@ public class RegistrationDAOTest {
     public void isExistingUserReturnsTrueIfUserFoundTest() {
         User user = new User();
         user.setGoogleId(GOOGLE_ID);
-        String sql = "SELECT count(*) AS rowcount FROM User where GOOGLE_ID_HASH = ?";
+        user.setEmailAddress("email");
+        String sql = "SELECT E_MAILADRES FROM User where GOOGLE_ID_HASH = ?";
         try {
 
             DataSource dataSource = mock(DataSource.class);
@@ -85,10 +86,11 @@ public class RegistrationDAOTest {
             when(dataSource.getConnection()).thenReturn(connection);
             when(connection.prepareStatement(sql)).thenReturn(preparedStatement);
             when(preparedStatement.executeQuery()).thenReturn(resultSet);
-            when(resultSet.getInt(1)).thenReturn(3);
+            when(resultSet.next()).thenReturn(true);
+            when(resultSet.getString(1)).thenReturn("email");
 
             sut.setDatasource(dataSource);
-            boolean exist = sut.isExistingUser(GOOGLE_ID);
+            boolean exist = sut.isExistingUser(user);
 
             verify(connection).prepareStatement(sql);
             verify(preparedStatement).executeQuery();
@@ -103,7 +105,8 @@ public class RegistrationDAOTest {
     public void isExistingUserReturnsFalseIfUserNotFoundTest() {
         User user = new User();
         user.setGoogleId(GOOGLE_ID);
-        String sql = "SELECT count(*) AS rowcount FROM User where GOOGLE_ID_HASH = ?";
+        user.setEmailAddress("email");
+        String sql = "SELECT E_MAILADRES FROM User where GOOGLE_ID_HASH = ?";
         try {
 
             DataSource dataSource = mock(DataSource.class);
@@ -115,10 +118,10 @@ public class RegistrationDAOTest {
             when(dataSource.getConnection()).thenReturn(connection);
             when(connection.prepareStatement(sql)).thenReturn(preparedStatement);
             when(preparedStatement.executeQuery()).thenReturn(resultSet);
-            when(resultSet.getInt(1)).thenReturn(0);
+            when(resultSet.getString(1)).thenReturn("ail");
 
             sut.setDatasource(dataSource);
-            boolean exist = sut.isExistingUser(GOOGLE_ID);
+            boolean exist = sut.isExistingUser(user);
 
             verify(connection).prepareStatement(sql);
             verify(preparedStatement).executeQuery();

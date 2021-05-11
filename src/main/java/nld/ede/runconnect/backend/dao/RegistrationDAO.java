@@ -32,7 +32,7 @@ public class RegistrationDAO implements IRegistrationDAO {
 
     @Override
     public boolean registerUser(User user) throws SQLException {
-        if (!isExistingUser(user.getGoogleId())) {
+        if (!isExistingUser(user)) {
             String sql = "insert into User (FIRSTNAME, LASTNAME, E_MAILADRES, USERNAME, GOOGLE_ID_HASH, PHOTOURL) values (?, ?, ?, ?, ?, ?)";
             try (Connection connection = dataSource.getConnection()) {
                 PreparedStatement statement = connection.prepareStatement(sql);
@@ -52,22 +52,22 @@ public class RegistrationDAO implements IRegistrationDAO {
         return false;
     }
 
-
-
-    public boolean isExistingUser(String googleId) throws SQLException {
-        String sql = "SELECT count(*) AS rowcount FROM User where GOOGLE_ID_HASH = ?";
+    public boolean isExistingUser(User user) throws SQLException {
+        String sql = "SELECT E_MAILADRES FROM User where GOOGLE_ID_HASH = ?";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, googleId);
+            statement.setString(1, user.getGoogleId());
             ResultSet rs = statement.executeQuery();
-            rs.next();
-            if (rs.getInt(1) == 0) {
-                return false;
+            while (rs.next()) {
+                if (rs.getString(1).equals(user.getEmailAddress())) {
+                    return true;
+                }
             }
         } catch (SQLException exception) {
+            exception.printStackTrace();
             throw exception;
         }
-        return true;
+        return false;
     }
 
     public User extractUser(ResultSet rs) throws SQLException {
