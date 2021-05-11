@@ -209,3 +209,23 @@ It will perform a body containing a complete list of segments that belong to a r
     }
 ]
 ```
+#### Activities
+Add a new activity
+```
+url:    /activities
+method: POST
+```
+
+
+It will expect a body containing an object of the form
+
+```
+{
+    "routeId": 1,
+    "userId": 1,
+    "point": 20,
+    "duration": 100000,
+    "tempo": 12,
+    "distance": 19
+}
+```
