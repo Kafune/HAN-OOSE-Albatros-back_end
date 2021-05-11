@@ -209,7 +209,7 @@ It will perform a body containing a complete list of segments that belong to a r
     }
 ]
 ```
-Adds a route.
+Registration
 ```
 url:    /registration
 method: POST
@@ -220,13 +220,25 @@ It will expect a body containing an object of the form
 
 ```
 { 
-  "userId": 3,
-  "firstname": "User test",
-  "lastname": " Lastname test",
-  "emailAddress": "M@",
-  "username": "Username om in te loggen", 
-  "birthdate": "2021-01-25",
+  "firstname": "Mo",
+  "lastname": "Yasin",
+  "emailAddress": "ags@",
+  "username": "Mohammad Yasin",
+  "googleId": "sdw3232dsssdsd",
+  "afbeeldingUrl": "url/fotos"
 }
+```
+It will perform a body containing a complete object of the form
 
-Note: birthdate moet in de format: yyyy-mm-dd.
+```
+{
+    "afbeeldingUrl": "url/fotos",
+    "emailAddress": "ags@",
+    "firstname": "Mo",
+    "googleId": "sdw3232dsssdsd",
+    "lastname": "Yasin",
+    "totalScore": 0,
+    "userId": 10,
+    "username": "Mohammad Yasin"
+}
 ```
