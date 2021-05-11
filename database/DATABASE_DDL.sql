@@ -78,6 +78,7 @@ create table POI
 create table ROUTE
 (
     ROUTEID              int not null auto_increment,
+    NAME                 VARCHAR(150) NOT NULL,
     DISTANCE             int not null,
     DESCRIPTION          varchar(150) not null,
     primary key (ROUTEID)
@@ -117,7 +118,7 @@ create table `USER`
     USERNAME             varchar(150) not null,
     TOTALSCORE           int not null default 0,
     GOOGLE_ID_HASH        mediumtext not null,
-    PHOTOURL             varchar(2083),
+    IMAGE_URL             varchar(2083),
     primary key (USERID),
     unique key AK_KEY_2 (E_MAILADRES),
     unique key AK_KEY_4 (GOOGLE_ID_HASH)
