@@ -120,7 +120,6 @@ create table `USER`
     PHOTOURL             varchar(2083),
     primary key (USERID),
     unique key AK_KEY_2 (E_MAILADRES),
-    unique key AK_KEY_3 (USERNAME),
     unique key AK_KEY_4 (GOOGLE_ID_HASH)
 );
 
