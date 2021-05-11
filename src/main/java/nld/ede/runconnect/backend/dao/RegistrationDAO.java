@@ -36,12 +36,12 @@ public class RegistrationDAO implements IRegistrationDAO {
             String sql = "insert into User (FIRSTNAME, LASTNAME, E_MAILADRES, USERNAME, GOOGLE_ID_HASH, PHOTOURL) values (?, ?, ?, ?, ?, ?)";
             try (Connection connection = dataSource.getConnection()) {
                 PreparedStatement statement = connection.prepareStatement(sql);
-                statement.setString(1, user.getFirstname());
-                statement.setString(2, user.getLastname());
+                statement.setString(1, user.getFirstName());
+                statement.setString(2, user.getLastName());
                 statement.setString(3, user.getEmailAddress());
                 statement.setString(4, user.getUsername());
                 statement.setString(5, user.getGoogleId());
-                statement.setString(6, user.getAfbeeldingUrl());
+                statement.setString(6, user.getImageUrl());
                 statement.executeUpdate();
                 return true;
             } catch (SQLException exception) {
@@ -73,13 +73,13 @@ public class RegistrationDAO implements IRegistrationDAO {
     public User extractUser(ResultSet rs) throws SQLException {
         User user = new User();
         user.setUserId(rs.getInt(1));
-        user.setFirstname(rs.getString(2));
-        user.setLastname(rs.getString(3));
+        user.setFirstName(rs.getString(2));
+        user.setLastName(rs.getString(3));
         user.setEmailAddress(rs.getString(4));
         user.setUsername(rs.getString(5));
         user.setTotalScore(rs.getInt(6));
         user.setGoogleId(rs.getString(7));
-        user.setAfbeeldingUrl(rs.getString(8));
+        user.setImageUrl(rs.getString(8));
         return user;
     }
 

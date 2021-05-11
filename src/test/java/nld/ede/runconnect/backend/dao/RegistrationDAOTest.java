@@ -175,13 +175,13 @@ public class RegistrationDAOTest {
 
             User user = sut.extractUser(rs);
             assertEquals(2, user.getUserId());
-            assertEquals("first name", user.getFirstname());
-            assertEquals("lastname", user.getLastname());
+            assertEquals("first name", user.getFirstName());
+            assertEquals("lastname", user.getLastName());
             assertEquals("emailaddress", user.getEmailAddress());
             assertEquals("username",user.getUsername());
             assertEquals(5, user.getTotalScore());
             assertEquals(GOOGLE_ID, user.getGoogleId());
-            assertEquals("url",user.getAfbeeldingUrl());
+            assertEquals("url",user.getImageUrl());
 
         } catch (SQLException e) {
             e.printStackTrace();

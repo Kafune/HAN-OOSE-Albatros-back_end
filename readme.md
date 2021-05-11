@@ -220,23 +220,23 @@ It will expect a body containing an object of the form
 
 ```
 { 
-  "firstname": "Mo",
-  "lastname": "Yasin",
+  "firstName": "Mo",
+  "lastName": "Yasin",
   "emailAddress": "ags@",
   "username": "Mohammad Yasin",
   "googleId": "sdw3232dsssdsd",
-  "afbeeldingUrl": "url/fotos"
+  "imageUrl": "url/fotos"
 }
 ```
 It will perform a body containing a complete object of the form
 
 ```
 {
-    "afbeeldingUrl": "url/fotos",
+    "imageUrl": "url/fotos",
     "emailAddress": "ags@",
-    "firstname": "Mo",
+    "firstName": "Mo",
     "googleId": "sdw3232dsssdsd",
-    "lastname": "Yasin",
+    "lastName": "Yasin",
     "totalScore": 0,
     "userId": 10,
     "username": "Mohammad Yasin"

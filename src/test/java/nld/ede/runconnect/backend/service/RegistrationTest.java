@@ -1,6 +1,5 @@
 package nld.ede.runconnect.backend.service;
 
-import com.sun.mail.imap.protocol.ID;
 import nld.ede.runconnect.backend.dao.RegistrationDAO;
 import nld.ede.runconnect.backend.domain.User;
 import nld.ede.runconnect.backend.service.dto.UserDTO;
@@ -75,13 +74,13 @@ public class RegistrationTest {
             assertEquals(200, actualResponseStatus);
 
             assertEquals(user.getUserId(), actualUserDTO.getUserId());
-            assertEquals(user.getFirstname(), actualUserDTO.getFirstname());
-            assertEquals(user.getLastname(), actualUserDTO.getLastname());
+            assertEquals(user.getFirstName(), actualUserDTO.getFirstName());
+            assertEquals(user.getLastName(), actualUserDTO.getLastName());
             assertEquals(user.getEmailAddress(), actualUserDTO.getEmailAddress());
             assertEquals(user.getUsername(), actualUserDTO.getUsername());
             assertEquals(user.getTotalScore(), actualUserDTO.getTotalScore());
             assertEquals(user.getGoogleId(), actualUserDTO.getGoogleId());
-            assertEquals(user.getAfbeeldingUrl(), actualUserDTO.getAfbeeldingUrl());
+            assertEquals(user.getImageUrl(), actualUserDTO.getImageUrl());
         } catch (SQLException e) {
             fail();
         }
@@ -89,13 +88,13 @@ public class RegistrationTest {
     private User getUser() {
         User user = new User();
         user.setUserId(USER_ID);
-        user.setFirstname("Alrasheed");
-        user.setLastname("Obada");
+        user.setFirstName("Alrasheed");
+        user.setLastName("Obada");
         user.setEmailAddress("Mail test adres");
         user.setUsername("Ik heb geen zin meer");
         user.setTotalScore(32);
         user.setGoogleId(GOOGLE_ID);
-        user.setAfbeeldingUrl("Url.com");
+        user.setImageUrl("Url.com");
 
         return user;
     }

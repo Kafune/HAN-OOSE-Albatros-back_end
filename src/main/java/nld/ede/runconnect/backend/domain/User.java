@@ -5,12 +5,12 @@ package nld.ede.runconnect.backend.domain;
 public class User {
 
     private int userId;
-    private String firstname;
-    private String lastname;
+    private String firstName;
+    private String lastName;
     private String emailAddress;
     private String username;
     private int totalScore;
-    private String afbeeldingUrl;
+    private String imageUrl;
     private String googleId;
 
     public String getGoogleId() {
@@ -29,20 +29,20 @@ public class User {
         this.userId = userId;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmailAddress() {
@@ -69,11 +69,11 @@ public class User {
         this.totalScore = totalScore;
     }
 
-    public String getAfbeeldingUrl() {
-        return afbeeldingUrl;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setAfbeeldingUrl(String afbeeldingUrl) {
-        this.afbeeldingUrl = afbeeldingUrl;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

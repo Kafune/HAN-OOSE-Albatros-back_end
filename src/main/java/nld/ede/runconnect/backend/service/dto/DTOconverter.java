@@ -113,13 +113,13 @@ public class DTOconverter {
     public static UserDTO domainToUserDTO(User userInDatabase) {
         UserDTO userDTO = new UserDTO();
         userDTO.setUserId(userInDatabase.getUserId());
-        userDTO.setFirstname(userInDatabase.getFirstname());
-        userDTO.setLastname(userInDatabase.getLastname());
+        userDTO.setFirstName(userInDatabase.getFirstName());
+        userDTO.setLastName(userInDatabase.getLastName());
         userDTO.setEmailAddress(userInDatabase.getEmailAddress());
         userDTO.setUsername(userInDatabase.getUsername());
         userDTO.setTotalScore(userInDatabase.getTotalScore());
         userDTO.setGoogleId(userInDatabase.getGoogleId());
-        userDTO.setAfbeeldingUrl(userInDatabase.getAfbeeldingUrl());
+        userDTO.setImageUrl(userInDatabase.getImageUrl());
 
         return userDTO;
     }
