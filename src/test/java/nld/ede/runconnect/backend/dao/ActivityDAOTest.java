@@ -1,5 +1,6 @@
 package nld.ede.runconnect.backend.dao;
 
+import nld.ede.runconnect.backend.domain.Activity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -7,7 +8,9 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.*;
 
@@ -28,19 +31,16 @@ public class ActivityDAOTest {
 
     @Test
     public void addNewActivityTest() {
-        String sql = "INSERT INTO ACTIVITIES (ROUTEID, USERID, POINT, DURATION, TEMPO, DISTANCE) Values (?, ?, ?, ?, ?, ?)";
-
         try {
-            //mocks
-            when(dataSource.getConnection()).thenReturn(connection);
-            when(connection.prepareStatement(sql)).thenReturn(preparedStatement);
-            when(preparedStatement.executeUpdate()).thenReturn(1);
-
-            
-
+            when(dataSource.getConnection()).thenThrow(new SQLException());
         } catch (Exception e) {
             fail(e);
         }
+
+        sut.setDataSource(dataSource);
+
+        //act and assert
+        assertThrows(SQLException.class, () -> sut.addNewActivity(new Activity()));
     }
 
 }
