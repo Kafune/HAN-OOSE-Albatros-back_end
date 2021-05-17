@@ -8,6 +8,8 @@ public class Activity {
     private long duration;
     private int tempo;
 
+    private int distance;
+
     public int getRouteId() {
         return routeId;
     }
@@ -55,6 +57,4 @@ public class Activity {
     public void setDistance(int distance) {
         this.distance = distance;
     }
-
-    private int distance;
 }

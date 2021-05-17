@@ -6,6 +6,7 @@ import nld.ede.runconnect.backend.service.dto.ActivityDTO;
 import nld.ede.runconnect.backend.service.dto.DTOconverter;
 
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -20,10 +21,10 @@ public class Activities {
 
     @POST
     @Path("/")
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addActivity(String requestBody) throws SQLException {
-        ActivityDTO newActivityDTO = DTOconverter.JSONToActivityDTO(requestBody);
-        Activity newActivity = DTOconverter.ActivityDTOToDomainActivity(newActivityDTO);
+    public Response addActivity(ActivityDTO activityDTO) throws SQLException {
+        Activity newActivity = DTOconverter.ActivityDTOToDomainActivity(activityDTO);
         activityDAO.addNewActivity(newActivity);
 
         return Response.status(201).build();

@@ -2,8 +2,12 @@ package nld.ede.runconnect.backend.service;
 
 import nld.ede.runconnect.backend.dao.ActivityDAO;
 import nld.ede.runconnect.backend.domain.Activity;
+import nld.ede.runconnect.backend.service.dto.ActivityDTO;
+import nld.ede.runconnect.backend.service.dto.DTOconverter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 
 import javax.ws.rs.core.Response;
 
@@ -24,21 +28,21 @@ public class ActivitiesTest {
     @Test
     void addActivityTest() throws SQLException {
         int statusCodeExpected = 201;
-        String json = "{\n" +
-                "    \"routeId\": 1,\n" +
-                "    \"userId\": 1,\n" +
-                "    \"point\": 20,\n" +
-                "    \"duration\": 100000,\n" +
-                "    \"tempo\": 12,\n" +
-                "    \"distance\": 19\n" +
-                "}";
+
+        ActivityDTO activityDTO = new ActivityDTO();
 
         //mock
         ActivityDAO activityDAO = mock(ActivityDAO.class);
+        Activity activity = new Activity();
+
+        try (MockedStatic<DTOconverter> utilities = Mockito.mockStatic(DTOconverter.class)) {
+            utilities.when(() -> DTOconverter.ActivityDTOToDomainActivity(activityDTO))
+                    .thenReturn(activity);
+        }
 
         activities.setActivityDAO(activityDAO);
 
-        Response response = activities.addActivity(json);
+        Response response = activities.addActivity(activityDTO);
 
         assertEquals(statusCodeExpected, response.getStatus());
 

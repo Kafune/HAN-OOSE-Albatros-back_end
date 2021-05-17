@@ -31,16 +31,37 @@ public class ActivityDAOTest {
 
     @Test
     public void addNewActivityTest() {
+        String sql = "INSERT INTO activity (routeId, userId, point, duration, tempo, distance) Values (?, ?, ?, ?, ?, ?)";
+        Activity activity = new Activity();
+
         try {
-            when(dataSource.getConnection()).thenThrow(new SQLException());
+            DataSource dataSource = mock(DataSource.class);
+            Connection connection = mock(Connection.class);
+            PreparedStatement preparedStatement = mock(PreparedStatement.class);
+
+            // instruct Mocks
+            when(dataSource.getConnection()).thenReturn(connection);
+            when(connection.prepareStatement(sql)).thenReturn(preparedStatement);
+            when(preparedStatement.executeUpdate()).thenReturn(1);
+
+            sut.setDataSource(dataSource);
+
+            //act
+            sut.addNewActivity(activity);
+
+            //assert
+            verify(connection).prepareStatement(sql);
+            verify(preparedStatement).setInt(1, activity.getRouteId());
+            verify(preparedStatement).setInt(2, activity.getUserId());
+            verify(preparedStatement).setInt(3, activity.getPoint());
+            verify(preparedStatement).setLong(4, activity.getDuration());
+            verify(preparedStatement).setInt(5, activity.getTempo());
+            verify(preparedStatement).setInt(6, activity.getDistance());
+            verify(preparedStatement).executeUpdate();
+
         } catch (Exception e) {
             fail(e);
         }
-
-        sut.setDataSource(dataSource);
-
-        //act and assert
-        assertThrows(SQLException.class, () -> sut.addNewActivity(new Activity()));
     }
 
 }
