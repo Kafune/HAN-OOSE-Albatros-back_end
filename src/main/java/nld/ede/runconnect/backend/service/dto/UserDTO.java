@@ -1,7 +1,6 @@
 package nld.ede.runconnect.backend.service.dto;
 
 public class UserDTO {
-
     private int userId;
     private String firstName;
     private String lastName;
