@@ -209,3 +209,36 @@ It will perform a body containing a complete list of segments that belong to a r
     }
 ]
 ```
+Registration
+```
+url:    /registration
+method: POST
+```
+
+
+It will expect a body containing an object of the form
+
+```
+{ 
+  "firstName": "Mo",
+  "lastName": "Yasin",
+  "emailAddress": "ags@",
+  "username": "Mohammad Yasin",
+  "googleId": "sdw3232dsssdsd",
+  "imageUrl": "url/fotos"
+}
+```
+It will perform a body containing a complete object of the form
+
+```
+{
+    "imageUrl": "url/fotos",
+    "emailAddress": "ags@",
+    "firstName": "Mo",
+    "googleId": "sdw3232dsssdsd",
+    "lastName": "Yasin",
+    "totalScore": 0,
+    "userId": 10,
+    "username": "Mohammad Yasin"
+}
+```
