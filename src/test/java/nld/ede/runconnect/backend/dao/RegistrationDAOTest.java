@@ -28,7 +28,7 @@ public class RegistrationDAOTest {
     public void registerUserReturnsTrueIfUserAddedTest() {
         User user = new User();
         user.setGoogleId(GOOGLE_ID);
-        String sql = "insert into User (FIRSTNAME, LASTNAME, E_MAILADRES, USERNAME, GOOGLE_ID_HASH, PHOTOURL) values (?, ?, ?, ?, ?, ?)";
+        String sql = "insert into User (FIRSTNAME, LASTNAME, E_MAILADRES, USERNAME, GOOGLE_ID_HASH, IMAGE_URL) values (?, ?, ?, ?, ?, ?)";
         try {
             RegistrationDAO sutSpy = spy(sut);
             doReturn(false).when(sutSpy).isExistingUser(user);

@@ -17,6 +17,10 @@ public class DTOconverter {
         return newRoute;
     }
 
+    public static ActivityDTO JSONToActivityDTO(String JSONObject) throws JsonSyntaxException {
+        return JSON.fromJson(JSONObject, ActivityDTO.class);
+    }
+
     public static RouteDTO domainToRouteDTO(Route route) {
         RouteDTO routeDTO = new RouteDTO();
         routeDTO.routeId = route.getRouteId();
@@ -109,7 +113,6 @@ public class DTOconverter {
         return poi;
     }
 
-
     public static UserDTO domainToUserDTO(User user) {
         UserDTO userDTO = new UserDTO();
         userDTO.setUserId(user.getUserId());
@@ -122,5 +125,15 @@ public class DTOconverter {
         userDTO.setImageUrl(user.getImageUrl());
 
         return userDTO;
+    }
+
+    public static Activity ActivityDTOToDomainActivity(ActivityDTO activityDTO) {
+        Activity activity = new Activity();
+        activity.setRouteId(activityDTO.routeId);
+        activity.setUserId(activityDTO.userId);
+        activity.setPoint(activityDTO.point);
+        activity.setDuration(activityDTO.duration);
+        activity.setTempo(activityDTO.tempo);
+        return activity;
     }
 }
