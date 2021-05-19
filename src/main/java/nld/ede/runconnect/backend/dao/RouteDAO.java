@@ -65,7 +65,7 @@ public class RouteDAO implements IRouteDAO {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, name);
             statement.setString(2, description);
-            statement.setInt(2, distance);
+            statement.setInt(3, distance);
             statement.executeUpdate();
         } catch (SQLException exception) {
             throw exception;

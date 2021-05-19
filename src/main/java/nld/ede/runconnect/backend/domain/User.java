@@ -10,16 +10,7 @@ public class User {
     private String username;
     private int totalScore;
     private String imageUrl;
-    private String googleId;
-
-    public String getGoogleId() {
-        return googleId;
-    }
-
-    public void setGoogleId(String googleId) {
-        this.googleId = googleId;
-    }
-
+    
     public int getUserId() {
         return userId;
     }

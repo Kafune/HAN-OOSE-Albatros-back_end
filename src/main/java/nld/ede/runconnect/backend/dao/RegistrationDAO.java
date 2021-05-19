@@ -33,14 +33,13 @@ public class RegistrationDAO implements IRegistrationDAO {
     @Override
     public boolean registerUser(User user) throws SQLException {
         if (!isExistingUser(user)) {
-            String sql = "insert into User (FIRSTNAME, LASTNAME, E_MAILADRES, USERNAME, GOOGLE_ID_HASH, IMAGE_URL) values (?, ?, ?, ?, ?, ?)";
+            String sql = "insert into User (FIRSTNAME, LASTNAME, E_MAILADRES, USERNAME, IMAGE_URL) values (?, ?, ?, ?, ?, ?)";
             try (Connection connection = dataSource.getConnection()) {
                 PreparedStatement statement = connection.prepareStatement(sql);
                 statement.setString(1, user.getFirstName());
                 statement.setString(2, user.getLastName());
                 statement.setString(3, user.getEmailAddress());
                 statement.setString(4, user.getUsername());
-                statement.setString(5, user.getGoogleId());
                 statement.setString(6, user.getImageUrl());
                 statement.executeUpdate();
                 return true;

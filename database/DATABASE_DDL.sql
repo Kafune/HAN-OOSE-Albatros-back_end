@@ -1,40 +1,43 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     10-5-2021 16:57:21                           */
+/* Created on:     19-5-2021 14:40:54                           */
 /*==============================================================*/
 
 
-drop table if exists IMAGE;
-
-drop table if exists ACTIVITY;
-
-drop table if exists `USER`;
-
-drop table if exists POI;
-
-drop table if exists SEGMENTINROUTE;
-
-drop table if exists ROUTE;
-
-drop table if exists SEGMENT;
-
-drop table if exists COORDINATES;
+DROP TABLE IF EXISTS IMAGE;
+DROP TABLE IF EXISTS ACTIVITYINSEGMENT;
+DROP TABLE IF EXISTS ACTIVITY;
+DROP TABLE IF EXISTS `USER`;
+DROP TABLE IF EXISTS POI;
+DROP TABLE IF EXISTS SEGMENTINROUTE;
+DROP TABLE IF EXISTS ROUTE;
+DROP TABLE IF EXISTS SEGMENT;
+DROP TABLE IF EXISTS COORDINATES;
 
 /*==============================================================*/
 /* Table: ACTIVITY                                              */
 /*==============================================================*/
 create table ACTIVITY
 (
-    ACTIVITYID           int not null auto_increment,
-    ROUTEID              int not null,
+    ACTIVITYID           int not null,
     USERID               int not null,
     POINT                int not null,
-    DURATION             bigint,
-    TEMPO                int,
-    DISTANCE             int,
+    DURATION             bigint not null,
+    DISTANCE             int not null,
+    ROUTEID              int,
     primary key (ACTIVITYID)
 );
 
+/*==============================================================*/
+/* Table: ACTIVITYINSEGMENT                                     */
+/*==============================================================*/
+create table ACTIVITYINSEGMENT
+(
+    SEGMENTID            int not null,
+    ACTIVITYID           int not null,
+    SEQUENCENR           int not null,
+    primary key (SEGMENTID, ACTIVITYID)
+);
 
 /*==============================================================*/
 /* Table: COORDINATES                                           */
@@ -78,7 +81,7 @@ create table POI
 create table ROUTE
 (
     ROUTEID              int not null auto_increment,
-    NAME                 VARCHAR(150) NOT NULL,
+    NAME                 varchar(150) not null,
     DISTANCE             int not null,
     DESCRIPTION          varchar(150) not null,
     primary key (ROUTEID)
@@ -117,37 +120,41 @@ create table `USER`
     E_MAILADRES          varchar(254) not null,
     USERNAME             varchar(150) not null,
     TOTALSCORE           int not null default 0,
-    GOOGLE_ID_HASH        mediumtext not null,
-    IMAGE_URL             varchar(2083),
+    IMAGEURL             varchar(2083),
     primary key (USERID),
-    unique key AK_KEY_2 (E_MAILADRES),
-    unique key AK_KEY_4 (GOOGLE_ID_HASH)
+    unique key AK_AK_EMAILADRES_USERNAME (E_MAILADRES, USERNAME)
 );
 
-alter table ACTIVITY add constraint FK_REFERENCE_1 foreign key (USERID)
-    references `USER` (USERID) on delete cascade on update cascade;
-
-alter table ACTIVITY add constraint FK_REFERENCE_2 foreign key (ROUTEID)
+alter table ACTIVITY add constraint FK_FK_ACTIVITY_ROUTE foreign key (ROUTEID)
     references ROUTE (ROUTEID) on delete cascade on update cascade;
 
-alter table IMAGE add constraint FK_REFERENCE_3 foreign key (ACTIVITYID)
+alter table ACTIVITY add constraint FK_FK_ACTIVITY_USER foreign key (USERID)
+    references `USER` (USERID) on delete cascade on update cascade;
+
+alter table ACTIVITYINSEGMENT add constraint FK_FK_ACTIVITYINSEGMENT_ACTIVITY foreign key (ACTIVITYID)
     references ACTIVITY (ACTIVITYID) on delete cascade on update cascade;
 
-alter table IMAGE add constraint FK_REFERENCE_6 foreign key (USERID)
-    references `USER` (USERID) on delete cascade on update cascade;
-
-alter table POI add constraint FK_REFERENCE_8 foreign key (SEGMENTID)
+alter table ACTIVITYINSEGMENT add constraint FK_FK_ACTIVITYINSEGMENT_SEGMENT foreign key (SEGMENTID)
     references SEGMENT (SEGMENTID) on delete cascade on update cascade;
 
-alter table SEGMENT add constraint FK_REFERENCE_10 foreign key (ENDCOORD)
+alter table IMAGE add constraint FK_FK_IMAGE_ACTIVITY foreign key (ACTIVITYID)
+    references ACTIVITY (ACTIVITYID) on delete cascade on update cascade;
+
+alter table IMAGE add constraint FK_FK_IMAGE_USER foreign key (USERID)
+    references `USER` (USERID) on delete cascade on update cascade;
+
+alter table POI add constraint FK_FK_POI_SEGMENT foreign key (SEGMENTID)
+    references SEGMENT (SEGMENTID) on delete cascade on update cascade;
+
+alter table SEGMENT add constraint FK_FK_SEGMENT_COORDINATES_ENDCOORD foreign key (ENDCOORD)
     references COORDINATES (COORDINATESID) on delete cascade on update cascade;
 
-alter table SEGMENT add constraint FK_REFERENCE_9 foreign key (STARTCOORD)
+alter table SEGMENT add constraint FK_FK_SEGMENT_COORDINATES_STARTCOORD foreign key (STARTCOORD)
     references COORDINATES (COORDINATESID) on delete cascade on update cascade;
 
-alter table SEGMENTINROUTE add constraint FK_REFERENCE_4 foreign key (ROUTEID)
+alter table SEGMENTINROUTE add constraint FK_FK_SEGMENTINROUTE_ROUTE foreign key (ROUTEID)
     references ROUTE (ROUTEID) on delete cascade on update cascade;
 
-alter table SEGMENTINROUTE add constraint FK_REFERENCE_7 foreign key (SEGMENTID)
+alter table SEGMENTINROUTE add constraint FK_FK_SEGMENTINROUTE_SEGMENT foreign key (SEGMENTID)
     references SEGMENT (SEGMENTID) on delete cascade on update cascade;
 

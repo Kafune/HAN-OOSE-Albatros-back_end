@@ -6,7 +6,6 @@ public class Activity {
     private int userId;
     private int point;
     private long duration;
-    private int tempo;
 
     private int distance;
 
@@ -42,13 +41,6 @@ public class Activity {
         this.duration = duration;
     }
 
-    public int getTempo() {
-        return tempo;
-    }
-
-    public void setTempo(int tempo) {
-        this.tempo = tempo;
-    }
 
     public int getDistance() {
         return distance;

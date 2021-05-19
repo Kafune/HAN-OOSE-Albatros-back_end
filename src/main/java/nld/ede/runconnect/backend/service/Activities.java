@@ -17,7 +17,7 @@ import java.sql.SQLException;
 @Path("activities")
 public class Activities {
 
-    IActivityDAO activityDAO;
+    private IActivityDAO activityDAO;
 
     @POST
     @Path("/")
