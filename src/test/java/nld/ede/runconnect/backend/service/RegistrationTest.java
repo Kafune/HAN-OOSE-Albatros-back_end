@@ -37,11 +37,7 @@ public class RegistrationTest {
         Response response = Response.ok().entity(user).build();
         try {
 
-            try (MockedStatic<GoogleIdVerifier> utilities = Mockito.mockStatic(GoogleIdVerifier.class)) {
-                utilities.when(() -> GoogleIdVerifier.verifyGoogleId(user))
-                        .thenReturn(true);
-            }
-
+            
             when(registrationDAOMock.registerUser(user)).thenReturn(true);
             when(registrationDAOMock.findUser(GOOGLE_ID)).thenReturn(user);
             sut.setRegistrationDAO(registrationDAOMock);
