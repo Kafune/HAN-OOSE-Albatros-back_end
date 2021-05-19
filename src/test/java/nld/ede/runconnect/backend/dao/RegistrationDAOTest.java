@@ -28,7 +28,7 @@ public class RegistrationDAOTest {
     public void registerUserReturnsTrueIfUserAddedTest() {
         User user = new User();
         user.setGoogleId(GOOGLE_ID);
-        String sql = "insert into User (FIRSTNAME, LASTNAME, E_MAILADRES, USERNAME, GOOGLE_ID_HASH, IMAGE_URL) values (?, ?, ?, ?, ?, ?)";
+        String sql = "insert into User (FIRSTNAME, LASTNAME, E_MAILADRES, USERNAME, IMAGE_URL) values (?, ?, ?, ?, ?)";
         try {
             RegistrationDAO sutSpy = spy(sut);
             doReturn(false).when(sutSpy).isExistingUser(user);
@@ -74,7 +74,7 @@ public class RegistrationDAOTest {
         User user = new User();
         user.setGoogleId(GOOGLE_ID);
         user.setEmailAddress("email");
-        String sql = "SELECT E_MAILADRES FROM User where GOOGLE_ID_HASH = ?";
+        String sql = "SELECT count(*) as count FROM User where E_MAILADRES = ?";
         try {
 
             DataSource dataSource = mock(DataSource.class);
@@ -87,7 +87,7 @@ public class RegistrationDAOTest {
             when(connection.prepareStatement(sql)).thenReturn(preparedStatement);
             when(preparedStatement.executeQuery()).thenReturn(resultSet);
             when(resultSet.next()).thenReturn(true);
-            when(resultSet.getString(1)).thenReturn("email");
+            when(resultSet.getInt(1)).thenReturn(1);
 
             sut.setDatasource(dataSource);
             boolean exist = sut.isExistingUser(user);
@@ -106,7 +106,7 @@ public class RegistrationDAOTest {
         User user = new User();
         user.setGoogleId(GOOGLE_ID);
         user.setEmailAddress("email");
-        String sql = "SELECT E_MAILADRES FROM User where GOOGLE_ID_HASH = ?";
+        String sql = "SELECT count(*) as count FROM User where E_MAILADRES = ?";
         try {
 
             DataSource dataSource = mock(DataSource.class);
@@ -135,7 +135,7 @@ public class RegistrationDAOTest {
     @Test
     public void findUserTest() {
         try {
-            String expectedSQL = "SELECT * FROM User WHERE GOOGLE_ID_HASH = ?";
+            String expectedSQL = "SELECT * FROM User WHERE E_MAILADRES = ?";
 
             DataSource dataSource = mock(DataSource.class);
             Connection connection = mock(Connection.class);
@@ -170,8 +170,7 @@ public class RegistrationDAOTest {
             when(rs.getString(4)).thenReturn("emailaddress");
             when(rs.getString(5)).thenReturn("username");
             when(rs.getInt(6)).thenReturn(5);
-            when(rs.getString(7)).thenReturn(GOOGLE_ID);
-            when(rs.getString(8)).thenReturn("url");
+            when(rs.getString(7)).thenReturn("url");
 
             User user = sut.extractUser(rs);
             assertEquals(2, user.getUserId());
@@ -180,7 +179,6 @@ public class RegistrationDAOTest {
             assertEquals("emailaddress", user.getEmailAddress());
             assertEquals("username",user.getUsername());
             assertEquals(5, user.getTotalScore());
-            assertEquals(GOOGLE_ID, user.getGoogleId());
             assertEquals("url",user.getImageUrl());
 
         } catch (SQLException e) {

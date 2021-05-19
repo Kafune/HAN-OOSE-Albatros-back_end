@@ -7,8 +7,7 @@ import org.junit.jupiter.api.Test;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -31,7 +30,7 @@ public class ActivityDAOTest {
 
     @Test
     public void addNewActivityTest() {
-        String sql = "INSERT INTO activity (routeId, userId, point, duration, tempo, distance) Values (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO activity (routeId, userId, point, duration, distance) Values (?, ?, ?, ?, ?)";
         Activity activity = new Activity();
 
         try {
@@ -55,7 +54,7 @@ public class ActivityDAOTest {
             verify(preparedStatement).setInt(2, activity.getUserId());
             verify(preparedStatement).setInt(3, activity.getPoint());
             verify(preparedStatement).setLong(4, activity.getDuration());
-            verify(preparedStatement).setInt(6, activity.getDistance());
+            verify(preparedStatement).setInt(5, activity.getDistance());
             verify(preparedStatement).executeUpdate();
 
         } catch (Exception e) {
