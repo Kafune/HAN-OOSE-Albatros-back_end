@@ -3,7 +3,7 @@ package nld.ede.runconnect.backend.service;
 
 import nld.ede.runconnect.backend.dao.IRouteDAO;
 import nld.ede.runconnect.backend.domain.Route;
-import nld.ede.runconnect.backend.service.dto.DTOconverter;
+import nld.ede.runconnect.backend.service.helpers.DTOconverter;
 import nld.ede.runconnect.backend.service.dto.RouteDTO;
 
 import javax.inject.Inject;

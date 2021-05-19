@@ -73,14 +73,13 @@ public class RegistrationTest {
 
             assertEquals(200, actualResponseStatus);
 
-            assertEquals(user.getUserId(), actualUserDTO.getUserId());
-            assertEquals(user.getFirstName(), actualUserDTO.getFirstName());
-            assertEquals(user.getLastName(), actualUserDTO.getLastName());
-            assertEquals(user.getEmailAddress(), actualUserDTO.getEmailAddress());
-            assertEquals(user.getUsername(), actualUserDTO.getUsername());
-            assertEquals(user.getTotalScore(), actualUserDTO.getTotalScore());
-            assertEquals(user.getGoogleId(), actualUserDTO.getGoogleId());
-            assertEquals(user.getImageUrl(), actualUserDTO.getImageUrl());
+            assertEquals(user.getUserId(), actualUserDTO.userId);
+            assertEquals(user.getFirstName(), actualUserDTO.firstName);
+            assertEquals(user.getLastName(), actualUserDTO.lastName);
+            assertEquals(user.getEmailAddress(), actualUserDTO.emailAddress);
+            assertEquals(user.getUsername(), actualUserDTO.username);
+            assertEquals(user.getTotalScore(), actualUserDTO.totalScore);
+            assertEquals(user.getImageUrl(), actualUserDTO.imageUrl);
         } catch (SQLException e) {
             fail();
         }

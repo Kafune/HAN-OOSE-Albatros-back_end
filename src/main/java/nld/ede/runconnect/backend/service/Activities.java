@@ -3,7 +3,7 @@ package nld.ede.runconnect.backend.service;
 import nld.ede.runconnect.backend.dao.IActivityDAO;
 import nld.ede.runconnect.backend.domain.Activity;
 import nld.ede.runconnect.backend.service.dto.ActivityDTO;
-import nld.ede.runconnect.backend.service.dto.DTOconverter;
+import nld.ede.runconnect.backend.service.helpers.DTOconverter;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;

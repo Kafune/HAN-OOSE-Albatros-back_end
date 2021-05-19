@@ -1,10 +1,8 @@
 package nld.ede.runconnect.backend.service;
 
 import nld.ede.runconnect.backend.dao.ISegmentDAO;
-import nld.ede.runconnect.backend.domain.Route;
 import nld.ede.runconnect.backend.domain.Segment;
-import nld.ede.runconnect.backend.service.dto.DTOconverter;
-import nld.ede.runconnect.backend.service.dto.RouteDTO;
+import nld.ede.runconnect.backend.service.helpers.DTOconverter;
 import nld.ede.runconnect.backend.service.dto.SegmentDTO;
 
 import javax.inject.Inject;

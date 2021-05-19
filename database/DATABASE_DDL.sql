@@ -120,7 +120,7 @@ create table `USER`
     E_MAILADRES          varchar(254) not null,
     USERNAME             varchar(150) not null,
     TOTALSCORE           int not null default 0,
-    IMAGEURL             varchar(2083),
+    IMAGE_URL             varchar(2083),
     primary key (USERID),
     unique key AK_AK_EMAILADRES_USERNAME (E_MAILADRES, USERNAME)
 );
