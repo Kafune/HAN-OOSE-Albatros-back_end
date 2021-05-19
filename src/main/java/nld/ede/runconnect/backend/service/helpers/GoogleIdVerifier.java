@@ -16,13 +16,13 @@ public class GoogleIdVerifier {
 
     public static boolean verifyGoogleId(User userToLogin) {
         Response response = getResponse(userToLogin.getGoogleId());
-        UserInfo userInfo = (UserInfo) response.getEntity();
+
         return response.getStatus() == STATUS_OK
                 && ((UserInfo) response.getEntity()).email.equals(userToLogin.getEmailAddress());
-
     }
 
     public static Response getResponse(String id) {
+
         Client client = ClientBuilder.newClient();
 
         String query = "id_token=" + id;

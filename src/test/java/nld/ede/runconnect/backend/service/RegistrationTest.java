@@ -3,9 +3,14 @@ package nld.ede.runconnect.backend.service;
 import nld.ede.runconnect.backend.dao.RegistrationDAO;
 import nld.ede.runconnect.backend.domain.User;
 import nld.ede.runconnect.backend.service.dto.UserDTO;
+import nld.ede.runconnect.backend.service.helpers.GoogleIdVerifier;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
 
@@ -29,7 +34,14 @@ public class RegistrationTest {
     @Test
     public void registerUserCallsMethodInDAOTest() {
         User user = getUser();
+        Response response = Response.ok().entity(user).build();
         try {
+
+            try (MockedStatic<GoogleIdVerifier> utilities = Mockito.mockStatic(GoogleIdVerifier.class)) {
+                utilities.when(() -> GoogleIdVerifier.verifyGoogleId(user))
+                        .thenReturn(true);
+            }
+
             when(registrationDAOMock.registerUser(user)).thenReturn(true);
             when(registrationDAOMock.findUser(GOOGLE_ID)).thenReturn(user);
             sut.setRegistrationDAO(registrationDAOMock);
@@ -84,6 +96,7 @@ public class RegistrationTest {
             fail();
         }
     }
+
     private User getUser() {
         User user = new User();
         user.setUserId(USER_ID);
