@@ -1,12 +1,25 @@
 package nld.ede.runconnect.backend.domain;
 
+import nld.ede.runconnect.backend.service.dto.SegmentDTO;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Activity {
     private int activityId;
     private int routeId;
     private int userId;
     private int point;
     private long duration;
+    private List<Segment> segments = new ArrayList<>();
 
+    public List<Segment> getSegments() {
+        return segments;
+    }
+
+    public void setSegments(List<Segment> segments) {
+        this.segments = segments;
+    }
 
     private int distance;
 

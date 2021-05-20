@@ -133,6 +133,9 @@ public class DTOconverter {
         activity.setUserId(activityDTO.userId);
         activity.setPoint(activityDTO.point);
         activity.setDuration(activityDTO.duration);
+        for (SegmentDTO segmentDTO: activityDTO.segments) {
+            activity.getSegments().add(SegmentDTOToDomainSegment(segmentDTO));
+        }
         return activity;
     }
 }
