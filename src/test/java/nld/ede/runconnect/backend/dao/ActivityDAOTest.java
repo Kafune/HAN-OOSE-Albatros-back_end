@@ -30,8 +30,7 @@ public class ActivityDAOTest {
 
     @Test
     public void addNewActivityTest() {
-        String sql = "INSERT INTO activity (routeId, userId, point, duration, distance) Values (?, ?, ?, ?, ?)";
-        Activity activity = new Activity();
+        String sql = "INSERT INTO ACTIVITY (routeId, userId, point, duration, distance) Values (?, ?, ?, ?, ?)";        Activity activity = new Activity();
 
         try {
             DataSource dataSource = mock(DataSource.class);

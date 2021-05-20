@@ -28,7 +28,7 @@ public class RegistrationDAOTest {
     public void registerUserReturnsTrueIfUserAddedTest() {
         User user = new User();
         user.setGoogleId(GOOGLE_ID);
-        String sql = "insert into User (FIRSTNAME, LASTNAME, E_MAILADRES, USERNAME, IMAGE_URL) values (?, ?, ?, ?, ?)";
+        String sql = "insert into `USER` (FIRSTNAME, LASTNAME, E_MAILADRES, USERNAME, IMAGE_URL) values (?, ?, ?, ?, ?)";
         try {
             RegistrationDAO sutSpy = spy(sut);
             doReturn(false).when(sutSpy).isExistingUser(user);
@@ -74,7 +74,7 @@ public class RegistrationDAOTest {
         User user = new User();
         user.setGoogleId(GOOGLE_ID);
         user.setEmailAddress("email");
-        String sql = "SELECT count(*) as count FROM User where E_MAILADRES = ?";
+        String sql = "SELECT count(*) as count FROM `USER` where E_MAILADRES = ?";
         try {
 
             DataSource dataSource = mock(DataSource.class);
@@ -106,7 +106,7 @@ public class RegistrationDAOTest {
         User user = new User();
         user.setGoogleId(GOOGLE_ID);
         user.setEmailAddress("email");
-        String sql = "SELECT count(*) as count FROM User where E_MAILADRES = ?";
+        String sql = "SELECT count(*) as count FROM `USER` where E_MAILADRES = ?";
         try {
 
             DataSource dataSource = mock(DataSource.class);
@@ -135,7 +135,7 @@ public class RegistrationDAOTest {
     @Test
     public void findUserTest() {
         try {
-            String expectedSQL = "SELECT * FROM User WHERE E_MAILADRES = ?";
+            String expectedSQL = "SELECT * FROM `USER` WHERE E_MAILADRES = ?";
 
             DataSource dataSource = mock(DataSource.class);
             Connection connection = mock(Connection.class);
