@@ -23,7 +23,9 @@ public class Registration {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response registerUser(User user) throws SQLException {
+
         boolean isExistingUserInGoogle = GoogleIdVerifier.verifyGoogleId(user);
+
         if (isExistingUserInGoogle) {
             boolean registered = registrationDAO.registerUser(user);
             User userInDatabase = registrationDAO.findUser(user.getEmailAddress());

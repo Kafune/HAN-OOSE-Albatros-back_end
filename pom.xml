@@ -34,7 +34,7 @@
             <version>2.33</version>
             <scope>test</scope>
         </dependency>
-<!--        TODO: Deze dependencies zijn misschien nogig voor het afmaken van RegistrationTest-->
+<!--        TODO: Deze dependencies zijn misschien nodig voor het afmaken van RegistrationTest-->
 <!--        <dependency>-->
 <!--            <groupId>org.glassfish.jersey.core</groupId>-->
 <!--            <artifactId>jersey-client</artifactId>-->
