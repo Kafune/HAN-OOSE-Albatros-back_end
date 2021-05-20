@@ -6,7 +6,7 @@ import nld.ede.runconnect.backend.service.helpers.DTOconverter;
 import nld.ede.runconnect.backend.service.dto.SegmentDTO;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -16,7 +16,7 @@ import javax.ws.rs.core.Response;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-@Singleton
+
 @Path("segments")
 public class Segments {
 
