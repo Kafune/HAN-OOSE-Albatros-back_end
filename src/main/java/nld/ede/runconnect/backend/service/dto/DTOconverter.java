@@ -133,7 +133,6 @@ public class DTOconverter {
         activity.setUserId(activityDTO.userId);
         activity.setPoint(activityDTO.point);
         activity.setDuration(activityDTO.duration);
-        activity.setTempo(activityDTO.tempo);
         return activity;
     }
 }

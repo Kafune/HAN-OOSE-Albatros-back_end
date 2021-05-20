@@ -55,8 +55,7 @@ public class ActivityDAOTest {
             verify(preparedStatement).setInt(2, activity.getUserId());
             verify(preparedStatement).setInt(3, activity.getPoint());
             verify(preparedStatement).setLong(4, activity.getDuration());
-            verify(preparedStatement).setInt(5, activity.getTempo());
-            verify(preparedStatement).setInt(6, activity.getDistance());
+            verify(preparedStatement).setInt(5, activity.getDistance());
             verify(preparedStatement).executeUpdate();
 
         } catch (Exception e) {
