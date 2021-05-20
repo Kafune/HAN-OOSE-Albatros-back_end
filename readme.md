@@ -269,8 +269,7 @@ It will expect a body containing an object of the form
                     "longitude": 5.679166, 
                     "latitude": 52.030257, 
                     "altitude": 26.0
-                },
-                "id": 2
+                }
         },         
         {
                 "endCoordinate": { 
@@ -282,8 +281,8 @@ It will expect a body containing an object of the form
                     "longitude": 5.55, 
                     "latitude": 52.66, 
                     "altitude": 28.0
-                },
-                "id": 4
+                }
+                
         }]
 }
 routeId mag null zijn
