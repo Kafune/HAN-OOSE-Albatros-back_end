@@ -34,18 +34,6 @@
             <version>2.33</version>
             <scope>test</scope>
         </dependency>
-<!--        TODO: Deze dependencies zijn misschien nodig voor het afmaken van RegistrationTest-->
-        <dependency>
-            <groupId>org.glassfish.jersey.core</groupId>
-            <artifactId>jersey-client</artifactId>
-            <version>3.0.2</version>
-            <scope>test</scope>
-        </dependency>
-<!--        <dependency>-->
-<!--            <groupId>javax.ws.rs</groupId>-->
-<!--            <artifactId>javax.ws.rs-api</artifactId>-->
-<!--            <version>2.1</version>-->
-<!--        </dependency>-->
         <!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
         <dependency>
             <groupId>org.mockito</groupId>
