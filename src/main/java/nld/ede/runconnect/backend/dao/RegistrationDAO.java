@@ -16,7 +16,7 @@ public class RegistrationDAO implements IRegistrationDAO {
 
     @Override
     public User findUser(String email) throws SQLException {
-        String sql = "SELECT * FROM User WHERE E_MAILADRES = ?";
+        String sql = "SELECT * FROM `USER` WHERE E_MAILADRES = ?";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, email);
@@ -33,7 +33,7 @@ public class RegistrationDAO implements IRegistrationDAO {
     @Override
     public boolean registerUser(User user) throws SQLException {
         if (!isExistingUser(user)) {
-            String sql = "insert into User (FIRSTNAME, LASTNAME, E_MAILADRES, USERNAME, IMAGE_URL) values (?, ?, ?, ?, ?)";
+            String sql = "insert into `USER` (FIRSTNAME, LASTNAME, E_MAILADRES, USERNAME, IMAGE_URL) values (?, ?, ?, ?, ?)";
             try (Connection connection = dataSource.getConnection()) {
                 PreparedStatement statement = connection.prepareStatement(sql);
                 statement.setString(1, user.getFirstName());
@@ -52,7 +52,7 @@ public class RegistrationDAO implements IRegistrationDAO {
     }
 
     public boolean isExistingUser(User user) throws SQLException {
-        String sql = "SELECT count(*) as count FROM User where E_MAILADRES = ?";
+        String sql = "SELECT count(*) as count FROM `USER` where E_MAILADRES = ?";
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, user.getEmailAddress());
