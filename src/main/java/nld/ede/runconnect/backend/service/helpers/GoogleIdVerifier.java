@@ -14,14 +14,14 @@ public class GoogleIdVerifier {
 
     public static final int STATUS_OK = 200;
 
-    public static boolean verifyGoogleId(User userToLogin) {
+    public  boolean verifyGoogleId(User userToLogin) {
         Response response = getResponse(userToLogin.getGoogleId());
 
         return response.getStatus() == STATUS_OK
                 && ((UserInfo) response.getEntity()).email.equals(userToLogin.getEmailAddress());
     }
 
-    public static Response getResponse(String id) {
+    public  Response getResponse(String id) {
 
         Client client = ClientBuilder.newClient();
 

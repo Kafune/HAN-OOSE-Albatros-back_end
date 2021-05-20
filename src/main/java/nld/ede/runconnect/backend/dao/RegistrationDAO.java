@@ -3,12 +3,13 @@ package nld.ede.runconnect.backend.dao;
 import nld.ede.runconnect.backend.domain.User;
 
 import javax.annotation.Resource;
+import javax.inject.Singleton;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+//@Singleton
 public class RegistrationDAO implements IRegistrationDAO {
 
     @Resource(name = "jdbc/Run_Connect")

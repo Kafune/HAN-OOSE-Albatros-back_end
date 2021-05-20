@@ -18,13 +18,14 @@ import java.sql.SQLException;
 public class Registration {
 
     private IRegistrationDAO registrationDAO;
+    private GoogleIdVerifier googleIdVerifier;
 
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response registerUser(User user) throws SQLException {
 
-        boolean isExistingUserInGoogle = GoogleIdVerifier.verifyGoogleId(user);
+        boolean isExistingUserInGoogle = googleIdVerifier.verifyGoogleId(user);
 
         if (isExistingUserInGoogle) {
             boolean registered = registrationDAO.registerUser(user);
@@ -43,5 +44,10 @@ public class Registration {
     @Inject
     public void setRegistrationDAO(IRegistrationDAO registrationDAO) {
         this.registrationDAO = registrationDAO;
+    }
+
+    @Inject
+    public void setGoogleIdVerifier(GoogleIdVerifier googleIdVerifier) {
+        this.googleIdVerifier = googleIdVerifier;
     }
 }
