@@ -25,23 +25,21 @@ public class ActivityDAO implements IActivityDAO {
             statement.setInt(5, activity.getDistance());
             statement.executeUpdate();
         } catch (SQLException exception) {
-            exception.printStackTrace();
             throw exception;
         }
         insertSegments(activity);
     }
 
-    private void insertSegments(Activity activity) throws SQLException {
-        System.out.println("aasas");
+    public void insertSegments(Activity activity) throws SQLException {
         /*
          * Insert every segment with a for loop and a custom made database procedure.
          */
-        for(int incrementedid =0; incrementedid< activity.getSegments().size(); incrementedid++) {
+        for (int incrementedid = 0; incrementedid < activity.getSegments().size(); incrementedid++) {
             Segment segment = activity.getSegments().get(incrementedid);
 
-            String sql2 = "CALL spr_InsertActivitySegments(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "CALL spr_InsertActivitySegments(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             try (Connection connection = dataSource.getConnection()) {
-                PreparedStatement statement = connection.prepareStatement(sql2);
+                PreparedStatement statement = connection.prepareStatement(sql);
                 statement.setInt(1, activity.getUserId());
                 statement.setInt(2, activity.getPoint());
                 statement.setLong(3, activity.getDuration());
@@ -53,16 +51,12 @@ public class ActivityDAO implements IActivityDAO {
                 statement.setDouble(9, segment.getEndCoordinate().getLatitude());
                 statement.setDouble(10, segment.getEndCoordinate().getLongitude());
                 statement.setFloat(11, segment.getEndCoordinate().getAltitude());
-                System.out.println("aasa32332s");
                 statement.executeUpdate();
-                System.out.println("32");
             } catch (SQLException exception) {
-                exception.printStackTrace();
                 throw exception;
             }
         }
     }
-
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
     }
