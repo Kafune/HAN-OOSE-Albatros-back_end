@@ -6,6 +6,5 @@ public class ActivityDTO {
     public int userId;
     public int point;
     public long duration;
-    public int tempo;
     public int distance;
 }
