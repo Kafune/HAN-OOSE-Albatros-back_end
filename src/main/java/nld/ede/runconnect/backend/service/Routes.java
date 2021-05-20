@@ -7,13 +7,14 @@ import nld.ede.runconnect.backend.service.helpers.DTOconverter;
 import nld.ede.runconnect.backend.service.dto.RouteDTO;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.SQLException;
-
+@Singleton
 @Path("routes")
 public class Routes {
 
