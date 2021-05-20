@@ -19,7 +19,7 @@ DROP TABLE IF EXISTS COORDINATES;
 /*==============================================================*/
 create table ACTIVITY
 (
-    ACTIVITYID           int not null,
+    ACTIVITYID           int not null auto_increment,
     USERID               int not null,
     POINT                int not null,
     DURATION             bigint not null,
