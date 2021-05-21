@@ -3,7 +3,7 @@ DROP PROCEDURE if exists spr_InsertActivitySegments ;
 CREATE PROCEDURE spr_InsertActivitySegments (IN userId int,
                                       IN point INT,
                                       IN duration bigint,
-                                      IN distance int,
+                                      IN distance double,
                                       IN sequence_nr int,
                                       IN start_latitude double,
                                       IN start_longitude double,
