@@ -131,7 +131,7 @@ public class DTOconverter {
     public static Activity ActivityDTOToDomainActivity(ActivityDTO activityDTO) {
         Activity activity = new Activity();
         activity.setRouteId(activityDTO.routeId);
-        activity.setUserId(activityDTO.userId);
+        activity.setUserId(1);
         activity.setPoint(activityDTO.point);
         activity.setDuration(activityDTO.duration);
         for (SegmentDTO segmentDTO: activityDTO.segments) {
