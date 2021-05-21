@@ -33,7 +33,7 @@ public class ActivityDAOTest {
 
     @Test
     public void addNewActivityTest() {
-        String sql = "INSERT INTO activity (routeId, userId, point, duration, distance) Values (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO ACTIVITY (routeId, userId, point, duration, distance) Values (?, ?, ?, ?, ?)";
         Activity activity = new Activity();
 
         try {
@@ -50,10 +50,10 @@ public class ActivityDAOTest {
 
             //act
             sut.addNewActivity(activity);
-
+            Integer i = null;
             //assert
             verify(connection).prepareStatement(sql);
-            verify(preparedStatement).setInt(1, activity.getRouteId());
+
             verify(preparedStatement).setInt(2, activity.getUserId());
             verify(preparedStatement).setInt(3, activity.getPoint());
             verify(preparedStatement).setLong(4, activity.getDuration());

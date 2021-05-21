@@ -15,16 +15,14 @@ public class ActivityDAO implements IActivityDAO {
 
     @Override
     public void addNewActivity(Activity activity) throws SQLException {
-        Integer routeId = null;
-        if (activity.getRouteId() != 0) {
-            routeId = activity.getRouteId();
-        }
-        System.out.println(activity.getDistance());
+
         String sql = "INSERT INTO ACTIVITY (routeId, userId, point, duration, distance) Values (?, ?, ?, ?, ?)";
 
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, routeId);
+            if (activity.getRouteId() != 0) {
+                statement.setInt(1, activity.getRouteId());
+            }
             statement.setInt(2, activity.getUserId());
             statement.setInt(3, activity.getPoint());
             statement.setLong(4, activity.getDuration());
