@@ -57,7 +57,7 @@ public class ActivityDAOTest {
             verify(preparedStatement).setInt(2, activity.getUserId());
             verify(preparedStatement).setInt(3, activity.getPoint());
             verify(preparedStatement).setLong(4, activity.getDuration());
-            verify(preparedStatement).setInt(5, activity.getDistance());
+            verify(preparedStatement).setFloat(5, activity.getDistance());
             verify(preparedStatement).executeUpdate();
 
         } catch (Exception e) {
@@ -88,7 +88,7 @@ public class ActivityDAOTest {
             verify(preparedStatement).setInt(1, activity.getUserId());
             verify(preparedStatement).setInt(2, activity.getPoint());
             verify(preparedStatement).setLong(3, activity.getDuration());
-            verify(preparedStatement).setInt(4, activity.getDistance());
+            verify(preparedStatement).setFloat(4, activity.getDistance());
             verify(preparedStatement).setDouble(6, activity.getSegments().get(0).getStartCoordinate().getLatitude());
             verify(preparedStatement).setDouble(7, activity.getSegments().get(0).getStartCoordinate().getLongitude());
             verify(preparedStatement).setFloat(8, activity.getSegments().get(0).getStartCoordinate().getAltitude());

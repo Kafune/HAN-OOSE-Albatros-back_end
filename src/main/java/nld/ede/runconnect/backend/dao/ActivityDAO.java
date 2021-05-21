@@ -27,7 +27,7 @@ public class ActivityDAO implements IActivityDAO {
             statement.setInt(2, activity.getUserId());
             statement.setInt(3, activity.getPoint());
             statement.setLong(4, activity.getDuration());
-            statement.setInt(5, activity.getDistance());
+            statement.setFloat(5, activity.getDistance());
             statement.executeUpdate();
         } catch (SQLException exception) {
             exception.printStackTrace();
@@ -49,7 +49,7 @@ public class ActivityDAO implements IActivityDAO {
                 statement.setInt(1, activity.getUserId());
                 statement.setInt(2, activity.getPoint());
                 statement.setLong(3, activity.getDuration());
-                statement.setInt(4, activity.getDistance());
+                statement.setFloat(4, activity.getDistance());
                 statement.setInt(5, incrementedid);
                 statement.setDouble(6, segment.getStartCoordinate().getLatitude());
                 statement.setDouble(7, segment.getStartCoordinate().getLongitude());
