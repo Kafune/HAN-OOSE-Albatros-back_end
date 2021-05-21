@@ -34,26 +34,29 @@ public class ActivityDAOTest {
     @Test
     public void addNewActivityTest() {
         String sql = "INSERT INTO ACTIVITY (routeId, userId, point, duration, distance) Values (?, ?, ?, ?, ?)";
-        Activity activity = new Activity();
+        Activity activity = getActivity();
 
         try {
             DataSource dataSource = mock(DataSource.class);
             Connection connection = mock(Connection.class);
             PreparedStatement preparedStatement = mock(PreparedStatement.class);
 
+            ActivityDAO activityDAOSpy = spy(ActivityDAO.class);
+            doNothing().when(activityDAOSpy).insertSegments(activity);
+
             // instruct Mocks
             when(dataSource.getConnection()).thenReturn(connection);
             when(connection.prepareStatement(sql)).thenReturn(preparedStatement);
             when(preparedStatement.executeUpdate()).thenReturn(1);
 
-            sut.setDataSource(dataSource);
+            activityDAOSpy.setDataSource(dataSource);
 
             //act
-            sut.addNewActivity(activity);
+            activityDAOSpy.addNewActivity(activity);
             Integer i = null;
             //assert
             verify(connection).prepareStatement(sql);
-
+            verify(preparedStatement).setInt(1, activity.getRouteId());
             verify(preparedStatement).setInt(2, activity.getUserId());
             verify(preparedStatement).setInt(3, activity.getPoint());
             verify(preparedStatement).setLong(4, activity.getDuration());
@@ -61,6 +64,7 @@ public class ActivityDAOTest {
             verify(preparedStatement).executeUpdate();
 
         } catch (Exception e) {
+            e.printStackTrace();
             fail(e);
         }
     }
