@@ -19,7 +19,7 @@ public class ActivityDAO implements IActivityDAO {
         if (activity.getRouteId() != 0) {
             routeId = activity.getRouteId();
         }
-        System.out.println(routeId);
+        System.out.println(activity.getDistance());
         String sql = "INSERT INTO ACTIVITY (routeId, userId, point, duration, distance) Values (?, ?, ?, ?, ?)";
 
         try (Connection connection = dataSource.getConnection()) {
