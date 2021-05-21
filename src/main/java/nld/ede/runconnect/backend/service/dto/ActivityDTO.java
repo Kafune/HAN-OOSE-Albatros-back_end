@@ -8,6 +8,6 @@ public class ActivityDTO {
     public int userId;
     public int point;
     public long duration;
-    public int distance;
+    public float distance;
     public List<SegmentDTO> segments = new ArrayList<>();
 }

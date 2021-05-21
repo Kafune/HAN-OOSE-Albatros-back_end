@@ -23,7 +23,7 @@ create table ACTIVITY
     USERID               int not null,
     POINT                int not null,
     DURATION             bigint not null,
-    DISTANCE             int not null,
+    DISTANCE             double not null,
     ROUTEID              int,
     primary key (ACTIVITYID)
 );

@@ -1,7 +1,5 @@
 package nld.ede.runconnect.backend.domain;
 
-import nld.ede.runconnect.backend.service.dto.SegmentDTO;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +8,7 @@ public class Activity {
     private int routeId;
     private int userId;
     private int point;
+    private float distance;
     private long duration;
     private List<Segment> segments = new ArrayList<>();
 
@@ -21,7 +20,7 @@ public class Activity {
         this.segments = segments;
     }
 
-    private int distance;
+
 
     public int getRouteId() {
         return routeId;
@@ -56,11 +55,11 @@ public class Activity {
     }
 
 
-    public int getDistance() {
+    public float getDistance() {
         return distance;
     }
 
-    public void setDistance(int distance) {
+    public void setDistance(float distance) {
         this.distance = distance;
     }
 }
