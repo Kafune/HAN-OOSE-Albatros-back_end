@@ -3,9 +3,16 @@ package nld.ede.runconnect.backend.service;
 import nld.ede.runconnect.backend.dao.RegistrationDAO;
 import nld.ede.runconnect.backend.domain.User;
 import nld.ede.runconnect.backend.service.dto.UserDTO;
+
+import nld.ede.runconnect.backend.service.helpers.DTOconverter;
+import nld.ede.runconnect.backend.service.helpers.GoogleIdVerifier;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
 
@@ -29,14 +36,20 @@ public class RegistrationTest {
     @Test
     public void registerUserCallsMethodInDAOTest() {
         User user = getUser();
+
         try {
+            GoogleIdVerifier googleIdVerifierMock = mock(GoogleIdVerifier.class);
+            when(googleIdVerifierMock.verifyGoogleId(user)).thenReturn(true);
+            sut.setGoogleIdVerifier(googleIdVerifierMock);
+
             when(registrationDAOMock.registerUser(user)).thenReturn(true);
-            when(registrationDAOMock.findUser(GOOGLE_ID)).thenReturn(user);
+            when(registrationDAOMock.findUser(user.getEmailAddress())).thenReturn(user);
             sut.setRegistrationDAO(registrationDAOMock);
 
             sut.registerUser(user);
 
             verify(registrationDAOMock).registerUser(user);
+
         } catch (SQLException e) {
             fail();
         }
@@ -46,8 +59,12 @@ public class RegistrationTest {
     public void registerUserReturns201IfUserRegistered() {
         User user = getUser();
         try {
+            GoogleIdVerifier googleIdVerifierMock = mock(GoogleIdVerifier.class);
+            when(googleIdVerifierMock.verifyGoogleId(user)).thenReturn(true);
+            sut.setGoogleIdVerifier(googleIdVerifierMock);
+
             when(registrationDAOMock.registerUser(user)).thenReturn(true);
-            when(registrationDAOMock.findUser(GOOGLE_ID)).thenReturn(user);
+            when(registrationDAOMock.findUser(user.getEmailAddress())).thenReturn(user);
             sut.setRegistrationDAO(registrationDAOMock);
 
             Response response = sut.registerUser(user);
@@ -63,8 +80,12 @@ public class RegistrationTest {
     public void registerUserReturns200IfUserFoundInDatabase() {
         User user = getUser();
         try {
+            GoogleIdVerifier googleIdVerifierMock = mock(GoogleIdVerifier.class);
+            when(googleIdVerifierMock.verifyGoogleId(user)).thenReturn(true);
+            sut.setGoogleIdVerifier(googleIdVerifierMock);
+
             when(registrationDAOMock.registerUser(user)).thenReturn(false);
-            when(registrationDAOMock.findUser(GOOGLE_ID)).thenReturn(user);
+            when(registrationDAOMock.findUser(user.getEmailAddress())).thenReturn(user);
             sut.setRegistrationDAO(registrationDAOMock);
 
             Response response = sut.registerUser(user);
@@ -73,18 +94,36 @@ public class RegistrationTest {
 
             assertEquals(200, actualResponseStatus);
 
-            assertEquals(user.getUserId(), actualUserDTO.getUserId());
-            assertEquals(user.getFirstName(), actualUserDTO.getFirstName());
-            assertEquals(user.getLastName(), actualUserDTO.getLastName());
-            assertEquals(user.getEmailAddress(), actualUserDTO.getEmailAddress());
-            assertEquals(user.getUsername(), actualUserDTO.getUsername());
-            assertEquals(user.getTotalScore(), actualUserDTO.getTotalScore());
-            assertEquals(user.getGoogleId(), actualUserDTO.getGoogleId());
-            assertEquals(user.getImageUrl(), actualUserDTO.getImageUrl());
+            assertEquals(user.getUserId(), actualUserDTO.userId);
+            assertEquals(user.getFirstName(), actualUserDTO.firstName);
+            assertEquals(user.getLastName(), actualUserDTO.lastName);
+            assertEquals(user.getEmailAddress(), actualUserDTO.emailAddress);
+            assertEquals(user.getUsername(), actualUserDTO.username);
+            assertEquals(user.getTotalScore(), actualUserDTO.totalScore);
+            assertEquals(user.getImageUrl(), actualUserDTO.imageUrl);
         } catch (SQLException e) {
             fail();
         }
     }
+    @Test
+    public void registerUserReturns404IfIdNotExistsInGoogle() {
+        User user = getUser();
+        try {
+            GoogleIdVerifier googleIdVerifierMock = mock(GoogleIdVerifier.class);
+            when(googleIdVerifierMock.verifyGoogleId(user)).thenReturn(false);
+            sut.setGoogleIdVerifier(googleIdVerifierMock);
+
+
+            Response response = sut.registerUser(user);
+            int actualResponseStatus = response.getStatus();
+
+            assertEquals(404, actualResponseStatus);
+
+        } catch (SQLException e) {
+            fail();
+        }
+    }
+
     private User getUser() {
         User user = new User();
         user.setUserId(USER_ID);

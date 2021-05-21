@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ActivityDTO {
-    public int activityId;
     public int routeId;
     public int userId;
     public int point;

@@ -15,7 +15,8 @@ public class ActivityDAO implements IActivityDAO {
 
     @Override
     public void addNewActivity(Activity activity) throws SQLException {
-        String sql = "INSERT INTO activity (routeId, userId, point, duration, distance) Values (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO ACTIVITY (routeId, userId, point, duration, distance) Values (?, ?, ?, ?, ?)";
+
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, activity.getRouteId());
