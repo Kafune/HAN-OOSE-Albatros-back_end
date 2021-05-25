@@ -33,7 +33,7 @@ public class ActivityDAOTest {
 
     @Test
     public void addNewActivityTest() {
-        String sql = "INSERT INTO ACTIVITY (routeId, userId, point, duration, distance) Values (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO ACTIVITY (routeId, userId, point, duration, distance) VALUES (?, ?, ?, ?, ?)";
         Activity activity = getActivity();
 
         try {

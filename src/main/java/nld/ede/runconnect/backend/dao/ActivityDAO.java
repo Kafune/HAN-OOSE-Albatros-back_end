@@ -19,7 +19,7 @@ public class ActivityDAO implements IActivityDAO {
         if (activity.getRouteId() != 0) {
             routeId = activity.getRouteId();
         }
-        String sql = "INSERT INTO ACTIVITY (routeId, userId, point, duration, distance) Values (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO ACTIVITY (routeId, userId, point, duration, distance) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -30,7 +30,6 @@ public class ActivityDAO implements IActivityDAO {
             statement.setFloat(5, activity.getDistance());
             statement.executeUpdate();
         } catch (SQLException exception) {
-            exception.printStackTrace();
             throw exception;
         }
         insertSegments(activity);
@@ -40,8 +39,8 @@ public class ActivityDAO implements IActivityDAO {
         /*
          * Insert every segment with a for loop and a custom made database procedure.
          */
-        for (int incrementedid = 0; incrementedid < activity.getSegments().size(); incrementedid++) {
-            Segment segment = activity.getSegments().get(incrementedid);
+        for (Segment segment: activity.getSegments()) {
+            int incrementedId = activity.getSegments().indexOf(segment) + 1;
 
             String sql = "CALL spr_InsertActivitySegments(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             try (Connection connection = dataSource.getConnection()) {
@@ -50,7 +49,7 @@ public class ActivityDAO implements IActivityDAO {
                 statement.setInt(2, activity.getPoint());
                 statement.setLong(3, activity.getDuration());
                 statement.setFloat(4, activity.getDistance());
-                statement.setInt(5, incrementedid);
+                statement.setInt(5, incrementedId);
                 statement.setDouble(6, segment.getStartCoordinate().getLatitude());
                 statement.setDouble(7, segment.getStartCoordinate().getLongitude());
                 statement.setFloat(8, segment.getStartCoordinate().getAltitude());
@@ -59,11 +58,11 @@ public class ActivityDAO implements IActivityDAO {
                 statement.setFloat(11, segment.getEndCoordinate().getAltitude());
                 statement.executeUpdate();
             } catch (SQLException exception) {
-                exception.printStackTrace();
                 throw exception;
             }
         }
     }
+
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
     }

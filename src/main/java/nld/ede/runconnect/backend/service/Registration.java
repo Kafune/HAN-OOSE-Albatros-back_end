@@ -34,9 +34,9 @@ public class Registration {
             UserDTO userDTO = DTOconverter.domainToUserDTO(userInDatabase);
             if (registered) {
                 return Response.status(201).entity(userDTO).build();
-            } else {
-                return Response.status(200).entity(userDTO).build();
             }
+            return Response.status(200).entity(userDTO).build();
+
         }
         return Response.status(404).build();
     }
