@@ -41,8 +41,8 @@ public class RouteDAO implements IRouteDAO {
         Route route = new Route();
         route.setRouteId(resultSet.getInt(1));
         route.setName(resultSet.getString(2));
-        route.setDescription(resultSet.getString(3));
-        route.setDistance(resultSet.getInt(4));
+        route.setDistance(resultSet.getInt(3));
+        route.setDescription(resultSet.getString(4));
         return route;
     }
 
@@ -65,7 +65,7 @@ public class RouteDAO implements IRouteDAO {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, name);
             statement.setString(2, description);
-            statement.setInt(2, distance);
+            statement.setInt(3, distance);
             statement.executeUpdate();
         } catch (SQLException exception) {
             throw exception;

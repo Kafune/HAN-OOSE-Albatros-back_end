@@ -1,13 +1,12 @@
 package nld.ede.runconnect.backend.service;
 
 import nld.ede.runconnect.backend.dao.ISegmentDAO;
-import nld.ede.runconnect.backend.domain.Route;
 import nld.ede.runconnect.backend.domain.Segment;
-import nld.ede.runconnect.backend.service.dto.DTOconverter;
-import nld.ede.runconnect.backend.service.dto.RouteDTO;
+import nld.ede.runconnect.backend.service.helpers.DTOconverter;
 import nld.ede.runconnect.backend.service.dto.SegmentDTO;
 
 import javax.inject.Inject;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -21,7 +20,7 @@ import java.util.List;
 @Path("segments")
 public class Segments {
 
-    ISegmentDAO segmentDAO;
+    private ISegmentDAO segmentDAO;
 
     @GET
     @Path("/{id}")
