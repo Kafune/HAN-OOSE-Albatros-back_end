@@ -1,6 +1,11 @@
-package nld.ede.runconnect.backend.service.dto;
+package nld.ede.runconnect.backend.service.helpers;
 
 import nld.ede.runconnect.backend.domain.Route;
+import nld.ede.runconnect.backend.service.dto.CoordinateDTO;
+import nld.ede.runconnect.backend.service.dto.POIDTO;
+import nld.ede.runconnect.backend.service.dto.RouteDTO;
+import nld.ede.runconnect.backend.service.dto.SegmentDTO;
+import nld.ede.runconnect.backend.service.helpers.DTOconverter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

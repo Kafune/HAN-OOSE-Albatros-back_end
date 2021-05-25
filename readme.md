@@ -254,11 +254,36 @@ It will expect a body containing an object of the form
 
 ```
 {
-    "routeId": 1,
-    "userId": 1,
-    "point": 20,
-    "duration": 100000,
-    "tempo": 12,
-    "distance": 19
+    "routeId": 2,
+    "userId": 32,
+    "point": 32,
+    "duration": 12,
+    "distance": 23,
+    "segments": [{
+                "endCoordinate": { 
+                    "longitude": 5.679981, 
+                    "latitude": 52.034237, 
+                    "altitude": 27
+                },
+                "startCoordinate": {
+                    "longitude": 5.679166, 
+                    "latitude": 52.030257, 
+                    "altitude": 26.0
+                }
+        },         
+        {
+                "endCoordinate": { 
+                    "longitude": 5.3232, 
+                    "latitude": 52.565, 
+                    "altitude": 21
+                },
+                "startCoordinate": {
+                    "longitude": 5.55, 
+                    "latitude": 52.66, 
+                    "altitude": 28.0
+                }
+                
+        }]
 }
+routeId mag null zijn
 ```

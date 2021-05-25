@@ -3,7 +3,7 @@ package nld.ede.runconnect.backend.service;
 import nld.ede.runconnect.backend.dao.ActivityDAO;
 import nld.ede.runconnect.backend.domain.Activity;
 import nld.ede.runconnect.backend.service.dto.ActivityDTO;
-import nld.ede.runconnect.backend.service.dto.DTOconverter;
+import nld.ede.runconnect.backend.service.helpers.DTOconverter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;

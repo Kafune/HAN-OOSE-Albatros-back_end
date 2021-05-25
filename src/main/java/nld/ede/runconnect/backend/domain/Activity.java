@@ -1,14 +1,26 @@
 package nld.ede.runconnect.backend.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Activity {
     private int activityId;
     private int routeId;
     private int userId;
     private int point;
+    private float distance;
     private long duration;
-    private int tempo;
+    private List<Segment> segments = new ArrayList<>();
 
-    private int distance;
+    public List<Segment> getSegments() {
+        return segments;
+    }
+
+    public void setSegments(List<Segment> segments) {
+        this.segments = segments;
+    }
+
+
 
     public int getRouteId() {
         return routeId;
@@ -42,19 +54,12 @@ public class Activity {
         this.duration = duration;
     }
 
-    public int getTempo() {
-        return tempo;
-    }
 
-    public void setTempo(int tempo) {
-        this.tempo = tempo;
-    }
-
-    public int getDistance() {
+    public float getDistance() {
         return distance;
     }
 
-    public void setDistance(int distance) {
+    public void setDistance(float distance) {
         this.distance = distance;
     }
 }
