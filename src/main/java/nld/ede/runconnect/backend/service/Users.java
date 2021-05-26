@@ -30,7 +30,7 @@ public class Users
 
         // Return OK if request goes through.
         // This suggests that the request went well, even if the entity array is empty.
-        return Response.status(Response.Status.OK).entity(users).build();
+        return Response.status(200).entity(users).build();
     }
 
     /**
