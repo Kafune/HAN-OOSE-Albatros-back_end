@@ -23,8 +23,7 @@ public class UserDAO implements IUserDAO
      * @throws SQLException Exception if SQL fails.
      */
     @Override
-    public ArrayList<User> searchForUsers(String searchValue) throws SQLException
-    {
+    public ArrayList<User> searchForUsers(String searchValue) throws SQLException {
         ArrayList<User> foundUsers = new ArrayList<>();
 
         try (Connection connection = dataSource.getConnection()) {

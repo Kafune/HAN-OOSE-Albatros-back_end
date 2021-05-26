@@ -24,8 +24,7 @@ public class Users
      */
     @POST
     @Path("/find")
-    public Response findUser(String searchValue) throws SQLException
-    {
+    public Response findUser(String searchValue) throws SQLException {
         ArrayList<User> users = userDAO.searchForUsers(searchValue);
         ArrayList<UserDTO> userDTOs = DTOconverter.domainsToUserDTOs(users);
 
