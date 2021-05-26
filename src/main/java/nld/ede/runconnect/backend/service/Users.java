@@ -6,8 +6,9 @@ import nld.ede.runconnect.backend.service.dto.UserDTO;
 import nld.ede.runconnect.backend.service.helpers.DTOconverter;
 
 import javax.inject.Inject;
-import javax.ws.rs.POST;
+import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,9 +23,9 @@ public class Users
      * @param searchValue The value to search for.
      * @return The response code with body.
      */
-    @POST
-    @Path("/find")
-    public Response findUser(String searchValue) throws SQLException {
+    @GET
+    @Path("/find/{search-value}")
+    public Response findUser(@PathParam("search-value") String searchValue) throws SQLException {
         ArrayList<User> users = userDAO.searchForUsers(searchValue);
         ArrayList<UserDTO> userDTOs = DTOconverter.domainsToUserDTOs(users);
 

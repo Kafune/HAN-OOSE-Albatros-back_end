@@ -291,13 +291,13 @@ routeId mag null zijn
 #### Users
 Search for a user based on a search string.
 ```
-url:    /users/find
-method: POST
+url:    /users/find/{search-value}
+method: GET
 ```
 
-It will expect a body containing a search string like `Henk Janss`
+It will expect a search string like `Henk Janss` in the search-value path parameter.
 
-It will return a list of User DTOs with JSON.
+It will return a list of User DTOs with JSON. If none, an empty array.
 ```
 [
     {
