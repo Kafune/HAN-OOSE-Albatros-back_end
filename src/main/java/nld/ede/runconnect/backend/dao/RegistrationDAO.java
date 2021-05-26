@@ -35,8 +35,7 @@ public class RegistrationDAO implements IRegistrationDAO {
     public boolean registerUser(User user) throws SQLException {
         if (!isExistingUser(user)) {
             String sql = "insert into `USER` (FIRSTNAME, LASTNAME, E_MAILADRES, USERNAME, IMAGE_URL) values (?, ?, ?, ?, ?)";
-            try (Connection connection = dataSource.getConnection()) {
-                PreparedStatement statement = connection.prepareStatement(sql);
+            try (Connection connection = dataSource.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setString(1, user.getFirstName());
                 statement.setString(2, user.getLastName());
                 statement.setString(3, user.getEmailAddress());
