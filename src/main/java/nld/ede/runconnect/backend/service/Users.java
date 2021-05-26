@@ -28,8 +28,10 @@ public class Users
         ArrayList<UserDTO> users = DTOconverter
             .domainsToUserDTOs(userDAO.searchForUsers(searchValue));
 
-        // Return OK if request goes through.
-        // This suggests that the request went well, even if the entity array is empty.
+        if (users.size() == 0) {
+            return Response.status(204).entity(users).build();
+        }
+
         return Response.status(200).entity(users).build();
     }
 
