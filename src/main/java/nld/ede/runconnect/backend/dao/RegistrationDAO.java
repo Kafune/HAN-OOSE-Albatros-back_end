@@ -10,23 +10,30 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import static nld.ede.runconnect.backend.dao.helpers.ConnectionHandler.close;
+
 public class RegistrationDAO implements IRegistrationDAO {
 
     @Resource(name = "jdbc/Run_Connect")
     private DataSource dataSource;
 
+    PreparedStatement statement = null;
+    ResultSet resultSet = null;
+
     @Override
     public User findUser(String email) throws SQLException {
         String sql = "SELECT * FROM `USER` WHERE E_MAILADRES = ?";
         try (Connection connection = dataSource.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(sql);
             statement.setString(1, email);
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                return extractUser(rs);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                return extractUser(resultSet);
             }
         } catch (SQLException exception) {
             throw exception;
+        } finally {
+            close(statement, resultSet);
         }
         return null;
     }
