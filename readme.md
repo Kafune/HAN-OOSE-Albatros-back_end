@@ -188,7 +188,7 @@ It will perform a body containing a complete list of segments that belong to a r
         "startCoordinate": {
             "altitude": 27.0,
             "latitude": 52.030033,
-            "longitude": 5.675282
+            "longitude": 5.675282ll expect a body containing an object of the form
         }
     },
     {
@@ -286,4 +286,28 @@ It will expect a body containing an object of the form
         }]
 }
 routeId mag null zijn
+```
+
+#### Users
+Search for a user based on a search string.
+```
+url:    /users/find
+method: POST
+```
+
+It will expect a body containing a search string like `Henk Janss`
+
+It will return a list of User DTOs with JSON.
+```
+[
+    {
+        "emailAddress": "dasasfas@gmail.com",
+        "firstName": "Henk",
+        "imageUrl": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImQzZmZiYjhhZGUwMWJiNGZhMmYyNWNmYjEwOGNjZWI4ODM0MDZkYWMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIxMDQ5MzYyOTEzODE0LWlkcXU1cjhmZG8wbG8zNTlzaDVvMW5pM2ZwcjR1bGJvLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMTA0OTM2MjkxMzgxNC1xNmpuN2U3azNjYWtnbWZrNjUyMmk5dHBiZXRjdjRoNy5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjExMjQ2MzE3MDgyOTk2ODY4MjYzOSIsImVtYWlsIjoibmllbHNib3NtYW4zMzNAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJOaWVscyBCb3NtYW4iLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EtL0FPaDE0R2c2YkFPUm8xMWswOUphUnhIdGdyS3RIZ19Fd3dKTnhlMW50YUhtR3c9czk2LWMiLCJnaXZlbl9uYW1lIjoiTmllbHMiLCJmYW1pbHlfbmFtZSI6IkJvc21hbiIsImxvY2FsZSI6Im5sIiwiaWF0IjoxNjIxNTEyNDY4LCJleHAiOjE2MjE1MTYwNjh9.n6O5TYEyHpk8_8FnLcyy4ISZ1_4ZxkEjTxA6PMKhmf_AiA1YSpwYFKmzYLneli8E8zRDHbHjusRTw-R6Yx2aqqVzu-5aVwGsMCV4RV1LcA6VV0i7x27Fwaaxc6WjWs5UJ2f7_pvOwlKcOsgABRxjgbiqJzaiHKVjGUyy1K89zAIPqKTlOM8h8CMPG9ATj7H5dNLWgeIsoO_NjJLTmJu2p1Q-yW06ONJ2DtrL7bFMBVkDDJcoN-PqOhQJuTm0va-EBV_Kp7xIfO9FjjAfhR7JhM-XubnPKYzU30ydplTGFtBsBrn367xaRx_NUPzrLIQiH2zCR-QLyfAil-HVLv5rcw",
+        "lastName": "Janssen",
+        "totalScore": 321,
+        "userId": 11,
+        "username": "Henk Janssen"
+    }
+]
 ```
