@@ -33,8 +33,6 @@ public class UsersTest
         usersReturn.add(user);
 
         try {
-            GoogleIdVerifier googleIdVerifierMock = mock(GoogleIdVerifier.class);
-            when(googleIdVerifierMock.verifyGoogleId(user)).thenReturn(true);
             users.setUserDAO(userDAO);
             when(userDAO.searchForUsers(search)).thenReturn(usersReturn);
 

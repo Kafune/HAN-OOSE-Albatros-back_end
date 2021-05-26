@@ -38,17 +38,17 @@ public class UserDAOTest
             PreparedStatement preparedStatement = mock(PreparedStatement.class);
             ResultSet resultSet = mock(ResultSet.class);
 
-            UserDAO userDAOSpy = spy(UserDAO.class);
+            UserDAO userDAO = mock(UserDAO.class);
 
             // Setup mocks.
             when(dataSource.getConnection()).thenReturn(connection);
             when(connection.prepareStatement(sql)).thenReturn(preparedStatement);
             when(preparedStatement.executeQuery()).thenReturn(resultSet);
 
-            userDAOSpy.setDatasource(dataSource);
+            userDAO.setDatasource(dataSource);
 
             // Act
-            userDAOSpy.searchForUsers("Henk");
+            userDAO.searchForUsers("Henk");
 
             // Assert
             verify(connection).prepareStatement(sql);
