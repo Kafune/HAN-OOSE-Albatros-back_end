@@ -26,12 +26,12 @@ public class Users
     @GET
     @Path("/find/{search-value}")
     public Response findUser(@PathParam("search-value") String searchValue) throws SQLException {
-        ArrayList<User> users = userDAO.searchForUsers(searchValue);
-        ArrayList<UserDTO> userDTOs = DTOconverter.domainsToUserDTOs(users);
+        ArrayList<UserDTO> users = DTOconverter
+            .domainsToUserDTOs(userDAO.searchForUsers(searchValue));
 
         // Return OK if request goes through.
         // This suggests that the request went well, even if the result is empty.
-        return Response.status(Response.Status.OK).entity(userDTOs).build();
+        return Response.status(Response.Status.OK).entity(users).build();
     }
 
     /**
