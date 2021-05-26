@@ -29,10 +29,8 @@ public class Users
         ArrayList<User> users = userDAO.searchForUsers(searchValue);
         ArrayList<UserDTO> userDTOs = DTOconverter.domainsToUserDTOs(users);
 
-        if (userDTOs.size() == 0) {
-            return Response.status(Response.Status.NOT_FOUND).build();
-        }
-
+        // Return OK if request goes through.
+        // This suggests that the request went well, even if the result is empty.
         return Response.status(Response.Status.OK).entity(userDTOs).build();
     }
 
