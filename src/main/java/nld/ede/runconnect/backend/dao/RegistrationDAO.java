@@ -16,8 +16,8 @@ public class RegistrationDAO implements IRegistrationDAO {
     @Resource(name = "jdbc/Run_Connect")
     private DataSource dataSource;
 
-    PreparedStatement statement = null;
-    ResultSet resultSet = null;
+    private PreparedStatement statement = null;
+    private ResultSet resultSet = null;
 
     @Override
     public User findUser(String email) throws SQLException {
