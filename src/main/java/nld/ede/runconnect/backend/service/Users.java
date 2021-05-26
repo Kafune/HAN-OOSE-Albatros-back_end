@@ -24,7 +24,7 @@ public class Users
      */
     @GET
     @Path("/find/{search-value}")
-    public Response findUser(@PathParam("search-value") String searchValue) throws SQLException {
+    public Response searchForUser(@PathParam("search-value") String searchValue) throws SQLException {
         ArrayList<UserDTO> users = DTOconverter
             .domainsToUserDTOs(userDAO.searchForUsers(searchValue));
 

@@ -38,9 +38,9 @@ public class UsersTest
             users.setUserDAO(userDAO);
             when(userDAO.searchForUsers(search)).thenReturn(usersReturn);
 
-            users.findUser(search);
+            users.searchForUser(search);
 
-            verify(users).findUser(search);
+            verify(users).searchForUser(search);
         } catch (SQLException e) {
             fail();
         }
