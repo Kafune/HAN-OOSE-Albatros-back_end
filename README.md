@@ -188,7 +188,7 @@ It will perform a body containing a complete list of segments that belong to a r
         "startCoordinate": {
             "altitude": 27.0,
             "latitude": 52.030033,
-            "longitude": 5.675282ll expect a body containing an object of the form
+            "longitude": 5.675282
         }
     },
     {
