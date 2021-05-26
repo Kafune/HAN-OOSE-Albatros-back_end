@@ -22,6 +22,12 @@ public class Registration {
     private GoogleIdVerifier googleIdVerifier;
 
 
+    /**
+     * Registers a user.
+     * @param user The user to register.
+     * @return The response code.
+     * @throws SQLException Exception if SQL fails.
+     */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response registerUser(User user) throws SQLException {
@@ -42,11 +48,19 @@ public class Registration {
     }
 
 
+    /**
+     * Injects and sets the registration DAO.
+     * @param registrationDAO The DAO.
+     */
     @Inject
     public void setRegistrationDAO(IRegistrationDAO registrationDAO) {
         this.registrationDAO = registrationDAO;
     }
 
+    /**
+     * Injects and sets the google verifier.
+     * @param googleIdVerifier The verifier.
+     */
     @Inject
     public void setGoogleIdVerifier(GoogleIdVerifier googleIdVerifier) {
         this.googleIdVerifier = googleIdVerifier;

@@ -20,6 +20,12 @@ public class Activities {
 
     private IActivityDAO activityDAO;
 
+    /**
+     * Adds an activity.
+     * @param activityDTO The data on which to add.
+     * @return The response of the request.
+     * @throws SQLException Exception if SQL fails.
+     */
     @POST
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
