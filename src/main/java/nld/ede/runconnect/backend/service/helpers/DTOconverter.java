@@ -173,6 +173,21 @@ public class DTOconverter {
     }
 
     /**
+     * Converts a list of user domains to a list of user DTOs.
+     * @param users The user domains to convert.
+     * @return The DTOs.
+     */
+    public static ArrayList<UserDTO> domainsToUserDTOs(ArrayList<User> users) {
+        ArrayList<UserDTO> userDTOs = new ArrayList<>();
+
+        for (User user: users) {
+            userDTOs.add(domainToUserDTO(user));
+        }
+
+        return userDTOs;
+    }
+
+    /**
      * Converts a user domain to a user DTO.
      * @param user The domain
      * @return The DTO.
