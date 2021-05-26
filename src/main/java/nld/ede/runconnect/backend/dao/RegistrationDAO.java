@@ -15,6 +15,12 @@ public class RegistrationDAO implements IRegistrationDAO {
     @Resource(name = "jdbc/Run_Connect")
     private DataSource dataSource;
 
+    /**
+     * Finds a user based on given email.
+     * @param email Email to look for.
+     * @return the found user (if found).
+     * @throws SQLException Exception if SQL fails.
+     */
     @Override
     public User findUser(String email) throws SQLException {
         String sql = "SELECT * FROM `USER` WHERE E_MAILADRES = ?";
@@ -31,6 +37,12 @@ public class RegistrationDAO implements IRegistrationDAO {
         return null;
     }
 
+    /**
+     * Registers a user.
+     * @param user The user to register
+     * @return If the register was successful.
+     * @throws SQLException Exception if SQL fails.
+     */
     @Override
     public boolean registerUser(User user) throws SQLException {
         if (!isExistingUser(user)) {
@@ -52,6 +64,12 @@ public class RegistrationDAO implements IRegistrationDAO {
         return false;
     }
 
+    /**
+     * Checks if a user exists in the database.
+     * @param user The user to check.
+     * @return If the user exists
+     * @throws SQLException Exception if SQL fails.
+     */
     public boolean isExistingUser(User user) throws SQLException {
         String sql = "SELECT count(*) as count FROM `USER` where E_MAILADRES = ?";
         try (Connection connection = dataSource.getConnection()) {
@@ -70,6 +88,12 @@ public class RegistrationDAO implements IRegistrationDAO {
         return false;
     }
 
+    /**
+     * Extracts a user from a result set.
+     * @param rs The result set.
+     * @return The extracted user.
+     * @throws SQLException Exception if SQL fails.
+     */
     public User extractUser(ResultSet rs) throws SQLException {
         User user = new User();
         user.setUserId(rs.getInt(1));
@@ -82,6 +106,10 @@ public class RegistrationDAO implements IRegistrationDAO {
         return user;
     }
 
+    /**
+     * Sets datasource.
+     * @param dataSource the data source
+     */
     public void setDatasource(DataSource dataSource) {
         this.dataSource = dataSource;
     }

@@ -13,6 +13,11 @@ public class ActivityDAO implements IActivityDAO {
     @Resource(name = "jdbc/Run_Connect")
     private DataSource dataSource;
 
+    /**
+     * Adds a new activity to the database.
+     * @param activity The activity to add.
+     * @throws SQLException Exception if SQL fails.
+     */
     @Override
     public void addNewActivity(Activity activity) throws SQLException {
         Integer routeId = null;
@@ -35,6 +40,11 @@ public class ActivityDAO implements IActivityDAO {
         insertSegments(activity);
     }
 
+    /**
+     * Inserts segments in the database.
+     * @param activity The activity to which to add the segments.
+     * @throws SQLException Exception if SQL fails.
+     */
     public void insertSegments(Activity activity) throws SQLException {
         /*
          * Insert every segment with a for loop and a custom made database procedure.
@@ -63,6 +73,10 @@ public class ActivityDAO implements IActivityDAO {
         }
     }
 
+    /**
+     * Sets data source.
+     * @param dataSource the data source
+     */
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
     }

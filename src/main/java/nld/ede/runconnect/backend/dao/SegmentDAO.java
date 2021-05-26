@@ -14,10 +14,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SegmentDAO implements ISegmentDAO {
-
     @Resource(name = "jdbc/Run_Connect")
     private DataSource dataSource;
 
+    /**
+     * Gets all the segments in a specific route.
+     * @param id The ID of the route.
+     * @return A list of segments that belong to the route.
+     * @throws SQLException Exception if SQL fails.
+     */
     @Override
     public List<Segment> getSegmentsOfRoute(int id) throws SQLException {
         String sql = getSelectStatement();
@@ -38,6 +43,12 @@ public class SegmentDAO implements ISegmentDAO {
         }
     }
 
+    /**
+     * Extracts the segment from a result set.
+     * @param resultSet The result set.
+     * @return The extracted segment.
+     * @throws SQLException Exception if SQL fails.
+     */
     public Segment extractSegment(ResultSet resultSet) throws SQLException {
         Segment segment = new Segment();
         segment.setId(resultSet.getInt(1));
@@ -48,6 +59,12 @@ public class SegmentDAO implements ISegmentDAO {
         return segment;
     }
 
+    /**
+     * Extracts a point of interest from a result set.
+     * @param resultSet The result set.
+     * @return The extracted point of interest.
+     * @throws SQLException Exception if SQL fails.
+     */
     private POI extractPoi(ResultSet resultSet) throws SQLException {
         POI poi = new POI();
         if (resultSet.getString(9) != null) {
@@ -59,6 +76,12 @@ public class SegmentDAO implements ISegmentDAO {
         return poi;
     }
 
+    /**
+     * Extracts the end coordinate from a result set.
+     * @param resultSet The result set.
+     * @return The extracted end coordinate.
+     * @throws SQLException Exception if SQL fails.
+     */
     private Coordinate extractEndCoordinate(ResultSet resultSet) throws SQLException {
         Coordinate coordinate = new Coordinate();
         coordinate.setAltitude(resultSet.getInt(6));
@@ -67,6 +90,12 @@ public class SegmentDAO implements ISegmentDAO {
         return coordinate;
     }
 
+    /**
+     * Extracts start coordinates from a result set.
+     * @param resultSet The result set.
+     * @return The extracted start coordinate.
+     * @throws SQLException Exception if SQL fails.
+     */
     private Coordinate extractStartCoordinate(ResultSet resultSet) throws SQLException {
         Coordinate coordinate = new Coordinate();
         coordinate.setAltitude(resultSet.getInt(3));
@@ -75,7 +104,10 @@ public class SegmentDAO implements ISegmentDAO {
         return coordinate;
     }
 
-
+    /**
+     * Gets the select statement for queries.
+     * @return The select statement.
+     */
     private String getSelectStatement() {
         return "SELECT s.SEGMENTID, " +
                 "s.SEQUENCENR, c2.ALTITUDE AS STARTALTITUDE, c2.LONGITUDE AS STARTLONGITUDE, " +
