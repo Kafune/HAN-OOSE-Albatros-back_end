@@ -51,7 +51,6 @@ public class RegistrationDAO implements IRegistrationDAO {
                 statement.executeUpdate();
                 return true;
             } catch (SQLException exception) {
-                exception.printStackTrace();
                 throw exception;
             } finally {
                 close(statement, null);
@@ -72,7 +71,6 @@ public class RegistrationDAO implements IRegistrationDAO {
                 }
             }
         } catch (SQLException exception) {
-            exception.printStackTrace();
             throw exception;
         } finally {
             close(statement, resultSet);
