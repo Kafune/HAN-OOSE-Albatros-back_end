@@ -9,9 +9,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import static nld.ede.runconnect.backend.dao.helpers.ConnectionHandler.close;
+
 public class ActivityDAO implements IActivityDAO {
     @Resource(name = "jdbc/Run_Connect")
     private DataSource dataSource;
+
+    private PreparedStatement statement;
 
     @Override
     public void addNewActivity(Activity activity) throws SQLException {
@@ -22,7 +26,7 @@ public class ActivityDAO implements IActivityDAO {
         String sql = "INSERT INTO ACTIVITY (routeId, userId, point, duration, distance) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection connection = dataSource.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(sql);
             statement.setInt(1, routeId);
             statement.setInt(2, activity.getUserId());
             statement.setInt(3, activity.getPoint());
@@ -31,6 +35,8 @@ public class ActivityDAO implements IActivityDAO {
             statement.executeUpdate();
         } catch (SQLException exception) {
             throw exception;
+        } finally {
+            close(statement, null);
         }
         insertSegments(activity);
     }
@@ -44,7 +50,7 @@ public class ActivityDAO implements IActivityDAO {
 
             String sql = "CALL spr_InsertActivitySegments(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             try (Connection connection = dataSource.getConnection()) {
-                PreparedStatement statement = connection.prepareStatement(sql);
+                statement = connection.prepareStatement(sql);
                 statement.setInt(1, activity.getUserId());
                 statement.setInt(2, activity.getPoint());
                 statement.setLong(3, activity.getDuration());
@@ -59,6 +65,8 @@ public class ActivityDAO implements IActivityDAO {
                 statement.executeUpdate();
             } catch (SQLException exception) {
                 throw exception;
+            } finally {
+                close(statement, null);
             }
         }
     }
