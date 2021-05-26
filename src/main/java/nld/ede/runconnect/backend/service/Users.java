@@ -1,7 +1,6 @@
 package nld.ede.runconnect.backend.service;
 
 import nld.ede.runconnect.backend.dao.IUserDAO;
-import nld.ede.runconnect.backend.domain.User;
 import nld.ede.runconnect.backend.service.dto.UserDTO;
 import nld.ede.runconnect.backend.service.helpers.DTOconverter;
 
