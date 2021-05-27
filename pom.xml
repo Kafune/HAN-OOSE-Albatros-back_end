@@ -121,7 +121,6 @@
         <finalName>Run_connect</finalName>
     </build>
     <properties>
-        <sonar.java.libraries>target</sonar.java.libraries>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <failOnMissingWebXml>false</failOnMissingWebXml>
