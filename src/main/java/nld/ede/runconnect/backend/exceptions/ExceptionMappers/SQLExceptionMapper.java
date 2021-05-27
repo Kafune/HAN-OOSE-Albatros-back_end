@@ -8,7 +8,11 @@ import java.sql.SQLException;
 @Provider
 public class SQLExceptionMapper implements ExceptionMapper<SQLException> {
 
-
+    /**
+     * Maps an SQL exception to a Response status.
+     * @param e The SQL exception
+     * @return The response status.
+     */
     @Override
     public Response toResponse(SQLException e) {
         return Response.status(

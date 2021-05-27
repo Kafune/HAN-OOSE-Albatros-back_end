@@ -15,13 +15,16 @@ import java.util.List;
 import static nld.ede.runconnect.backend.dao.helpers.ConnectionHandler.close;
 
 public class RouteDAO implements IRouteDAO {
-
     @Resource(name = "jdbc/Run_Connect")
     private DataSource dataSource;
-
     private PreparedStatement statement;
     private ResultSet resultSet;
 
+    /**
+     * Gets all the routes from the database.
+     * @return all of the routes.
+     * @throws SQLException Exception if SQL fails.
+     */
     @Override
     public List<Route> getAllRoutes() throws SQLException {
         String sql = "SELECT * FROM ROUTE";
@@ -44,6 +47,34 @@ public class RouteDAO implements IRouteDAO {
 
     }
 
+    /**
+     * Extracts a route from the result set.
+     * @param resultSet The result set to extract from.
+     * @return The extracted route.
+     * @throws SQLException Exception if SQL fails.
+     */
+    public Route extractRoute(ResultSet resultSet) throws SQLException {
+        Route route = new Route();
+        route.setRouteId(resultSet.getInt(1));
+        route.setName(resultSet.getString(2));
+        route.setDistance(resultSet.getInt(3));
+        route.setDescription(resultSet.getString(4));
+        return route;
+    }
+
+    /**
+     * Sets the data source.
+     * @param dataSource The data source.
+     */
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
+    /**
+     * Adds a new route to the database
+     * @param route The route to add.
+     * @throws SQLException Exception if SQL fails.
+     */
     @Override
     public void addNewRoute(Route route) throws SQLException {
 
@@ -96,19 +127,5 @@ public class RouteDAO implements IRouteDAO {
                 close(statement, null);
             }
         }
-    }
-
-
-    public Route extractRoute(ResultSet resultSet) throws SQLException {
-        Route route = new Route();
-        route.setRouteId(resultSet.getInt(1));
-        route.setName(resultSet.getString(2));
-        route.setDistance(resultSet.getInt(3));
-        route.setDescription(resultSet.getString(4));
-        return route;
-    }
-
-    public void setDataSource(DataSource dataSource) {
-        this.dataSource = dataSource;
     }
 }

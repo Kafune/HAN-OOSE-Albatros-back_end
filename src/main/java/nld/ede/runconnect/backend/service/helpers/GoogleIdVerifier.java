@@ -14,17 +14,25 @@ public class GoogleIdVerifier {
 
     public static final int STATUS_OK = 200;
 
-    public  boolean verifyGoogleId(User userToLogin) {
+    /**
+     * Verifies if the user exists with google.
+     * @param userToLogin The user to verify.
+     * @return If the user is verified.
+     */
+    public boolean verifyGoogleId(User userToLogin) {
         Response response = getResponse(userToLogin.getGoogleId());
 
         return response.getStatus() == STATUS_OK
                 && ((UserInfo) response.getEntity()).email.equals(userToLogin.getEmailAddress());
     }
 
-    public  Response getResponse(String id) {
-
+    /**
+     * Get's the response from Google.
+     * @param id The google ID.
+     * @return Google's response.
+     */
+    public Response getResponse(String id) {
         Client client = ClientBuilder.newClient();
-
         String query = "id_token=" + id;
         WebTarget webTarget = client.target("https://oauth2.googleapis.com/tokeninfo?" + query);
 
