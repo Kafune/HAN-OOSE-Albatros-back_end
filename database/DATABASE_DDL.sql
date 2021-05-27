@@ -25,7 +25,8 @@ create table ACTIVITY
     DURATION             bigint not null,
     DISTANCE             double not null,
     ROUTEID              int,
-    primary key (ACTIVITYID)
+    primary key (ACTIVITYID),
+    unique key activity_unique (USERID, POINT, DURATION, DISTANCE)
 );
 
 /*==============================================================*/
@@ -49,7 +50,7 @@ create table COORDINATES
     LONGITUDE            double not null,
     ALTITUDE             int not null,
     primary key (COORDINATESID),
-    unique key AK_KEY_2 (LATITUDE, LONGITUDE, ALTITUDE)
+    unique key coordinates_unique (LATITUDE, LONGITUDE, ALTITUDE)
 );
 
 /*==============================================================*/
@@ -122,7 +123,7 @@ create table `USER`
     TOTALSCORE           int not null default 0,
     IMAGE_URL             varchar(2083),
     primary key (USERID),
-    unique key AK_AK_EMAILADRES_USERNAME (E_MAILADRES, USERNAME)
+    unique key user_email_unique (E_MAILADRES)
 );
 
 alter table ACTIVITY add constraint FK_FK_ACTIVITY_ROUTE foreign key (ROUTEID)

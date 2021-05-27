@@ -13,9 +13,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static nld.ede.runconnect.backend.dao.helpers.ConnectionHandler.close;
+
 public class SegmentDAO implements ISegmentDAO {
     @Resource(name = "jdbc/Run_Connect")
     private DataSource dataSource;
+    private PreparedStatement statement;
+    private ResultSet resultSet;
 
     /**
      * Gets all the segments in a specific route.
@@ -27,9 +31,9 @@ public class SegmentDAO implements ISegmentDAO {
     public List<Segment> getSegmentsOfRoute(int id) throws SQLException {
         String sql = getSelectStatement();
         try (Connection connection = dataSource.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(sql);
             statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
+            resultSet = statement.executeQuery();
 
             List<Segment> segmentList = new ArrayList<>();
 
@@ -40,6 +44,8 @@ public class SegmentDAO implements ISegmentDAO {
 
         } catch (SQLException exception) {
             throw exception;
+        } finally {
+            close(statement, resultSet);
         }
     }
 

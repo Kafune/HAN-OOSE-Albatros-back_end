@@ -12,9 +12,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static nld.ede.runconnect.backend.dao.helpers.ConnectionHandler.close;
+
 public class RouteDAO implements IRouteDAO {
     @Resource(name = "jdbc/Run_Connect")
     private DataSource dataSource;
+    private PreparedStatement statement;
+    private ResultSet resultSet;
 
     /**
      * Gets all the routes from the database.
@@ -26,8 +30,8 @@ public class RouteDAO implements IRouteDAO {
         String sql = "SELECT * FROM ROUTE";
         try (Connection connection = dataSource.getConnection()) {
 
-            PreparedStatement statement = connection.prepareStatement(sql);
-            ResultSet resultSet = statement.executeQuery();
+            statement = connection.prepareStatement(sql);
+            resultSet = statement.executeQuery();
 
             List<Route> routeList = new ArrayList<>();
             while (resultSet.next()) {
@@ -37,6 +41,8 @@ public class RouteDAO implements IRouteDAO {
 
         } catch (SQLException exception) {
             throw exception;
+        } finally {
+            close(statement, resultSet);
         }
 
     }
@@ -81,13 +87,15 @@ public class RouteDAO implements IRouteDAO {
         String description = route.getDescription();
 
         try (Connection connection = dataSource.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(sql);
             statement.setString(1, name);
             statement.setString(2, description);
             statement.setInt(3, distance);
             statement.executeUpdate();
         } catch (SQLException exception) {
             throw exception;
+        } finally {
+            close(statement, null);
         }
 
         /*
@@ -98,7 +106,7 @@ public class RouteDAO implements IRouteDAO {
 
             String sql2 = "CALL spr_InsertSegements(?,?,?,?,?,?,?,?,?,?,?)";
             try (Connection connection = dataSource.getConnection()) {
-                PreparedStatement statement = connection.prepareStatement(sql2);
+                statement = connection.prepareStatement(sql2);
                 statement.setString(1, name);
                 statement.setInt(2, distance);
                 statement.setInt(3, incrementedid);
@@ -115,7 +123,23 @@ public class RouteDAO implements IRouteDAO {
                 statement.executeUpdate();
             } catch (SQLException exception) {
                 throw exception;
+            } finally {
+                close(statement, null);
             }
         }
+    }
+
+
+    public Route extractRoute(ResultSet resultSet) throws SQLException {
+        Route route = new Route();
+        route.setRouteId(resultSet.getInt(1));
+        route.setName(resultSet.getString(2));
+        route.setDistance(resultSet.getInt(3));
+        route.setDescription(resultSet.getString(4));
+        return route;
+    }
+
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 }
