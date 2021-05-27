@@ -20,8 +20,6 @@ public class Activity {
         this.segments = segments;
     }
 
-
-
     public int getRouteId() {
         return routeId;
     }

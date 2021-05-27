@@ -5,6 +5,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ConnectionHandler {
+
+    private ConnectionHandler() {}
+
     public static void close(PreparedStatement preparedStatement, ResultSet resultSet) throws SQLException {
         if(resultSet != null) {
             try {

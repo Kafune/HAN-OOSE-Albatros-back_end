@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DTOconverter {
+
+    private DTOconverter() {}
+
     private static final Gson JSON = new Gson();
 
     /**
@@ -140,7 +143,7 @@ public class DTOconverter {
         segment.setId(segmentDTO.id);
         segment.setStartCoordinate(CoordinateDTOToDomainCoordinate(segmentDTO.startCoordinate));
         segment.setEndCoordinate(CoordinateDTOToDomainCoordinate(segmentDTO.endCoordinate));
-        if (!(segmentDTO.poi == null)) {
+        if (segmentDTO.poi != null) {
             segment.setPOI(POIDTOToDomainPOI(segmentDTO.poi));
         }
         return segment;

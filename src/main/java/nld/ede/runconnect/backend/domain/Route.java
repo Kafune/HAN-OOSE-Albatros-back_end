@@ -3,7 +3,6 @@ package nld.ede.runconnect.backend.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import nld.ede.runconnect.backend.domain.Segment;
 
 
 public class Route {
