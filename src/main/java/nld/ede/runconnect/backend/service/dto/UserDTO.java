@@ -8,5 +8,6 @@ public class UserDTO {
     public String username;
     public int totalScore;
     public String imageUrl;
-
+    public boolean admin;
+    public String token;
 }

@@ -5,6 +5,7 @@ import nld.ede.runconnect.backend.domain.User;
 import nld.ede.runconnect.backend.service.dto.UserDTO;
 import nld.ede.runconnect.backend.service.helpers.DTOconverter;
 import nld.ede.runconnect.backend.service.helpers.GoogleIdVerifier;
+import nld.ede.runconnect.backend.service.tokens.TokenHashMap;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -54,6 +55,9 @@ public class Users {
             boolean registered = userDAO.registerUser(user);
             User userInDatabase = userDAO.findUser(user.getEmailAddress());
             UserDTO userDTO = DTOconverter.domainToUserDTO(userInDatabase);
+            TokenHashMap tokenHashMap = TokenHashMap.getInstance();
+            userDTO.token = tokenHashMap.addToken(userDTO.emailAddress);
+            System.out.println(userDTO.token);
             if (registered) {
                 return Response.status(201).entity(userDTO).build();
             }

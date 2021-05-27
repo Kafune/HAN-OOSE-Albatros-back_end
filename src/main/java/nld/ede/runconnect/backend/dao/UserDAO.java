@@ -136,6 +136,7 @@ public class UserDAO implements IUserDAO
         user.setUsername(rs.getString(5));
         user.setTotalScore(rs.getInt(6));
         user.setImageUrl(rs.getString(7));
+        user.setAdmin(rs.getBoolean(8));
         return user;
     }
 
