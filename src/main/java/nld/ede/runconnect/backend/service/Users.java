@@ -57,7 +57,6 @@ public class Users {
             UserDTO userDTO = DTOconverter.domainToUserDTO(userInDatabase);
             TokenHashMap tokenHashMap = TokenHashMap.getInstance();
             userDTO.token = tokenHashMap.addToken(userDTO.emailAddress);
-            System.out.println(userDTO.token);
             if (registered) {
                 return Response.status(201).entity(userDTO).build();
             }

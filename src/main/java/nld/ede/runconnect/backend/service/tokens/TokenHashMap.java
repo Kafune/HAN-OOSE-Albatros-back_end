@@ -34,6 +34,29 @@ public class TokenHashMap {
     }
 
     /**
+     * Checks if the token is being used.
+     * true if it exists
+     * @return boolean
+     */
+    public boolean doesExist(String token) {
+        return userToken.containsValue(token);
+    }
+
+    /**
+     * gets the email connected to a token returns Null if no email
+     * @param token
+     * @return
+     */
+    public String getEmail(String token){
+        for (String i : userToken.keySet()) {
+            if(userToken.get(i).equals(token)){
+                return i;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Sets interval. USE ONLY FOR TESTS!
      * @param interval
      */
@@ -81,4 +104,6 @@ public class TokenHashMap {
             _instance = null;
         }
     }
+
+
 }

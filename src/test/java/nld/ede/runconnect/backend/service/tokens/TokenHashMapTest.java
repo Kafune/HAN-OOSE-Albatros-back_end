@@ -46,5 +46,20 @@ class TokenHashMapTest {
         assertEquals(null, tokenHashMap.getToken("Exists"));
     }
 
+    @Test
+    void doesExist(){
+        tokenHashMap.addToken("Exists");
+        String token = tokenHashMap.getToken("Exists");
+        assertTrue(tokenHashMap.doesExist(token));
+    }
+
+    @Test
+    void getEmail(){
+        tokenHashMap.addToken("Exists");
+        String token = tokenHashMap.getToken("Exists");
+        assertEquals("Exists", tokenHashMap.getEmail(token));
+        assertEquals(null, tokenHashMap.getEmail(""));
+    }
+
 
 }

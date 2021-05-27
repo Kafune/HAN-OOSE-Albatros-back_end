@@ -217,4 +217,61 @@ public class UserDAOTest
         }
 
     }
+
+    @Test
+    public void CheckIfMailIsAdminReturnsTrueIfUserFoundTest() {
+        String sql = "SELECT ADMIN FROM `USER` where E_MAILADRES = ?";
+        try {
+
+            DataSource dataSource = mock(DataSource.class);
+            Connection connection = mock(Connection.class);
+            ResultSet resultSet = mock(ResultSet.class);
+            PreparedStatement preparedStatement = mock(PreparedStatement.class);
+
+
+            when(dataSource.getConnection()).thenReturn(connection);
+            when(connection.prepareStatement(sql)).thenReturn(preparedStatement);
+            when(preparedStatement.executeQuery()).thenReturn(resultSet);
+            when(resultSet.next()).thenReturn(true);
+            when(resultSet.getInt(1)).thenReturn(1);
+
+            sut.setDatasource(dataSource);
+            boolean exist = sut.CheckIfMailIsAdmin("email");
+
+            verify(connection).prepareStatement(sql);
+            verify(preparedStatement).executeQuery();
+            verify(resultSet).next();
+            assertTrue(exist);
+        } catch (SQLException e) {
+            fail();
+        }
+    }
+
+    @Test
+    public void CheckIfMailIsAdminReturnsFalseIfUserNotFoundTest() {
+        String sql = "SELECT ADMIN FROM `USER` where E_MAILADRES = ?";
+        try {
+
+            DataSource dataSource = mock(DataSource.class);
+            Connection connection = mock(Connection.class);
+            ResultSet resultSet = mock(ResultSet.class);
+            PreparedStatement preparedStatement = mock(PreparedStatement.class);
+
+
+            when(dataSource.getConnection()).thenReturn(connection);
+            when(connection.prepareStatement(sql)).thenReturn(preparedStatement);
+            when(preparedStatement.executeQuery()).thenReturn(resultSet);
+            when(resultSet.getString(1)).thenReturn("ail");
+
+            sut.setDatasource(dataSource);
+            boolean exist = sut.CheckIfMailIsAdmin("email");
+
+            verify(connection).prepareStatement(sql);
+            verify(preparedStatement).executeQuery();
+            verify(resultSet).next();
+            assertFalse(exist);
+        } catch (SQLException e) {
+            fail();
+        }
+    }
 }

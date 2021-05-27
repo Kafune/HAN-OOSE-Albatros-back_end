@@ -201,7 +201,7 @@ public class DTOconverter {
         userDTO.username = user.getUsername();
         userDTO.totalScore = user.getTotalScore();
         userDTO.imageUrl = user.getImageUrl();
-        userDTO.admin = user.isAdmin();
+        userDTO.a61646d696e = user.isAdmin();
 
         return userDTO;
     }

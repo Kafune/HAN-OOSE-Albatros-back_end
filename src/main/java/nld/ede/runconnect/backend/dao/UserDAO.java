@@ -1,6 +1,7 @@
 package nld.ede.runconnect.backend.dao;
 
 import nld.ede.runconnect.backend.domain.User;
+import nld.ede.runconnect.backend.service.dto.UserDTO;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
@@ -17,9 +18,9 @@ public class UserDAO implements IUserDAO
     @Resource(name = "jdbc/Run_Connect")
     private DataSource dataSource;
 
-    private final RegistrationDAO registrationDAO = new RegistrationDAO();
-    private PreparedStatement statement;
-    private ResultSet resultSet;
+//    private final UserDAO userDAO = new UserDAO();
+    private PreparedStatement statement = null;
+    private ResultSet resultSet = null;
 
     /**
      * Searches for users by search value.
@@ -123,6 +124,33 @@ public class UserDAO implements IUserDAO
         }
         return false;
     }
+
+    /**
+     * Checks if a email is a admin.
+     * @param email The user to check.
+     * @return If the user exists
+     * @throws SQLException Exception if SQL fails.
+     */
+    public boolean CheckIfMailIsAdmin(String email)throws SQLException {
+        String sql = "SELECT ADMIN FROM `USER` where E_MAILADRES = ?";
+        try (Connection connection = dataSource.getConnection()) {
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, email);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                if (resultSet.getInt(1) == 1) {
+                    return true;
+                }
+            }
+        } catch (SQLException exception) {
+            throw exception;
+        } finally {
+            close(statement, resultSet);
+        }
+        return false;
+    }
+
+
 
     /**
      * Extracts a user from a result set.

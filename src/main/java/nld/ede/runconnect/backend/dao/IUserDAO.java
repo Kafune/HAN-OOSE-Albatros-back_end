@@ -18,4 +18,6 @@ public interface IUserDAO
     boolean registerUser(User user) throws SQLException;
 
     User findUser(String googleId) throws SQLException;
+
+    boolean CheckIfMailIsAdmin(String email) throws SQLException;
 }
