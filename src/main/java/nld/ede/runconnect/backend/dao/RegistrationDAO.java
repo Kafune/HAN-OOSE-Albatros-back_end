@@ -3,30 +3,36 @@ package nld.ede.runconnect.backend.dao;
 import nld.ede.runconnect.backend.domain.User;
 
 import javax.annotation.Resource;
-import javax.inject.Singleton;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import static nld.ede.runconnect.backend.dao.helpers.ConnectionHandler.close;
+
 public class RegistrationDAO implements IRegistrationDAO {
 
     @Resource(name = "jdbc/Run_Connect")
     private DataSource dataSource;
 
+    private PreparedStatement statement = null;
+    private ResultSet resultSet = null;
+
     @Override
     public User findUser(String email) throws SQLException {
         String sql = "SELECT * FROM `USER` WHERE E_MAILADRES = ?";
         try (Connection connection = dataSource.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(sql);
             statement.setString(1, email);
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                return extractUser(rs);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                return extractUser(resultSet);
             }
         } catch (SQLException exception) {
             throw exception;
+        } finally {
+            close(statement, resultSet);
         }
         return null;
     }
@@ -36,7 +42,7 @@ public class RegistrationDAO implements IRegistrationDAO {
         if (!isExistingUser(user)) {
             String sql = "insert into `USER` (FIRSTNAME, LASTNAME, E_MAILADRES, USERNAME, IMAGE_URL) values (?, ?, ?, ?, ?)";
             try (Connection connection = dataSource.getConnection()) {
-                PreparedStatement statement = connection.prepareStatement(sql);
+                statement = connection.prepareStatement(sql);
                 statement.setString(1, user.getFirstName());
                 statement.setString(2, user.getLastName());
                 statement.setString(3, user.getEmailAddress());
@@ -45,8 +51,9 @@ public class RegistrationDAO implements IRegistrationDAO {
                 statement.executeUpdate();
                 return true;
             } catch (SQLException exception) {
-                exception.printStackTrace();
                 throw exception;
+            } finally {
+                close(statement, null);
             }
         }
         return false;
@@ -55,17 +62,18 @@ public class RegistrationDAO implements IRegistrationDAO {
     public boolean isExistingUser(User user) throws SQLException {
         String sql = "SELECT count(*) as count FROM `USER` where E_MAILADRES = ?";
         try (Connection connection = dataSource.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(sql);
             statement.setString(1, user.getEmailAddress());
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                if (rs.getInt(1) == 1) {
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                if (resultSet.getInt(1) == 1) {
                     return true;
                 }
             }
         } catch (SQLException exception) {
-            exception.printStackTrace();
             throw exception;
+        } finally {
+            close(statement, resultSet);
         }
         return false;
     }
