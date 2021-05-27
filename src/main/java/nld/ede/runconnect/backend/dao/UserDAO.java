@@ -10,11 +10,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import static nld.ede.runconnect.backend.dao.helpers.ConnectionHandler.close;
+
 public class UserDAO implements IUserDAO
 {
     @Resource(name = "jdbc/Run_Connect")
     private DataSource dataSource;
+
     private final RegistrationDAO registrationDAO = new RegistrationDAO();
+    private PreparedStatement statement;
+    private ResultSet resultSet;
 
     /**
      * Searches for users by search value.
@@ -28,15 +33,17 @@ public class UserDAO implements IUserDAO
 
         try (Connection connection = dataSource.getConnection()) {
             String searchUsersQuery = "SELECT * FROM USER WHERE username LIKE ?";
-            PreparedStatement statement = connection.prepareStatement(searchUsersQuery);
+            statement = connection.prepareStatement(searchUsersQuery);
             statement.setString(1, searchValue + "%");
-            ResultSet resultSet = statement.executeQuery();
+            resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
                 foundUsers.add(registrationDAO.extractUser(resultSet));
             }
         } catch (SQLException exception) {
             throw exception;
+        } finally {
+            close(statement, resultSet);
         }
         return foundUsers;
     }
