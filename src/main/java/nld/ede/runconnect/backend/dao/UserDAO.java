@@ -17,8 +17,9 @@ public class UserDAO implements IUserDAO
     @Resource(name = "jdbc/Run_Connect")
     private DataSource dataSource;
 
-    private PreparedStatement statement = null;
-    private ResultSet resultSet = null;
+    private final RegistrationDAO registrationDAO = new RegistrationDAO();
+    private PreparedStatement statement;
+    private ResultSet resultSet;
 
     /**
      * Searches for users by search value.
@@ -41,6 +42,8 @@ public class UserDAO implements IUserDAO
             }
         } catch (SQLException exception) {
             throw exception;
+        } finally {
+            close(statement, resultSet);
         }
         return foundUsers;
     }

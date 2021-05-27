@@ -98,6 +98,10 @@ public class RouteDAO implements IRouteDAO {
             close(statement, null);
         }
 
+        insertSegments(route, name, distance);
+    }
+
+    private void insertSegments(Route route, String name, int distance) throws SQLException {
         /*
          * Insert every segment with a for loop and a custom made database procedure.
          */
@@ -116,11 +120,17 @@ public class RouteDAO implements IRouteDAO {
                 statement.setDouble(7, segment.getEndCoordinate().getLatitude());
                 statement.setDouble(8, segment.getEndCoordinate().getLongitude());
                 statement.setFloat(9, segment.getEndCoordinate().getAltitude());
-               // -1 has been used here to indicate that this segment doesn't have a POI.
-               // The database procedure checks whether it is -1 or a poi.
-                statement.setString(10, ((segment.getPOI() == null) ? "-1" : segment.getPOI().getName()));
-                statement.setString(11, ((segment.getPOI() == null) ? "-1" : segment.getPOI().getDescription()));
+                // -1 has been used here to indicate that this segment doesn't have a POI.
+                // The database procedure checks whether it is -1 or a poi.
+                if(segment.getPOI() == null) {
+                    statement.setString(10, "-1");
+                    statement.setString(11, "-1");
+                } else {
+                    statement.setString(10, segment.getPOI().getName());
+                    statement.setString(11, segment.getPOI().getDescription());
+                }
                 statement.executeUpdate();
+
             } catch (SQLException exception) {
                 throw exception;
             } finally {
