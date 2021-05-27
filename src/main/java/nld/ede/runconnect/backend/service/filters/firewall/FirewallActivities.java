@@ -26,7 +26,7 @@ public class FirewallActivities implements IFirewall {
         String token = parameters.getFirst("token");
         TokenHashMap tokenHashMap = TokenHashMap.getInstance();
 
-        //@Path("/")
+        //Path("/")
         //addActivity
         if ( tokenHashMap.doesExist(token) && requestContext.getMethod().equals("POST")) {
                 String userEmail = tokenHashMap.getEmail(token);

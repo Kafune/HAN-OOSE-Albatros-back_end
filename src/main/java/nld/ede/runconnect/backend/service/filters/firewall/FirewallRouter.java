@@ -1,8 +1,5 @@
 package nld.ede.runconnect.backend.service.filters.firewall;
 
-import nld.ede.runconnect.backend.dao.IUserDAO;
-import nld.ede.runconnect.backend.service.tokens.TokenHashMap;
-
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.container.PreMatching;

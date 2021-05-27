@@ -16,7 +16,7 @@ public class FirewallSegments implements IFirewall{
         String token = parameters.getFirst("token");
         TokenHashMap tokenHashMap = TokenHashMap.getInstance();
 
-        //@Path("/")
+        //Path("/")
         //findSegmentsOfRoute
         if(requestContext.getMethod().equals("GET") && tokenHashMap.doesExist(token)){
             return;

@@ -29,7 +29,7 @@ public class Users {
     @Path("/find/{search-value}")
     public Response searchForUser(@PathParam("search-value") String searchValue) throws SQLException {
         ArrayList<UserDTO> users = DTOconverter
-                .domainsToUserDTOs(userDAO.searchForUsers(searchValue));
+            .domainsToUserDTOs(userDAO.searchForUsers(searchValue));
 
         if (users.size() == 0) {
             return Response.status(204).entity(users).build();
@@ -75,7 +75,7 @@ public class Users {
     public void setUserDAO(IUserDAO userDAO) {
         this.userDAO = userDAO;
     }
-    
+
     @Inject
     public void setGoogleIdVerifier(GoogleIdVerifier googleIdVerifier) {
         this.googleIdVerifier = googleIdVerifier;

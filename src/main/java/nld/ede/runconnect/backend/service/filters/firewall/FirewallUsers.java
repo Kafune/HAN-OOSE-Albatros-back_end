@@ -16,13 +16,13 @@ public class FirewallUsers  implements IFirewall{
         String token = parameters.getFirst("token");
         TokenHashMap tokenHashMap = TokenHashMap.getInstance();
 
-        //@Path("/")
+        //Path("/")
         //registerUser
         if(requestContext.getMethod().equals("POST") && pathSegments.get(1) ==null){
             return;
         }
 
-        //@Path("/find/{search-value}")
+        //Path("/find/{search-value}")
         //searchForUser
         if(pathSegments.get(1).toString().equals("find") && tokenHashMap.doesExist(token)){
             return;

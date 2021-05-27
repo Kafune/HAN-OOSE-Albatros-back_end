@@ -20,13 +20,13 @@ public class FirewallRoutes implements IFirewall{
         TokenHashMap tokenHashMap = TokenHashMap.getInstance();
         String userEmail = tokenHashMap.getEmail(token);
 
-        //@Path("/")
+        //Path("/")
         //makeRoute
         if(requestContext.getMethod().equals("POST") && pathSegments.get(1) ==null && userDAO.CheckIfMailIsAdmin(userEmail)){
             return;
         }
 
-        //@Path("/")
+        //Path("/")
         //findAllRoutes
         if(requestContext.getMethod().equals("GET") && tokenHashMap.doesExist(token)){
             return;
