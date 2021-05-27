@@ -32,8 +32,6 @@ public class FirewallActivities implements IFirewall {
                 String userEmail = tokenHashMap.getEmail(token);
                 // get userID with email
                 User user = userDAO.findUser(userEmail);
-
-
                 int userId = user.getUserId();
 
                 //get activity object from JSON body
