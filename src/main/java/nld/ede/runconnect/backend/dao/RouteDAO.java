@@ -128,18 +128,4 @@ public class RouteDAO implements IRouteDAO {
             }
         }
     }
-
-
-    public Route extractRoute(ResultSet resultSet) throws SQLException {
-        Route route = new Route();
-        route.setRouteId(resultSet.getInt(1));
-        route.setName(resultSet.getString(2));
-        route.setDistance(resultSet.getInt(3));
-        route.setDescription(resultSet.getString(4));
-        return route;
-    }
-
-    public void setDataSource(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
 }
