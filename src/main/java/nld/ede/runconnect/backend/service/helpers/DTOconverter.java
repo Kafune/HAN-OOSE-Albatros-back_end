@@ -9,9 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DTOconverter {
-
-    private DTOconverter() {}
-
     private static final Gson JSON = new Gson();
 
     /**
