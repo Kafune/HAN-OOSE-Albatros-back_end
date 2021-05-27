@@ -14,18 +14,11 @@ import static org.mockito.Mockito.verify;
 
 public class UserDAOTest
 {
-    DataSource dataSource;
-    Connection connection;
-    PreparedStatement preparedStatement;
     UserDAO userDAO;
 
     @BeforeEach
     public void setData() {
         userDAO = new UserDAO();
-        dataSource = mock(DataSource.class);
-        connection = mock(Connection.class);
-        preparedStatement = mock(PreparedStatement.class);
-        userDAO.setDatasource(dataSource);
     }
 
     @Test
@@ -37,8 +30,6 @@ public class UserDAOTest
             Connection connection = mock(Connection.class);
             PreparedStatement preparedStatement = mock(PreparedStatement.class);
             ResultSet resultSet = mock(ResultSet.class);
-
-            UserDAO userDAO = mock(UserDAO.class);
 
             // Setup mocks.
             when(dataSource.getConnection()).thenReturn(connection);
