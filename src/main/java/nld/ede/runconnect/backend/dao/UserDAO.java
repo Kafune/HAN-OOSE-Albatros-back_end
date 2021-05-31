@@ -17,7 +17,8 @@ public class UserDAO implements IUserDAO
 {
     @Resource(name = "jdbc/Run_Connect")
     private DataSource dataSource;
-    
+
+    private final RegistrationDAO registrationDAO = new RegistrationDAO();
     private PreparedStatement statement = null;
     private ResultSet resultSet = null;
 

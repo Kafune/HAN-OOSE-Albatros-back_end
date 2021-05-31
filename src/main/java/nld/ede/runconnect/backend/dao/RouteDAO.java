@@ -17,8 +17,8 @@ import static nld.ede.runconnect.backend.dao.helpers.ConnectionHandler.close;
 public class RouteDAO implements IRouteDAO {
     @Resource(name = "jdbc/Run_Connect")
     private DataSource dataSource;
-    private PreparedStatement statement;
-    private ResultSet resultSet;
+    private PreparedStatement statement = null;
+    private ResultSet resultSet = null;
 
     /**
      * Gets all the routes from the database.

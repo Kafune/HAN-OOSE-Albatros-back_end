@@ -13,8 +13,8 @@ import static nld.ede.runconnect.backend.dao.helpers.ConnectionHandler.close;
 
 public class ActivityDAO implements IActivityDAO {
     @Resource(name = "jdbc/Run_Connect")
-    private DataSource dataSource;
-    private PreparedStatement statement;
+    private DataSource dataSource = null;
+    private PreparedStatement statement = null;
 
     /**
      * Adds a new activity to the database.
