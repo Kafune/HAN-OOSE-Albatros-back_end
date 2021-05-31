@@ -5,7 +5,10 @@ import nld.ede.runconnect.backend.service.dto.UserDTO;
 import nld.ede.runconnect.backend.service.helpers.DTOconverter;
 
 import javax.inject.Inject;
-import javax.ws.rs.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,6 +20,7 @@ public class Users
 
     /**
      * Searches for users based on a search value.
+     *
      * @param searchValue The value to search for.
      * @return The response code with body.
      */
@@ -36,6 +40,7 @@ public class Users
 
     /**
      * Follows a user based on a user ID.
+     *
      * @param followerId The user to follow the followee in the path parameter.
      * @return A response with status code 200 if successful, 400 if not successful.
      * @throws SQLException Exception if SQL fails.
@@ -53,6 +58,7 @@ public class Users
 
     /**
      * Unfollows a user based on a user ID.
+     *
      * @param followerId The user to follow the followee in the path parameter.
      * @return A response with status code 200 if successful, 400 if not successful.
      * @throws SQLException Exception if SQL fails.
@@ -70,10 +76,12 @@ public class Users
 
     /**
      * Injects and sets the user DAO.
+     *
      * @param userDAO The DAO.
      */
     @Inject
-    public void setUserDAO(IUserDAO userDAO) {
+    public void setUserDAO(IUserDAO userDAO)
+    {
         this.userDAO = userDAO;
     }
 }
