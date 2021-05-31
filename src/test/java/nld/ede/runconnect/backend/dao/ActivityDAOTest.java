@@ -9,11 +9,12 @@ import org.junit.jupiter.api.Test;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class ActivityDAOTest {
@@ -28,7 +29,7 @@ public class ActivityDAOTest {
         dataSource = mock(DataSource.class);
         connection = mock(Connection.class);
         preparedStatement = mock(PreparedStatement.class);
-        sut.setDataSource(dataSource);
+        sut.setDatasource(dataSource);
     }
 
     @Test
@@ -49,7 +50,7 @@ public class ActivityDAOTest {
             when(connection.prepareStatement(sql)).thenReturn(preparedStatement);
             when(preparedStatement.executeUpdate()).thenReturn(1);
 
-            activityDAOSpy.setDataSource(dataSource);
+            activityDAOSpy.setDatasource(dataSource);
 
             //act
             activityDAOSpy.addNewActivity(activity);
@@ -82,7 +83,7 @@ public class ActivityDAOTest {
             when(dataSource.getConnection()).thenReturn(connection);
             when(connection.prepareStatement(sql)).thenReturn(preparedStatement);
             when(preparedStatement.executeUpdate()).thenReturn(1);
-            sut.setDataSource(dataSource);
+            sut.setDatasource(dataSource);
 
             //act
             sut.insertSegments(activity);
@@ -105,6 +106,62 @@ public class ActivityDAOTest {
         } catch (Exception e) {
             fail(e);
         }
+    }
+
+    @Test
+    public void getActivitiesTest() {
+        int userId = 1;
+        String sql = "SELECT * FROM ACTIVITY WHERE USERID = ?";
+
+        try {
+            DataSource dataSource = mock(DataSource.class);
+            Connection connection = mock(Connection.class);
+            PreparedStatement preparedStatement = mock(PreparedStatement.class);
+            ResultSet resultSet = mock(ResultSet.class);
+
+            // Setup mocks.
+            when(dataSource.getConnection()).thenReturn(connection);
+            when(connection.prepareStatement(sql)).thenReturn(preparedStatement);
+            when(preparedStatement.executeQuery()).thenReturn(resultSet);
+
+            sut.setDatasource(dataSource);
+
+            // Act
+            sut.getActivities(userId);
+
+            // Assert
+            verify(connection).prepareStatement(sql);
+            verify(preparedStatement).setInt(1, userId);
+            verify(preparedStatement).executeQuery();
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail(e);
+        }
+    }
+
+    @Test
+    public void extractActivityTest() {
+        ResultSet resultSet = mock(ResultSet.class);
+        try {
+            when(resultSet.getInt(1)).thenReturn(3);
+            when(resultSet.getInt(2)).thenReturn(5);
+            when( resultSet.getInt(3)).thenReturn(7);
+            when(resultSet.getLong(4)).thenReturn(8L);
+            when(resultSet.getFloat(5)).thenReturn(9F);
+            when(resultSet.getInt(6)).thenReturn(10);
+
+            Activity activity = sut.extractActivity(resultSet);
+
+            assertEquals(activity.getActivityId(), 3);
+            assertEquals(activity.getUserId(), 5);
+            assertEquals(activity.getPoint(), 7);
+            assertEquals(activity.getDuration(), 8L);
+            assertEquals(activity.getDistance(), 9F);
+            assertEquals(activity.getRouteId(), 10);
+        } catch (SQLException e) {
+            fail();
+        }
+
     }
 
     private Activity getActivity() {

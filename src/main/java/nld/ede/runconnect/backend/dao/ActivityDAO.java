@@ -117,16 +117,14 @@ public class ActivityDAO implements IActivityDAO {
      * @return a single activity object
      * @throws SQLException is SQL fails.
      */
-    private Activity extractActivity(ResultSet resultSet) throws SQLException {
+    public Activity extractActivity(ResultSet resultSet) throws SQLException {
         Activity activity = new Activity();
         activity.setActivityId(resultSet.getInt(1));
         activity.setUserId(resultSet.getInt(2));
         activity.setPoint(resultSet.getInt(3));
         activity.setDuration(resultSet.getLong(4));
         activity.setDistance(resultSet.getFloat(5));
-        if (resultSet.getInt(6) != 0) {
-            activity.setRouteId(resultSet.getInt(6));
-        }
+        activity.setRouteId(resultSet.getInt(6));
 
         return activity;
     }
@@ -135,7 +133,7 @@ public class ActivityDAO implements IActivityDAO {
      * Sets data source.
      * @param dataSource the data source
      */
-    public void setDataSource(DataSource dataSource) {
+    public void setDatasource(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
