@@ -18,8 +18,8 @@ public class UserDAO implements IUserDAO
     private DataSource dataSource;
 
     private final RegistrationDAO registrationDAO = new RegistrationDAO();
-    private PreparedStatement statement;
-    private ResultSet resultSet;
+    private PreparedStatement statement = null;
+    private ResultSet resultSet = null;
 
     /**
      * Searches for users by search value.
