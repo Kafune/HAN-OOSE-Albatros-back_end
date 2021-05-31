@@ -37,7 +37,7 @@ public class Users
     /**
      * Follows a user based on a user ID.
      * @param followerId The user to follow the followee in the path parameter.
-     * @return TODO:
+     * @return A response with status code 200 if successful, 400 if not successful.
      * @throws SQLException Exception if SQL fails.
      */
     @POST
@@ -54,7 +54,7 @@ public class Users
     /**
      * Unfollows a user based on a user ID.
      * @param followerId The user to follow the followee in the path parameter.
-     * @return TODO:
+     * @return A response with status code 200 if successful, 400 if not successful.
      * @throws SQLException Exception if SQL fails.
      */
     @POST
