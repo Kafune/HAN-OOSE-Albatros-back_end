@@ -8,5 +8,5 @@ import java.util.List;
 public interface IActivityDAO {
     void addNewActivity(Activity activity) throws SQLException;
 
-    List<Activity> getActivities(int userId);
+    List<Activity> getActivities(int userId) throws SQLException;
 }

@@ -255,13 +255,39 @@ It will expect a body containing an object of the form
 }
 routeId mag null zijn
 ```
+Get an activity based on a userId.
+```
+url:    /activities/user/{userId}
+method: GET
+```
+It will expect a path parameter of the type int.
+This parameter is the id of an existing user.
+
+It will perform a body containing a complete list of activities that belong to a user
+``` 
+[
+    {
+        "activityId": 1,
+        "distance": 3.2,
+        "duration": 32,
+        "point": 1,
+        "routeId": 1,
+        "segments": [],
+        "userId": 1
+    }
+]
+``` 
+
+
+
 
 #### Users
 Search for a user based on a search string.
 ```
-url:    /users/find/{search-value}
+url:    /activities/user/{userId}
 method: GET
 ```
+
 
 It will expect a search string like `Henk Janss` in the search-value path parameter.
 

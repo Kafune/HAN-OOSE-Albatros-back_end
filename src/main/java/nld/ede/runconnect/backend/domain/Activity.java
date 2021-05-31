@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Activity {
     private int activityId;
-    private int routeId;
+    private Integer routeId;
     private int userId;
     private int point;
     private float distance;
@@ -20,7 +20,7 @@ public class Activity {
         this.segments = segments;
     }
 
-    public int getRouteId() {
+    public Integer getRouteId() {
         return routeId;
     }
 
@@ -52,12 +52,19 @@ public class Activity {
         this.duration = duration;
     }
 
-
     public float getDistance() {
         return distance;
     }
 
     public void setDistance(float distance) {
         this.distance = distance;
+    }
+
+    public int getActivityId() {
+        return activityId;
+    }
+
+    public void setActivityId(int activityId) {
+        this.activityId = activityId;
     }
 }

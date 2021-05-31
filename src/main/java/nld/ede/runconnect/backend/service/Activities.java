@@ -34,10 +34,17 @@ public class Activities {
 
         return Response.status(201).build();
     }
+
+    /**
+     *
+     * @param userId id of a user
+     * @return a response that containing a list of activities that belong to a user.
+     * @throws SQLException if SQL fails.
+     */
     @GET
-    @Path("/{userId}")
+    @Path("user/{userId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getActivities(@PathParam("userId") int userId) {
+    public Response getActivities(@PathParam("userId") int userId) throws SQLException {
         ArrayList<ActivityDTO> activities = DTOconverter
                 .domainsToActivityDTOs(activityDAO.getActivities(userId));
 

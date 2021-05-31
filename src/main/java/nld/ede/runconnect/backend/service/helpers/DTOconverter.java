@@ -223,7 +223,37 @@ public class DTOconverter {
         return activity;
     }
 
+    /**
+     * Converts a list of Activity domain to a list of ActivityDTO.
+     * @param activities domain list
+     * @return the DTO list
+     */
     public static ArrayList<ActivityDTO> domainsToActivityDTOs(List<Activity> activities) {
-        return null;
+        ArrayList<ActivityDTO> activityDTOS = new ArrayList<>();
+
+        for (Activity activity: activities) {
+            activityDTOS.add(domainToActivityDTO(activity));
+        }
+
+        return activityDTOS;
+    }
+    /**
+     * Converts an Activity domain to ActivityDTO.
+     * @param activity domain
+     * @return the DTO
+     */
+
+    private static ActivityDTO domainToActivityDTO(Activity activity) {
+        ActivityDTO activityDTO = new ActivityDTO();
+        if (activity.getRouteId() != null) {
+            activityDTO.routeId = activity.getRouteId();
+        }
+        activityDTO.activityId = activity.getActivityId();
+        activityDTO.distance = activity.getDistance();
+        activityDTO.duration = activity.getDuration();
+        activityDTO.point = activity.getPoint();
+        activityDTO.userId = activity.getUserId();
+
+        return activityDTO;
     }
 }
