@@ -17,7 +17,6 @@ public interface IFirewall {
      * @param requestContext
      * @param pathSegments
      * @param parameters
-     * @param body
      */
-    void rules(ContainerRequestContext requestContext, List<PathSegment> pathSegments, MultivaluedMap<String, String> parameters, String body) throws SQLException;
+    void rules(ContainerRequestContext requestContext, List<PathSegment> pathSegments, MultivaluedMap<String, String> parameters) throws SQLException;
 }

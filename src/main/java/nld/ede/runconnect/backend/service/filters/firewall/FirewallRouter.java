@@ -29,9 +29,6 @@ public class FirewallRouter implements ContainerRequestFilter {
         List<PathSegment> pathSegments = uriInfo.getPathSegments();
         String firstURIParameter = pathSegments.get(0).getPath();
         MultivaluedMap<String, String> parameters = uriInfo.getQueryParameters();
-        String body = new BufferedReader(new InputStreamReader(requestContext.getEntityStream()))
-                .lines().collect(Collectors.joining("\n"));
-
         switch (firstURIParameter) {
             case "Activities":
                 firewall = new FirewallActivities();
@@ -53,7 +50,7 @@ public class FirewallRouter implements ContainerRequestFilter {
         }
 
         try {
-            firewall.rules(requestContext, pathSegments, parameters, body);
+            firewall.rules(requestContext, pathSegments, parameters);
         } catch (SQLException throwables) {
             requestContext.abortWith(Response.status(Response.Status.INTERNAL_SERVER_ERROR).build());
         }

@@ -12,7 +12,7 @@ public class FirewallSegments implements IFirewall{
 
 
     @Override
-    public void rules(ContainerRequestContext requestContext, List<PathSegment> pathSegments, MultivaluedMap<String, String> parameters, String body) {
+    public void rules(ContainerRequestContext requestContext, List<PathSegment> pathSegments, MultivaluedMap<String, String> parameters) {
         String token = parameters.getFirst("token");
         TokenHashMap tokenHashMap = TokenHashMap.getInstance();
 

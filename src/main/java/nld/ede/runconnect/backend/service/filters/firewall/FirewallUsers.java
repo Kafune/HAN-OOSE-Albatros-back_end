@@ -12,13 +12,13 @@ public class FirewallUsers  implements IFirewall{
 
 
     @Override
-    public void rules(ContainerRequestContext requestContext, List<PathSegment> pathSegments, MultivaluedMap<String, String> parameters, String body) {
+    public void rules(ContainerRequestContext requestContext, List<PathSegment> pathSegments, MultivaluedMap<String, String> parameters) {
         String token = parameters.getFirst("token");
         TokenHashMap tokenHashMap = TokenHashMap.getInstance();
 
         //Path("/")
         //registerUser
-        if(requestContext.getMethod().equals("POST") && pathSegments.get(1) ==null){
+        if(requestContext.getMethod().equals("POST") && pathSegments.size() <=1){
             return;
         }
 

@@ -15,15 +15,17 @@ public class FirewallRoutes implements IFirewall{
     private IUserDAO userDAO;
 
     @Override
-    public void rules(ContainerRequestContext requestContext, List<PathSegment> pathSegments, MultivaluedMap<String, String> parameters, String body) throws SQLException {
+    public void rules(ContainerRequestContext requestContext, List<PathSegment> pathSegments, MultivaluedMap<String, String> parameters) throws SQLException {
         String token = parameters.getFirst("token");
         TokenHashMap tokenHashMap = TokenHashMap.getInstance();
         String userEmail = tokenHashMap.getEmail(token);
 
         //Path("/")
         //makeRoute
-        if(requestContext.getMethod().equals("POST") && pathSegments.get(1) ==null && userDAO.CheckIfMailIsAdmin(userEmail)){
-            return;
+        if(requestContext.getMethod().equals("POST") && tokenHashMap.doesExist(token)){
+            if(userDAO.CheckIfMailIsAdmin(userEmail)) {
+                return;
+            }
         }
 
         //Path("/")

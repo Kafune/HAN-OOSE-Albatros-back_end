@@ -22,7 +22,7 @@ public class FirewallActivities implements IFirewall {
 
 
     @Override
-    public void rules(ContainerRequestContext requestContext, List<PathSegment> pathSegments, MultivaluedMap<String, String> parameters, String body) throws SQLException {
+    public void rules(ContainerRequestContext requestContext, List<PathSegment> pathSegments, MultivaluedMap<String, String> parameters) throws SQLException {
         String token = parameters.getFirst("token");
         TokenHashMap tokenHashMap = TokenHashMap.getInstance();
 
