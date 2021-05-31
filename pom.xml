@@ -57,6 +57,9 @@
                 <configuration>
                     <destFile>${basedir}/target/jacoco.exec</destFile>
                     <dataFile>${basedir}/target/jacoco.exec</dataFile>
+                    <excludes>
+                        <exclude>**/*nld/ede/runconnect/backend/service/filters/**</exclude>
+                    </excludes>
                 </configuration>
                 <executions>
                     <execution>
