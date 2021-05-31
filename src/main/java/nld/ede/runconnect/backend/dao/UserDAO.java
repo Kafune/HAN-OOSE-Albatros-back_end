@@ -4,6 +4,7 @@ import nld.ede.runconnect.backend.domain.User;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
+import javax.ws.rs.core.Response;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -46,6 +47,75 @@ public class UserDAO implements IUserDAO
             close(statement, resultSet);
         }
         return foundUsers;
+    }
+
+    /**
+     * Follow or unfollow a user based on follower and followee ID.
+     * @param follow Boolean value, if true follow, if false unfollow.
+     * @param followerId The ID of the person trying to follow a user.
+     * @param followeeId The ID of the user to follow.
+     * @return If the method was executed successful.
+     */
+    public boolean toggleFollow(boolean follow, int followerId, int followeeId) throws SQLException
+    {
+        // If user is already following or already not following user, return out of method.
+        if (isFollowing(followerId, followeeId) == follow) {
+            return false;
+        }
+
+        String query;
+
+        if (follow) {
+            query = "INSERT INTO FOLLOWS (FOLLOWERID, FOLLOWEEID) VALUES (?, ?)";
+        } else {
+            query = "DELETE FROM FOLLOWS WHERE FOLLOWERID = ? AND FOLLOWEEID = ?";
+        }
+
+        try (Connection connection = dataSource.getConnection()) {
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, followerId);
+            statement.setInt(2, followeeId);
+            resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return true;
+            }
+        } catch (SQLException exception) {
+            throw exception;
+        } finally {
+            close(statement, resultSet);
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks if user is already following other user.
+     * @param followerId The ID of the follower.
+     * @param followeeId The ID of the followee.
+     * @return If the follower is already following the followee.
+     * @throws SQLException Exception if SQL fails.
+     */
+    public boolean isFollowing(int followerId, int followeeId) throws SQLException
+    {
+        String query = "SELECT * FROM FOLLOWS WHERE FOLLOWERID = ? AND FOLLOWEEID = ?";
+
+        try (Connection connection = dataSource.getConnection()) {
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, followerId);
+            statement.setInt(2, followeeId);
+            resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return true;
+            }
+        } catch (SQLException exception) {
+            throw exception;
+        } finally {
+            close(statement, resultSet);
+        }
+
+        return false;
     }
 
     /**

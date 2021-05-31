@@ -5,9 +5,7 @@ import nld.ede.runconnect.backend.service.dto.UserDTO;
 import nld.ede.runconnect.backend.service.helpers.DTOconverter;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -24,7 +22,8 @@ public class Users
      */
     @GET
     @Path("/find/{search-value}")
-    public Response searchForUser(@PathParam("search-value") String searchValue) throws SQLException {
+    public Response searchForUser(@PathParam("search-value") String searchValue) throws SQLException
+    {
         ArrayList<UserDTO> users = DTOconverter
             .domainsToUserDTOs(userDAO.searchForUsers(searchValue));
 
@@ -33,6 +32,40 @@ public class Users
         }
 
         return Response.status(200).entity(users).build();
+    }
+
+    /**
+     * Follows a user based on a user ID.
+     * @param followerId The user to follow the followee in the path parameter.
+     * @return TODO:
+     * @throws SQLException Exception if SQL fails.
+     */
+    @POST
+    @Path("/{follower-id}/follow/{followee-id}")
+    public Response follow(@PathParam("follower-id") int followerId, @PathParam("followee-id") int followeeId) throws SQLException
+    {
+        if (followeeId != followerId && userDAO.toggleFollow(true, followerId, followeeId)) {
+            return Response.status(200).build();
+        }
+
+        return Response.status(400).build();
+    }
+
+    /**
+     * Unfollows a user based on a user ID.
+     * @param followerId The user to follow the followee in the path parameter.
+     * @return TODO:
+     * @throws SQLException Exception if SQL fails.
+     */
+    @POST
+    @Path("/{follower-id}/unfollow/{followee-id}")
+    public Response unfollow(@PathParam("follower-id") int followerId, @PathParam("followee-id") int followeeId) throws SQLException
+    {
+        if (followeeId != followerId && userDAO.toggleFollow(false, followerId, followeeId)) {
+            return Response.status(200).build();
+        }
+
+        return Response.status(400).build();
     }
 
     /**
