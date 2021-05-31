@@ -4,7 +4,6 @@ import nld.ede.runconnect.backend.domain.User;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
-import javax.ws.rs.core.Response;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
