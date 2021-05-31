@@ -12,8 +12,4 @@ public interface IUserDAO
     boolean toggleFollow(boolean follow, int followerId, int followeeId) throws SQLException;
 
     boolean isFollowing(int followerId, int followeeId) throws SQLException;
-
-    boolean follow(int followerId, int followeeId) throws SQLException;
-
-    boolean unfollow(int followerId, int followeeId) throws SQLException;
 }
