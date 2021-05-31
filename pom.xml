@@ -58,10 +58,7 @@
                     <destFile>${basedir}/target/jacoco.exec</destFile>
                     <dataFile>${basedir}/target/jacoco.exec</dataFile>
                     <excludes>
-                        <exclude>**/*nld/ede/runconnect/backend/service/helpers/GoogleIdVerifier.java</exclude>
-                        <exclude>**/*nld/ede/runconnect/backend/service/helpers/UserInfo.java</exclude>
-                        <exclude>**/*nld/ede/runconnect/backend/service/helpers/GoogleIdVerifier</exclude>
-                        <exclude>**/*nld/ede/runconnect/backend/service/helpers/UserInfo</exclude>
+                        <exclude>**/*nld/ede/runconnect/backend/service/helpers/**</exclude>
                         <exclude>**/*nld/ede/runconnect/backend/service/filters/**</exclude>
                     </excludes>
                 </configuration>
