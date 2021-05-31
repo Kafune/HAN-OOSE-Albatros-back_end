@@ -29,7 +29,7 @@ public class ActivityDAO implements IActivityDAO {
     @Override
     public void addNewActivity(Activity activity) throws SQLException {
         Integer routeId = null;
-        if (activity.getRouteId() != 0) {
+        if (activity.getRouteId() != -1) {
             routeId = activity.getRouteId();
         }
         String sql = "INSERT INTO ACTIVITY (routeId, userId, point, duration, distance) VALUES (?, ?, ?, ?, ?)";
