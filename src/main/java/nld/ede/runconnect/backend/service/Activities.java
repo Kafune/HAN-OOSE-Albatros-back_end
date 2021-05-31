@@ -49,7 +49,7 @@ public class Activities {
                 .domainsToActivityDTOs(activityDAO.getActivities(userId));
 
         if (activities.isEmpty()) {
-            return Response.status(404).build();
+            return Response.status(204).build();
         }
 
         return Response.status(200).entity(activities).build();
