@@ -14,6 +14,10 @@ import java.util.List;
 public class FirewallRoutes implements IFirewall{
     private IUserDAO userDAO;
 
+    FirewallRoutes(IUserDAO userDAO){
+        this.userDAO=userDAO;
+    }
+
     @Override
     public void rules(ContainerRequestContext requestContext, List<PathSegment> pathSegments, MultivaluedMap<String, String> parameters) throws SQLException {
         String token = parameters.getFirst("token");
@@ -37,13 +41,4 @@ public class FirewallRoutes implements IFirewall{
         requestContext.abortWith(Response.status(Response.Status.NOT_FOUND).build());
     }
 
-    /**
-     * Injects and sets the user DAO.
-     *
-     * @param userDAO The DAO.
-     */
-    @Inject
-    public void setUserDAO(IUserDAO userDAO) {
-        this.userDAO = userDAO;
-    }
 }

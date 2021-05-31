@@ -20,6 +20,9 @@ import java.util.stream.Collectors;
 public class FirewallActivities implements IFirewall {
     private IUserDAO userDAO;
 
+    FirewallActivities(IUserDAO userDAO){
+        this.userDAO=userDAO;
+    }
 
     @Override
     public void rules(ContainerRequestContext requestContext, List<PathSegment> pathSegments, MultivaluedMap<String, String> parameters) throws SQLException {
@@ -29,20 +32,23 @@ public class FirewallActivities implements IFirewall {
         //Path("/")
         //addActivity
         if ( tokenHashMap.doesExist(token) && requestContext.getMethod().equals("POST")) {
-                String userEmail = tokenHashMap.getEmail(token);
-                // get userID with email
-                User user = userDAO.findUser(userEmail);
-                int userId = user.getUserId();
+            //this wouldve worked if inputStreams were to be renewed. Sadly this cant be done. So we can't check if
+            // the correct user is uploading his or hers activity.
 
-                //get activity object from JSON body
-                String result = new BufferedReader(new InputStreamReader(requestContext.getEntityStream()))
-                        .lines().collect(Collectors.joining("\n"));
-                Gson JSON = new Gson();
-                var activity = JSON.fromJson(result, ActivityDTO.class);
-
-                if (activity.userId != userId) {
-                    requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
-                }
+//                String userEmail = tokenHashMap.getEmail(token);
+//                // get userID with email
+//                User user = userDAO.findUser(userEmail);
+//                int userId = user.getUserId();
+//
+//                //get activity object from JSON body
+//                String result = new BufferedReader(new InputStreamReader(requestContext.getEntityStream()))
+//                        .lines().collect(Collectors.joining("\n"));
+//                Gson JSON = new Gson();
+//                var activity = JSON.fromJson(result, ActivityDTO.class);
+//
+//                if (activity.userId != userId) {
+//                    requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
+//                }
                 return;
 
         }
@@ -51,13 +57,5 @@ public class FirewallActivities implements IFirewall {
         requestContext.abortWith(Response.status(Response.Status.NOT_FOUND).build());
     }
 
-    /**
-     * Injects and sets the user DAO.
-     *
-     * @param userDAO The DAO.
-     */
-    @Inject
-    public void setUserDAO(IUserDAO userDAO) {
-        this.userDAO = userDAO;
-    }
+
 }
