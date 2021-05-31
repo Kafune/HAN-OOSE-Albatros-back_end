@@ -14,4 +14,10 @@ public interface IUserDAO
      * @throws SQLException Exception if SQL fails.
      */
     ArrayList<User> searchForUsers(String searchValue) throws SQLException;
+
+    boolean registerUser(User user) throws SQLException;
+
+    User findUser(String googleId) throws SQLException;
+
+    boolean CheckIfMailIsAdmin(String email) throws SQLException;
 }
