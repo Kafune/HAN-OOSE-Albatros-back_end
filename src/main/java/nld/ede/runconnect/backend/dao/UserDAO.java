@@ -51,6 +51,7 @@ public class UserDAO implements IUserDAO
 
     /**
      * Follow or unfollow a user based on follower and followee ID.
+     * This method only contains the business logic.
      * @param follow Boolean value, if true follow, if false unfollow.
      * @param followerId The ID of the person trying to follow a user.
      * @param followeeId The ID of the user to follow.
@@ -63,13 +64,19 @@ public class UserDAO implements IUserDAO
             return false;
         }
 
-        String query;
+        return follow ? this.follow(followerId, followeeId) : this.unfollow(followerId, followeeId);
+    }
 
-        if (follow) {
-            query = "INSERT INTO FOLLOWS (FOLLOWERID, FOLLOWEEID) VALUES (?, ?)";
-        } else {
-            query = "DELETE FROM FOLLOWS WHERE FOLLOWERID = ? AND FOLLOWEEID = ?";
-        }
+    /**
+     * Follows a user based on follower and followee ID.
+     * @param followerId The ID of the follower.
+     * @param followeeId The ID of the followee.
+     * @return If the statement was successful.
+     * @throws SQLException Exception if SQL fails.
+     */
+    public boolean follow(int followerId, int followeeId) throws SQLException
+    {
+        String query = "INSERT INTO FOLLOWS (FOLLOWERID, FOLLOWEEID) VALUES (?, ?)";
 
         try (Connection connection = dataSource.getConnection()) {
             statement = connection.prepareStatement(query);
@@ -87,6 +94,30 @@ public class UserDAO implements IUserDAO
         }
 
         return false;
+    }
+
+    /**
+     * Unfollows a user based on follower and followee ID.
+     * @param followerId The ID of the follower.
+     * @param followeeId The ID of the followee.
+     * @return If the statement was successful.
+     * @throws SQLException Exception if SQL fails.
+     */
+    public boolean unfollow(int followerId, int followeeId) throws SQLException
+    {
+        String query = "DELETE FROM FOLLOWS WHERE FOLLOWERID = ? AND FOLLOWEEID = ?";
+
+        try (Connection connection = dataSource.getConnection()) {
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, followerId);
+            statement.setInt(2, followeeId);
+
+            return statement.executeUpdate() > 0;
+        } catch (SQLException exception) {
+            throw exception;
+        } finally {
+            close(statement, resultSet);
+        }
     }
 
     /**
