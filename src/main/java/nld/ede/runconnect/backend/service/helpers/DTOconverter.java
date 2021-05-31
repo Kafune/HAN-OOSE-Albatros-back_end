@@ -222,4 +222,8 @@ public class DTOconverter {
         }
         return activity;
     }
+
+    public static ArrayList<ActivityDTO> domainsToActivityDTOs(List<Activity> activities) {
+        return null;
+    }
 }

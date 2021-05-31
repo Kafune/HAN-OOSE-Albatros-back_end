@@ -7,13 +7,11 @@ import nld.ede.runconnect.backend.service.helpers.DTOconverter;
 
 import javax.inject.Inject;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 @Path("activities")
 public class Activities {
@@ -35,6 +33,19 @@ public class Activities {
         activityDAO.addNewActivity(newActivity);
 
         return Response.status(201).build();
+    }
+    @GET
+    @Path("/{userId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getActivities(@PathParam("userId") int userId) {
+        ArrayList<ActivityDTO> activities = DTOconverter
+                .domainsToActivityDTOs(activityDAO.getActivities(userId));
+
+        if (activities.isEmpty()) {
+            return Response.status(404).build();
+        }
+
+        return Response.status(200).entity(activities).build();
     }
 
     @Inject
