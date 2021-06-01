@@ -16,6 +16,7 @@ public class TokenHashMap {
         if(getToken(email) == null){
             userToken.put(email, String.valueOf(System.currentTimeMillis()));
         }
+        System.out.println(getToken(email));
         return getToken(email);
     }
 

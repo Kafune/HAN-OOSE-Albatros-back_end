@@ -6,10 +6,7 @@ import nld.ede.runconnect.backend.domain.Segment;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,21 +25,24 @@ public class ActivityDAO implements IActivityDAO {
      */
     @Override
     public void addNewActivity(Activity activity) throws SQLException {
-        Integer routeId = null;
-        if (activity.getRouteId() != -1) {
-            routeId = activity.getRouteId();
-        }
+
         String sql = "INSERT INTO ACTIVITY (routeId, userId, point, duration, distance) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection connection = dataSource.getConnection()) {
             statement = connection.prepareStatement(sql);
-            statement.setInt(1, routeId);
+            if (activity.getRouteId() != -1 ) {
+                statement.setInt(1, activity.getRouteId());
+            }
+            else {
+                statement.setNull(1, Types.INTEGER);
+            }
             statement.setInt(2, activity.getUserId());
             statement.setInt(3, activity.getPoint());
             statement.setLong(4, activity.getDuration());
             statement.setFloat(5, activity.getDistance());
             statement.executeUpdate();
         } catch (SQLException exception) {
+            exception.printStackTrace();
             throw exception;
         } finally {
             close(statement, null);
