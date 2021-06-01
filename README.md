@@ -284,7 +284,7 @@ It will perform a body containing a complete list of activities that belong to a
 #### Users
 Search for a user based on a search string.
 ```
-url:    /activities/user/{userId}
+url:    /users/find/{search-value}
 method: GET
 ```
 
