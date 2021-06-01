@@ -274,4 +274,66 @@ public class UserDAOTest
             fail();
         }
     }
+
+    @Test
+    public void toggleFollowTest() {
+        String followQuery = "INSERT INTO FOLLOWS (FOLLOWERID, FOLLOWEEID) VALUES (?, ?)";
+
+        try {
+            DataSource dataSource = mock(DataSource.class);
+            Connection connection = mock(Connection.class);
+            PreparedStatement preparedStatement = mock(PreparedStatement.class);
+            ResultSet resultSet = mock(ResultSet.class);
+            UserDAO userDAOSpy = spy(sut);
+
+            // Setup mocks.
+            when(dataSource.getConnection()).thenReturn(connection);
+            when(connection.prepareStatement(followQuery)).thenReturn(preparedStatement);
+            when(preparedStatement.executeQuery()).thenReturn(resultSet);
+            doReturn(false).when(userDAOSpy).isFollowing(1, 2);
+
+            userDAOSpy.setDatasource(dataSource);
+
+            // Act
+            userDAOSpy.toggleFollow(true, 1, 2);
+
+            // Assert
+            verify(connection).prepareStatement(followQuery);
+            verify(preparedStatement).executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail(e);
+        }
+    }
+
+    @Test
+    public void isFollowingTest() {
+        String isFollowingQuery = "SELECT * FROM FOLLOWS WHERE FOLLOWERID = ? AND FOLLOWEEID = ?";
+
+        try {
+            DataSource dataSource = mock(DataSource.class);
+            Connection connection = mock(Connection.class);
+            PreparedStatement preparedStatement = mock(PreparedStatement.class);
+            ResultSet resultSet = mock(ResultSet.class);
+            UserDAO userDAOSpy = spy(sut);
+
+            // Setup mocks.
+            when(dataSource.getConnection()).thenReturn(connection);
+            when(connection.prepareStatement(isFollowingQuery)).thenReturn(preparedStatement);
+            when(preparedStatement.executeQuery()).thenReturn(resultSet);
+            when(resultSet.next()).thenReturn(true);
+
+            userDAOSpy.setDatasource(dataSource);
+
+            // Act
+            userDAOSpy.isFollowing(1, 2);
+
+            // Assert
+            verify(connection).prepareStatement(isFollowingQuery);
+            verify(preparedStatement).executeQuery();
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail(e);
+        }
+    }
 }

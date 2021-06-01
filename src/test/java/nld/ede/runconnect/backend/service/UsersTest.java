@@ -148,6 +148,74 @@ public class UsersTest
         }
     }
 
+    @Test
+    void followTestSuccess() {
+        try {
+            // Arrange
+            when(userDAOMock.toggleFollow(true, 1, 2)).thenReturn(true);
+            sut.setUserDAO(userDAOMock);
+
+            // Act
+            Response response = sut.follow(1, 2);
+
+            // Assert
+            assertEquals(response.getStatus(), 200);
+        } catch (SQLException e) {
+            fail();
+        }
+    }
+
+    @Test
+    void followTestFail() {
+        try {
+            // Arrange
+            when(userDAOMock.toggleFollow(true, 1, 2)).thenReturn(false);
+            sut.setUserDAO(userDAOMock);
+
+            // Act
+            Response response = sut.follow(1, 2);
+
+            // Assert
+            assertEquals(response.getStatus(), 400);
+        } catch (SQLException e) {
+            fail();
+        }
+    }
+
+    @Test
+    void unfollowTestSuccess() {
+        try {
+            // Arrange
+            when(userDAOMock.toggleFollow(false, 1, 2)).thenReturn(true);
+            sut.setUserDAO(userDAOMock);
+
+            // Act
+            Response response = sut.unfollow(1, 2);
+
+            // Assert
+            assertEquals(response.getStatus(), 200);
+        } catch (SQLException e) {
+            fail();
+        }
+    }
+
+    @Test
+    void unfollowTestFail() {
+        try {
+            // Arrange
+            when(userDAOMock.toggleFollow(false, 1, 2)).thenReturn(false);
+            sut.setUserDAO(userDAOMock);
+
+            // Act
+            Response response = sut.unfollow(1, 2);
+
+            // Assert
+            assertEquals(response.getStatus(), 400);
+        } catch (SQLException e) {
+            fail();
+        }
+    }
+
     private User getUser() {
         User user = new User();
         user.setUserId(USER_ID);

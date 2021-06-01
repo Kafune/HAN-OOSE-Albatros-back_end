@@ -7,12 +7,6 @@ import java.util.ArrayList;
 
 public interface IUserDAO
 {
-    /**
-     * Searches for users by search value.
-     * @param searchValue The value to search for.
-     * @return The found users, if any.
-     * @throws SQLException Exception if SQL fails.
-     */
     ArrayList<User> searchForUsers(String searchValue) throws SQLException;
 
     boolean registerUser(User user) throws SQLException;
@@ -20,4 +14,8 @@ public interface IUserDAO
     User findUser(String googleId) throws SQLException;
 
     boolean CheckIfMailIsAdmin(String email) throws SQLException;
+
+    boolean toggleFollow(boolean follow, int followerId, int followeeId) throws SQLException;
+
+    boolean isFollowing(int followerId, int followeeId) throws SQLException;
 }
