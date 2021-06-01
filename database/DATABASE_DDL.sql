@@ -3,7 +3,7 @@
 /* Created on:     19-5-2021 14:40:54                           */
 /*==============================================================*/
 
-
+DROP TABLE IF EXISTS FOLLOWS;
 DROP TABLE IF EXISTS IMAGE;
 DROP TABLE IF EXISTS ACTIVITYINSEGMENT;
 DROP TABLE IF EXISTS ACTIVITY;
@@ -127,6 +127,16 @@ create table `USER`
     unique key user_email_unique (E_MAILADRES)
 );
 
+/*==============================================================/
+/* Table: FOLLOWS                                               /
+/==============================================================*/
+create table FOLLOWS
+(
+    FOLLOWERID           int not null,
+    FOLLOWEEID           int not null,
+    primary key (FOLLOWEEID, FOLLOWERID)
+);
+
 alter table ACTIVITY add constraint FK_FK_ACTIVITY_ROUTE foreign key (ROUTEID)
     references ROUTE (ROUTEID) on delete cascade on update cascade;
 
@@ -160,3 +170,8 @@ alter table SEGMENTINROUTE add constraint FK_FK_SEGMENTINROUTE_ROUTE foreign key
 alter table SEGMENTINROUTE add constraint FK_FK_SEGMENTINROUTE_SEGMENT foreign key (SEGMENTID)
     references SEGMENT (SEGMENTID) on delete cascade on update cascade;
 
+alter table FOLLOWS add constraint FK_FOLLOWS_FOLLOWEEID_USER foreign key (FOLLOWEEID)
+    references USER (USERID);
+
+alter table FOLLOWS add constraint FK_FOLLOWS_FOLLOWERID_USER foreign key (FOLLOWERID)
+    references USER (USERID);

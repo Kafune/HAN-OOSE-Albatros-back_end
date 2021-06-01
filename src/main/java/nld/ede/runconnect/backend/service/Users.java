@@ -8,6 +8,10 @@ import nld.ede.runconnect.backend.service.helpers.GoogleIdVerifier;
 import nld.ede.runconnect.backend.service.tokens.TokenHashMap;
 
 import javax.inject.Inject;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -15,7 +19,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 @Path("users")
-public class Users {
+public class Users
+{
     private IUserDAO userDAO;
     private GoogleIdVerifier googleIdVerifier;
 
@@ -27,7 +32,8 @@ public class Users {
      */
     @GET
     @Path("/find/{search-value}")
-    public Response searchForUser(@PathParam("search-value") String searchValue) throws SQLException {
+    public Response searchForUser(@PathParam("search-value") String searchValue) throws SQLException
+    {
         ArrayList<UserDTO> users = DTOconverter
             .domainsToUserDTOs(userDAO.searchForUsers(searchValue));
 
@@ -36,6 +42,42 @@ public class Users {
         }
 
         return Response.status(200).entity(users).build();
+    }
+
+    /**
+     * Follows a user based on a user ID.
+     *
+     * @param followerId The user to follow the followee in the path parameter.
+     * @return A response with status code 200 if successful, 400 if not successful.
+     * @throws SQLException Exception if SQL fails.
+     */
+    @POST
+    @Path("/{follower-id}/follows/{followee-id}")
+    public Response follow(@PathParam("follower-id") int followerId, @PathParam("followee-id") int followeeId) throws SQLException
+    {
+        if (followeeId != followerId && userDAO.toggleFollow(true, followerId, followeeId)) {
+            return Response.status(200).build();
+        }
+
+        return Response.status(400).build();
+    }
+
+    /**
+     * Unfollows a user based on a user ID.
+     *
+     * @param followerId The user to follow the followee in the path parameter.
+     * @return A response with status code 200 if successful, 400 if not successful.
+     * @throws SQLException Exception if SQL fails.
+     */
+    @DELETE
+    @Path("/{follower-id}/follows/{followee-id}")
+    public Response unfollow(@PathParam("follower-id") int followerId, @PathParam("followee-id") int followeeId) throws SQLException
+    {
+        if (followeeId != followerId && userDAO.toggleFollow(false, followerId, followeeId)) {
+            return Response.status(200).build();
+        }
+
+        return Response.status(400).build();
     }
 
     /**
@@ -72,7 +114,8 @@ public class Users {
      * @param userDAO The DAO.
      */
     @Inject
-    public void setUserDAO(IUserDAO userDAO) {
+    public void setUserDAO(IUserDAO userDAO)
+    {
         this.userDAO = userDAO;
     }
 

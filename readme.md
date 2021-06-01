@@ -337,3 +337,19 @@ It will perform a body containing a complete object of the form
     "userId": 10,
     "username": "Mohammad Yasin"
 }
+
+Follow a user based on own ID and followee ID.
+```
+url:    /users/{follower-id}/follow/{followee-id}
+method: POST
+```
+
+It will return a status 200 if successful, status 400 if not successful.
+
+Unfollow a user based on own ID and followee ID.
+```
+url:    /users/{follower-id}/unfollow/{followee-id}
+method: POST
+```
+
+It will return a status 200 if successful, status 400 if not successful.
