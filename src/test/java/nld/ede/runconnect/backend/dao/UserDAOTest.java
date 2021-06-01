@@ -4,7 +4,6 @@ import nld.ede.runconnect.backend.domain.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import javax.enterprise.inject.Any;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
