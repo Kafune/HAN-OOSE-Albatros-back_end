@@ -57,6 +57,74 @@ public class UsersTest
         }
     }
 
+    @Test
+    void followTestSuccess() {
+        try {
+            // Arrange
+            when(userDAO.toggleFollow(true, 1, 2)).thenReturn(true);
+            users.setUserDAO(userDAO);
+
+            // Act
+            Response response = users.follow(1, 2);
+
+            // Assert
+            assertEquals(response.getStatus(), 200);
+        } catch (SQLException e) {
+            fail();
+        }
+    }
+
+    @Test
+    void followTestFail() {
+        try {
+            // Arrange
+            when(userDAO.toggleFollow(true, 1, 2)).thenReturn(false);
+            users.setUserDAO(userDAO);
+
+            // Act
+            Response response = users.follow(1, 2);
+
+            // Assert
+            assertEquals(response.getStatus(), 400);
+        } catch (SQLException e) {
+            fail();
+        }
+    }
+
+    @Test
+    void unfollowTestSuccess() {
+        try {
+            // Arrange
+            when(userDAO.toggleFollow(false, 1, 2)).thenReturn(true);
+            users.setUserDAO(userDAO);
+
+            // Act
+            Response response = users.unfollow(1, 2);
+
+            // Assert
+            assertEquals(response.getStatus(), 200);
+        } catch (SQLException e) {
+            fail();
+        }
+    }
+
+    @Test
+    void unfollowTestFail() {
+        try {
+            // Arrange
+            when(userDAO.toggleFollow(false, 1, 2)).thenReturn(false);
+            users.setUserDAO(userDAO);
+
+            // Act
+            Response response = users.unfollow(1, 2);
+
+            // Assert
+            assertEquals(response.getStatus(), 400);
+        } catch (SQLException e) {
+            fail();
+        }
+    }
+
     private User getUser() {
         User user = new User();
         user.setUserId(USER_ID);

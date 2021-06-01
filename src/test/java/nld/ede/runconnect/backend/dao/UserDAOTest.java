@@ -3,6 +3,7 @@ package nld.ede.runconnect.backend.dao;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import javax.enterprise.inject.Any;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -49,5 +50,40 @@ public class UserDAOTest
             e.printStackTrace();
             fail(e);
         }
+    }
+
+    @Test
+    public void toggleFollowTest() {
+        String followQuery = "INSERT INTO FOLLOWS (FOLLOWERID, FOLLOWEEID) VALUES (?, ?)";
+
+        try {
+            DataSource dataSource = mock(DataSource.class);
+            Connection connection = mock(Connection.class);
+            PreparedStatement preparedStatement = mock(PreparedStatement.class);
+            ResultSet resultSet = mock(ResultSet.class);
+
+            // Setup mocks.
+            when(dataSource.getConnection()).thenReturn(connection);
+            when(userDAO.isFollowing(1, 2)).thenReturn(false);
+            when(connection.prepareStatement(followQuery)).thenReturn(preparedStatement);
+            when(preparedStatement.executeQuery()).thenReturn(resultSet);
+
+            userDAO.setDatasource(dataSource);
+
+            // Act
+            userDAO.toggleFollow(true, 1, 2);
+
+            // Assert
+            verify(connection).prepareStatement(followQuery);
+            verify(preparedStatement).executeQuery();
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail(e);
+        }
+    }
+
+    @Test
+    public void isFollowingTest() {
+        // TODO: Implement test.
     }
 }
