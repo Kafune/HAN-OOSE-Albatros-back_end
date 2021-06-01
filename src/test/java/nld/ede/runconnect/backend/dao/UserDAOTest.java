@@ -61,17 +61,18 @@ public class UserDAOTest
             Connection connection = mock(Connection.class);
             PreparedStatement preparedStatement = mock(PreparedStatement.class);
             ResultSet resultSet = mock(ResultSet.class);
+            UserDAO userDAOSpy = spy(userDAO);
 
             // Setup mocks.
+            when(userDAOSpy.isFollowing(1, 2)).thenReturn(false);
             when(dataSource.getConnection()).thenReturn(connection);
-            when(userDAO.isFollowing(1, 2)).thenReturn(false);
-            when(connection.prepareStatement(followQuery)).thenReturn(preparedStatement);
+            when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
             when(preparedStatement.executeQuery()).thenReturn(resultSet);
 
-            userDAO.setDatasource(dataSource);
+            userDAOSpy.setDatasource(dataSource);
 
             // Act
-            userDAO.toggleFollow(true, 1, 2);
+            userDAOSpy.toggleFollow(true, 1, 2);
 
             // Assert
             verify(connection).prepareStatement(followQuery);
