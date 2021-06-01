@@ -42,7 +42,6 @@ public class ActivityDAO implements IActivityDAO {
             statement.setFloat(5, activity.getDistance());
             statement.executeUpdate();
         } catch (SQLException exception) {
-            exception.printStackTrace();
             throw exception;
         } finally {
             close(statement, null);

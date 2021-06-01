@@ -101,7 +101,7 @@ public class ActivitiesTest {
 
             Response expectedResponse = sut.getActivities(userId);
 
-            assertEquals(expectedResponse.getStatus(), 404);
+            assertEquals(expectedResponse.getStatus(), 204);
         }
         catch (SQLException e) {
             fail();
