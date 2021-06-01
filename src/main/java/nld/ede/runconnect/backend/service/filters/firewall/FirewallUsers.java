@@ -29,12 +29,12 @@ public class FirewallUsers implements IFirewall {
 
         // Path("/{follower-id}/unfollows/{followee-id}")
         // Unfollow
-        if (pathSegments.get(2).toString().equals("unfollows") && requestContext.getMethod().equals("DELETE") && tokenHashMap.doesExist(token)) {
+        if (pathSegments.get(2).toString().equals("follows") && requestContext.getMethod().equals("DELETE") && tokenHashMap.doesExist(token)) {
             return;
         }
 
         // Path("/{follower-id}/follows/{followee-id}")
-        // Unfollow
+        // Follow
         if (pathSegments.get(2).toString().equals("follows") && requestContext.getMethod().equals("POST") && tokenHashMap.doesExist(token)) {
             return;
         }

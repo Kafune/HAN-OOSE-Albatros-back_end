@@ -322,7 +322,7 @@ It will return a status 200 if successful, status 400 if not successful.
 
 Unfollow a user based on own ID and followee ID.
 ```
-url:    /users/{follower-id}/unfollows/{followee-id}
+url:    /users/{follower-id}/follows/{followee-id}
 method: DELETE
 ```
 

@@ -70,7 +70,7 @@ public class Users
      * @throws SQLException Exception if SQL fails.
      */
     @DELETE
-    @Path("/{follower-id}/unfollows/{followee-id}")
+    @Path("/{follower-id}/follows/{followee-id}")
     public Response unfollow(@PathParam("follower-id") int followerId, @PathParam("followee-id") int followeeId) throws SQLException
     {
         if (followeeId != followerId && userDAO.toggleFollow(false, followerId, followeeId)) {
