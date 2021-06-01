@@ -314,7 +314,7 @@ It will return a list of User DTOs with JSON. If none, an empty array.
 
 Follow a user based on own ID and followee ID.
 ```
-url:    /users/{follower-id}/follows/{followee-id}
+url:    /users/{follower-id}/follow/{followee-id}
 method: POST
 ```
 
@@ -322,8 +322,8 @@ It will return a status 200 if successful, status 400 if not successful.
 
 Unfollow a user based on own ID and followee ID.
 ```
-url:    /users/{follower-id}/follows/{followee-id}
-method: DELETE
+url:    /users/{follower-id}/unfollow/{followee-id}
+method: POST
 ```
 
 It will return a status 200 if successful, status 400 if not successful.
