@@ -64,10 +64,10 @@ public class UserDAOTest
             UserDAO userDAOSpy = spy(userDAO);
 
             // Setup mocks.
-            when(userDAOSpy.isFollowing(1, 2)).thenReturn(false);
             when(dataSource.getConnection()).thenReturn(connection);
-            when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
+            when(connection.prepareStatement(followQuery)).thenReturn(preparedStatement);
             when(preparedStatement.executeQuery()).thenReturn(resultSet);
+            doReturn(false).when(userDAOSpy).isFollowing(1, 2);
 
             userDAOSpy.setDatasource(dataSource);
 
@@ -76,7 +76,7 @@ public class UserDAOTest
 
             // Assert
             verify(connection).prepareStatement(followQuery);
-            verify(preparedStatement).executeQuery();
+            verify(preparedStatement).executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
             fail(e);
