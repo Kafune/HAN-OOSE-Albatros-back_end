@@ -121,7 +121,8 @@ create table `USER`
     E_MAILADRES          varchar(254) not null,
     USERNAME             varchar(150) not null,
     TOTALSCORE           int not null default 0,
-    IMAGE_URL             varchar(2083),
+    IMAGE_URL            varchar(2083),
+    ADMIN                BOOLEAN default 0,
     primary key (USERID),
     unique key user_email_unique (E_MAILADRES)
 );

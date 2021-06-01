@@ -9,6 +9,12 @@ public interface IUserDAO
 {
     ArrayList<User> searchForUsers(String searchValue) throws SQLException;
 
+    boolean registerUser(User user) throws SQLException;
+
+    User findUser(String googleId) throws SQLException;
+
+    boolean CheckIfMailIsAdmin(String email) throws SQLException;
+
     boolean toggleFollow(boolean follow, int followerId, int followeeId) throws SQLException;
 
     boolean isFollowing(int followerId, int followeeId) throws SQLException;

@@ -1,6 +1,8 @@
 package nld.ede.runconnect.backend.dao;
 
+import nld.ede.runconnect.backend.domain.Coordinate;
 import nld.ede.runconnect.backend.domain.Route;
+import nld.ede.runconnect.backend.domain.Segment;
 import nld.ede.runconnect.backend.service.Routes;
 import nld.ede.runconnect.backend.service.dto.CoordinateDTO;
 import nld.ede.runconnect.backend.service.dto.POIDTO;
@@ -14,6 +16,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -78,6 +81,40 @@ public class RouteDAOTest {
         assertThrows(
                 SQLException.class,
                 () -> sut.addNewRoute(new Route())
+        );
+    }
+
+    @Test
+    void insertSegments() {
+        // Arrange
+        Route route = new Route();
+        Segment segment = new Segment();
+        Coordinate coordinate = new Coordinate();
+        coordinate.setAltitude(1);
+        coordinate.setLongitude(1);
+        coordinate.setLatitude(1);
+        segment.setSequenceNr(0);
+        Segment segment2 = new Segment();
+        segment2.setSequenceNr(0);
+        ArrayList<Segment> list = new ArrayList<>();
+        list.add(segment);
+        list.add(segment2);
+        route.setSegments(list);
+
+        //mock
+        DataSource dataSource = mock(DataSource.class);
+        try {
+            when(dataSource.getConnection()).thenThrow(new SQLException());
+        } catch (SQLException throwables) {
+            fail(throwables);
+        }
+        sut.setDataSource(dataSource);
+
+        // Act / assert
+
+        assertThrows(
+                SQLException.class,
+                () -> sut.insertSegments(route, "", 1)
         );
     }
 

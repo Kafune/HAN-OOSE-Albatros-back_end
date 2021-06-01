@@ -8,5 +8,7 @@ public class UserDTO {
     public String username;
     public int totalScore;
     public String imageUrl;
-
+    // This is the admin field. The name has been changed due to security reasons on the front-end.
+    public boolean a61646d696e;
+    public String token;
 }

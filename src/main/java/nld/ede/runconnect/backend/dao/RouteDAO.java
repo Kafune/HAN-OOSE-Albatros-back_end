@@ -100,8 +100,8 @@ public class RouteDAO implements IRouteDAO {
 
         insertSegments(route, name, distance);
     }
-
-    private void insertSegments(Route route, String name, int distance) throws SQLException {
+    @Override
+    public void insertSegments(Route route, String name, int distance) throws SQLException {
         /*
          * Insert every segment with a for loop and a custom made database procedure.
          */

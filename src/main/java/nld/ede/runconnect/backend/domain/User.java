@@ -11,6 +11,7 @@ public class User {
     private int totalScore;
     private String imageUrl;
     private String googleId;
+    private boolean admin;
 
     public String getGoogleId() {
         return googleId;
@@ -74,5 +75,13 @@ public class User {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
     }
 }
