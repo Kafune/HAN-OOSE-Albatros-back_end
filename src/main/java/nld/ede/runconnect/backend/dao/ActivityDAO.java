@@ -3,11 +3,12 @@ package nld.ede.runconnect.backend.dao;
 import nld.ede.runconnect.backend.domain.Activity;
 import nld.ede.runconnect.backend.domain.Segment;
 
+
 import javax.annotation.Resource;
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static nld.ede.runconnect.backend.dao.helpers.ConnectionHandler.close;
 
@@ -15,6 +16,7 @@ public class ActivityDAO implements IActivityDAO {
     @Resource(name = "jdbc/Run_Connect")
     private DataSource dataSource = null;
     private PreparedStatement statement = null;
+    private ResultSet resultSet = null;
 
     /**
      * Adds a new activity to the database.
@@ -23,15 +25,17 @@ public class ActivityDAO implements IActivityDAO {
      */
     @Override
     public void addNewActivity(Activity activity) throws SQLException {
-        Integer routeId = null;
-        if (activity.getRouteId() != -1) {
-            routeId = activity.getRouteId();
-        }
+
         String sql = "INSERT INTO ACTIVITY (routeId, userId, point, duration, distance) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection connection = dataSource.getConnection()) {
             statement = connection.prepareStatement(sql);
-            statement.setInt(1, routeId);
+            if (activity.getRouteId() != -1 ) {
+                statement.setInt(1, activity.getRouteId());
+            }
+            else {
+                statement.setNull(1, Types.INTEGER);
+            }
             statement.setInt(2, activity.getUserId());
             statement.setInt(3, activity.getPoint());
             statement.setLong(4, activity.getDuration());
@@ -81,10 +85,54 @@ public class ActivityDAO implements IActivityDAO {
     }
 
     /**
+     * Selects activities based on userId from the database
+     * @param userId id of a user
+     * @return list of activities
+     * @throws SQLException if SQL fails.
+     */
+    @Override
+    public List<Activity> getActivities(int userId) throws SQLException {
+        ArrayList<Activity> foundActivities = new ArrayList<>();
+
+        try (Connection connection = dataSource.getConnection()) {
+            String findActivitiesQuery = "SELECT * FROM ACTIVITY WHERE USERID = ?";
+            statement = connection.prepareStatement(findActivitiesQuery);
+            statement.setInt(1, userId);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                foundActivities.add(extractActivity(resultSet));
+            }
+        } catch (SQLException exception) {
+            throw exception;
+        } finally {
+            close(statement, resultSet);
+        }
+        return foundActivities;
+    }
+
+    /**
+     * extracts a activity domain object from result set
+     * @param resultSet result set. Rows from the database
+     * @return a single activity object
+     * @throws SQLException is SQL fails.
+     */
+    public Activity extractActivity(ResultSet resultSet) throws SQLException {
+        Activity activity = new Activity();
+        activity.setActivityId(resultSet.getInt(1));
+        activity.setUserId(resultSet.getInt(2));
+        activity.setPoint(resultSet.getInt(3));
+        activity.setDuration(resultSet.getLong(4));
+        activity.setDistance(resultSet.getFloat(5));
+        activity.setRouteId(resultSet.getInt(6));
+
+        return activity;
+    }
+
+    /**
      * Sets data source.
      * @param dataSource the data source
      */
-    public void setDataSource(DataSource dataSource) {
+    public void setDatasource(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 

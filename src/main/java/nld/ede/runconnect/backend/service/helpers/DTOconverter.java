@@ -13,6 +13,7 @@ public class DTOconverter {
 
     /**
      * Maps JSON to a route DTO.
+     *
      * @param JSONObject The given JSON data.
      * @return The mapped route DTO.
      * @throws JsonSyntaxException Exception if fromJson fails.
@@ -26,6 +27,7 @@ public class DTOconverter {
 
     /**
      * Maps JSON to an activity DTO.
+     *
      * @param JSONObject The given JSON.
      * @return The mapped activity DTO.
      * @throws JsonSyntaxException Exception if fromJson fails.
@@ -36,6 +38,7 @@ public class DTOconverter {
 
     /**
      * Converts a domain to a route DTO.
+     *
      * @param route The domain.
      * @return The route DTO.
      */
@@ -50,6 +53,7 @@ public class DTOconverter {
 
     /**
      * Converts a segment domain to a segment DTO.
+     *
      * @param segment The domain.
      * @return The DTO.
      */
@@ -66,6 +70,7 @@ public class DTOconverter {
 
     /**
      * Converts a segment domain to a segment DTO.
+     *
      * @param segment The domain.
      * @return The DTO.
      */
@@ -81,6 +86,7 @@ public class DTOconverter {
 
     /**
      * Converts an item domain to a item DTO.
+     *
      * @param item The domain.
      * @return The domain.
      */
@@ -97,6 +103,7 @@ public class DTOconverter {
 
     /**
      * Converts a segment domain to a start coordinate DTO.
+     *
      * @param item The segment domain.
      * @return The start coordinate DTO.
      */
@@ -113,6 +120,7 @@ public class DTOconverter {
 
     /**
      * Converts a route DTO to a route domain.
+     *
      * @param routeDTO The DTO.
      * @return The domain.
      */
@@ -132,6 +140,7 @@ public class DTOconverter {
 
     /**
      * Converts a segment DTO to a segment domain.
+     *
      * @param segmentDTO The DTO.
      * @return The domain.
      */
@@ -148,6 +157,7 @@ public class DTOconverter {
 
     /**
      * Converts a coordinate DTO to a coordinate domain.
+     *
      * @param coordinateDTO The DTO.
      * @return The domain.
      */
@@ -161,6 +171,7 @@ public class DTOconverter {
 
     /**
      * Converts a POI DTO to a POI domain.
+     *
      * @param poiDTO The DTO.
      * @return The domain.
      */
@@ -174,13 +185,14 @@ public class DTOconverter {
 
     /**
      * Converts a list of user domains to a list of user DTOs.
+     *
      * @param users The user domains to convert.
      * @return The DTOs.
      */
     public static ArrayList<UserDTO> domainsToUserDTOs(ArrayList<User> users) {
         ArrayList<UserDTO> userDTOs = new ArrayList<>();
 
-        for (User user: users) {
+        for (User user : users) {
             userDTOs.add(domainToUserDTO(user));
         }
 
@@ -189,6 +201,7 @@ public class DTOconverter {
 
     /**
      * Converts a user domain to a user DTO.
+     *
      * @param user The domain
      * @return The DTO.
      */
@@ -208,19 +221,55 @@ public class DTOconverter {
 
     /**
      * Converts an activity DTO to an activity domain.
+     *
      * @param activityDTO The DTO.
      * @return The domain.
      */
     public static Activity ActivityDTOToDomainActivity(ActivityDTO activityDTO) {
         Activity activity = new Activity();
         activity.setRouteId(activityDTO.routeId);
-        activity.setUserId(1);
+        activity.setUserId(activityDTO.userId);
         activity.setPoint(activityDTO.point);
         activity.setDuration(activityDTO.duration);
         activity.setDistance(activityDTO.distance);
-        for (SegmentDTO segmentDTO: activityDTO.segments) {
+        for (SegmentDTO segmentDTO : activityDTO.segments) {
             activity.getSegments().add(SegmentDTOToDomainSegment(segmentDTO));
         }
         return activity;
+    }
+
+    /**
+     * Converts a list of Activity domain to a list of ActivityDTO.
+     *
+     * @param activities domain list
+     * @return the DTO list
+     */
+    public static ArrayList<ActivityDTO> domainsToActivityDTOs(List<Activity> activities) {
+        ArrayList<ActivityDTO> activityDTOS = new ArrayList<>();
+
+        for (Activity activity : activities) {
+            activityDTOS.add(domainToActivityDTO(activity));
+        }
+
+        return activityDTOS;
+    }
+
+    /**
+     * Converts an Activity domain to ActivityDTO.
+     *
+     * @param activity domain
+     * @return the DTO
+     */
+
+    private static ActivityDTO domainToActivityDTO(Activity activity) {
+        ActivityDTO activityDTO = new ActivityDTO();
+        activityDTO.routeId = activity.getRouteId();
+        activityDTO.activityId = activity.getActivityId();
+        activityDTO.distance = activity.getDistance();
+        activityDTO.duration = activity.getDuration();
+        activityDTO.point = activity.getPoint();
+        activityDTO.userId = activity.getUserId();
+
+        return activityDTO;
     }
 }
