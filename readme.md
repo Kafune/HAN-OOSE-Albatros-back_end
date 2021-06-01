@@ -271,7 +271,7 @@ It will perform a body containing a complete list of activities that belong to a
         "distance": 3.2,
         "duration": 32,
         "point": 1,
-        "routeId": 1,
+        "routeId": 0,
         "segments": [],
         "userId": 1
     }
