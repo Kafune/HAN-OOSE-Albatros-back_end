@@ -217,12 +217,19 @@ public class UserDAO implements IUserDAO
 
     public ArrayList<Activity> getActivitiesByUsers(ArrayList<Integer> userIds) throws SQLException
     {
-        String sql = "SELECT * FROM ACTIVITY WHERE USERID IN (?) ORDER BY DATE LIMIT 7";
+        String userIdString = "";
+
+        for (Integer userId : userIds) {
+            userIdString += userId + ", ";
+        }
+
+        userIdString = userIdString.substring(0, userIdString.length() - 2);
+
+        String sql = String.format("SELECT * FROM ACTIVITY WHERE USERID IN (%s) ORDER BY DATE LIMIT 7", userIdString);
 
         try (Connection connection = dataSource.getConnection()) {
-            Array array = connection.createArrayOf("INTEGER", userIds.toArray());
             statement = connection.prepareStatement(sql);
-            statement.setArray(1, array);
+
             ResultSet resultSet = statement.executeQuery();
             ArrayList<Activity> activities = new ArrayList<>();
 

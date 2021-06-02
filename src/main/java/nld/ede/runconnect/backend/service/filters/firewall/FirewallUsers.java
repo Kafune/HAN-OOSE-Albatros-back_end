@@ -21,6 +21,12 @@ public class FirewallUsers implements IFirewall {
             return;
         }
 
+        // @ath("/{follower-id}/followee-activities")
+        // Get followee activities.
+        if (pathSegments.get(2).toString().equals("followee-activities") && tokenHashMap.doesExist(token)) {
+            return;
+        }
+
         // Path("/find/{search-value}")
         // searchForUser
         if (pathSegments.get(1).toString().equals("find") && tokenHashMap.doesExist(token)) {
