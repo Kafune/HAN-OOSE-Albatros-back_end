@@ -106,7 +106,7 @@ public class UserDAO implements IUserDAO
      * @return The user if found. Null if not found.
      * @throws SQLException Exception if SQL fails.
      */
-    public User getUserById(int userId) throws SQLException {
+    public User getById(int userId) throws SQLException {
         String sql = "SELECT * FROM `USER` WHERE USERID = ?";
 
         try (Connection connection = dataSource.getConnection()) {

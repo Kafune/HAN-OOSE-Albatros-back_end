@@ -105,7 +105,7 @@ public class Users
     @GET
     @Path("get-by-id/{user-id}")
     public Response getById(@PathParam("user-id") int userId) throws SQLException {
-        User user = userDAO.getUserById(userId);
+        User user = userDAO.getById(userId);
 
         if (user == null) {
             return Response.status(400).build();
