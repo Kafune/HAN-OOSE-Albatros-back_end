@@ -1,6 +1,5 @@
 package nld.ede.runconnect.backend.service;
 
-import nld.ede.runconnect.backend.dao.IActivityDAO;
 import nld.ede.runconnect.backend.dao.IUserDAO;
 import nld.ede.runconnect.backend.domain.Activity;
 import nld.ede.runconnect.backend.domain.User;
@@ -24,7 +23,6 @@ import java.util.ArrayList;
 public class Users
 {
     private IUserDAO userDAO;
-    private IActivityDAO activityDAO;
     private GoogleIdVerifier googleIdVerifier;
 
     /**
@@ -94,13 +92,13 @@ public class Users
     @Path("/{follower-id}/followee-activities")
     public Response getFeed(@PathParam("follower-id") int followerId) throws SQLException {
         ArrayList<Integer> followingUsers = userDAO.getFollowingUsers(followerId);
-        ArrayList<Activity> activities = activityDAO.getActivitiesByUsers(followingUsers);
+        ArrayList<Activity> activities = userDAO.getActivitiesByUsers(followingUsers);
 
         if (activities.isEmpty()) {
             return Response.status(400).build();
         }
 
-        return Response.status(200).entity(activities).build();
+        return Response.status(200).entity(DTOconverter.activityDomainsToDTO(activities)).build();
     }
 
     /**
@@ -119,7 +117,7 @@ public class Users
             return Response.status(400).build();
         }
 
-        return Response.status(200).entity(user).build();
+        return Response.status(200).entity(DTOconverter.domainToUserDTO(user)).build();
     }
 
     /**
@@ -159,17 +157,6 @@ public class Users
     public void setUserDAO(IUserDAO userDAO)
     {
         this.userDAO = userDAO;
-    }
-
-    /**
-     * Injects and sets the activity DAO.
-     *
-     * @param activityDAO The DAO.
-     */
-    @Inject
-    public void setActivityDAO(IActivityDAO activityDAO)
-    {
-        this.activityDAO = activityDAO;
     }
 
     @Inject

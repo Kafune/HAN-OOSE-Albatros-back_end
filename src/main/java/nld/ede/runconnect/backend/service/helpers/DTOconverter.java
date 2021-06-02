@@ -207,6 +207,39 @@ public class DTOconverter {
     }
 
     /**
+     * Maps an Activity domain to a Activity DTO.
+     *
+     * @param activity The activity domain to convert.
+     * @return The activity DTO.
+     */
+    public static ActivityDTO activityDomainToDTO(Activity activity) {
+        ActivityDTO dto = new ActivityDTO();
+        dto.setUserId(activity.getUserId());
+        dto.setPoint(activity.getPoint());
+        dto.setDistance(activity.getDistance());
+        dto.setDuration(activity.getDuration());
+        dto.setRouteId(activity.getRouteId());
+
+        return dto;
+    }
+
+    /**
+     * Maps a list of Activity domains to a list of Activity DTOs.
+     *
+     * @param activities The activities to convert.
+     * @return The list of activity domains.
+     */
+    public static ArrayList<ActivityDTO> activityDomainsToDTO(ArrayList<Activity> activities) {
+        ArrayList<ActivityDTO> dtos = new ArrayList<>();
+
+        for (Activity activity : activities) {
+            dtos.add(activityDomainToDTO(activity));
+        }
+
+        return dtos;
+    }
+
+    /**
      * Converts an activity DTO to an activity domain.
      * @param activityDTO The DTO.
      * @return The domain.
