@@ -5,10 +5,7 @@ import nld.ede.runconnect.backend.domain.User;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -175,7 +172,7 @@ public class UserDAO implements IUserDAO
         List<Activity> activities = new ArrayList<Activity>();
 
         try (Connection connection = dataSource.getConnection()) {
-            String sql = "SELECT * FROM activity WHERE USERID = ?";
+            String sql = "SELECT * FROM ACTIVITY WHERE USERID = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, rs.getInt(1));
             ResultSet resultSet = statement.executeQuery();
@@ -216,6 +213,29 @@ public class UserDAO implements IUserDAO
             close(statement, resultSet);
         }
         return false;
+    }
+
+    public ArrayList<Activity> getActivitiesByUsers(ArrayList<Integer> userIds) throws SQLException
+    {
+        String sql = "SELECT * FROM ACTIVITY WHERE USERID IN (?)";
+
+        try (Connection connection = dataSource.getConnection()) {
+            Array array = connection.createArrayOf("INTEGER", userIds.toArray());
+            statement = connection.prepareStatement(sql);
+            statement.setArray(1, array);
+            ResultSet resultSet = statement.executeQuery();
+            ArrayList<Activity> activities = new ArrayList<>();
+
+            while (resultSet.next()) {
+                activities.add(extractActivity(resultSet));
+            }
+
+            return activities;
+        } catch (SQLException exception) {
+            throw exception;
+        } finally {
+            close(statement, null);
+        }
     }
 
     /**
@@ -278,6 +298,7 @@ public class UserDAO implements IUserDAO
         activity.setDuration(resultSet.getLong(4));
         activity.setDistance(resultSet.getFloat(5));
         activity.setRouteId(resultSet.getInt(6));
+        activity.setDateTime(resultSet.getDate(7).toString());
 
         return activity;
     }
