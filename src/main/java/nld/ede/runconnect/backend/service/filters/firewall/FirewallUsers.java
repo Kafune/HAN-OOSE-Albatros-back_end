@@ -27,6 +27,12 @@ public class FirewallUsers implements IFirewall {
             return;
         }
 
+        // Path("/{user-id}")
+        // Get user based on ID.
+        if (pathSegments.get(1).toString().equals("get-by-id") && requestContext.getMethod().equals("GET") && tokenHashMap.doesExist(token)) {
+            return;
+        }
+
         // Path("/{follower-id}/unfollows/{followee-id}")
         // Unfollow
         if (pathSegments.get(2).toString().equals("follows") && requestContext.getMethod().equals("DELETE") && tokenHashMap.doesExist(token)) {
@@ -36,10 +42,6 @@ public class FirewallUsers implements IFirewall {
         // Path("/{follower-id}/follows/{followee-id}")
         // Follow
         if (pathSegments.get(2).toString().equals("follows") && requestContext.getMethod().equals("POST") && tokenHashMap.doesExist(token)) {
-            return;
-        }
-
-        if (pathSegments.size() == 2 && requestContext.getMethod().equals("POST") && tokenHashMap.doesExist(token)) {
             return;
         }
 

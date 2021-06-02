@@ -103,7 +103,7 @@ public class Users
      * @throws SQLException Exception if SQL fails.
      */
     @GET
-    @Path("/{user-id}")
+    @Path("get-by-id/{user-id}")
     public Response getById(@PathParam("user-id") int userId) throws SQLException {
         User user = userDAO.getUserById(userId);
 

@@ -107,7 +107,7 @@ public class UserDAO implements IUserDAO
      * @throws SQLException Exception if SQL fails.
      */
     public User getUserById(int userId) throws SQLException {
-        String sql = "SELECT * FROM USER WHERE USERID = ?";
+        String sql = "SELECT * FROM `USER` WHERE USERID = ?";
 
         try (Connection connection = dataSource.getConnection()) {
             statement = connection.prepareStatement(sql);
