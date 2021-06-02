@@ -15,6 +15,8 @@ public interface IUserDAO
 
     boolean CheckIfMailIsAdmin(String email) throws SQLException;
 
+    User getUserById(int userId) throws SQLException;
+
     boolean toggleFollow(boolean follow, int followerId, int followeeId) throws SQLException;
 
     boolean isFollowing(int followerId, int followeeId) throws SQLException;

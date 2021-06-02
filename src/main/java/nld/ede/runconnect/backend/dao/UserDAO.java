@@ -100,6 +100,33 @@ public class UserDAO implements IUserDAO
     }
 
     /**
+     * Get's a user domain based on it's ID.
+     *
+     * @param userId The ID of the searchable user.
+     * @return The user if found. Null if not found.
+     * @throws SQLException Exception if SQL fails.
+     */
+    public User getUserById(int userId) throws SQLException {
+        String sql = "SELECT * FROM USER WHERE USERID = ?";
+
+        try (Connection connection = dataSource.getConnection()) {
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, userId);
+            resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return extractUser(resultSet);
+            }
+        } catch (SQLException exception) {
+            throw exception;
+        } finally {
+            close(statement, resultSet);
+        }
+
+        return null;
+    }
+
+    /**
      * Checks if a user exists in the database.
      * @param user The user to check.
      * @return If the user exists

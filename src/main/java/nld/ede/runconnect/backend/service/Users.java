@@ -81,6 +81,40 @@ public class Users
     }
 
     /**
+     * Get's a feed of activities from users the user is following.
+     *
+     * @param followerId The user to follow the followee in the path parameter.
+     * @return A response with status code 200 if successful, 400 if not successful.
+     * @throws SQLException Exception if SQL fails.
+     */
+    @GET
+    @Path("/{follower-id}/followee-activities")
+    public Response getFeed(@PathParam("follower-id") int followerId) throws SQLException {
+        // TODO: Implement method.
+
+        return Response.status(200).build();
+    }
+
+    /**
+     * Get's user information based on user ID.
+     *
+     * @param userId The ID of the searchable user.
+     * @return A response with status code 200 if successful, 400 if not successful.
+     * @throws SQLException Exception if SQL fails.
+     */
+    @GET
+    @Path("/{user-id}")
+    public Response getById(@PathParam("user-id") int userId) throws SQLException {
+        User user = userDAO.getUserById(userId);
+
+        if (user == null) {
+            return Response.status(400).build();
+        }
+
+        return Response.status(200).entity(user).build();
+    }
+
+    /**
      * Registers a user.
      *
      * @param user The user to register.

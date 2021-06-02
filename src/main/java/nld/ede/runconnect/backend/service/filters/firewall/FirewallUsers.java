@@ -39,6 +39,10 @@ public class FirewallUsers implements IFirewall {
             return;
         }
 
+        if (pathSegments.size() == 2 && requestContext.getMethod().equals("POST") && tokenHashMap.doesExist(token)) {
+            return;
+        }
+
         requestContext.abortWith(Response.status(Response.Status.NOT_FOUND).build());
     }
 }
