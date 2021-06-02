@@ -8,6 +8,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import static nld.ede.runconnect.backend.dao.helpers.ConnectionHandler.close;
 
@@ -43,6 +44,12 @@ public class ActivityDAO implements IActivityDAO {
             close(statement, null);
         }
         insertSegments(activity);
+    }
+
+    @Override
+    public ArrayList<Activity> getActivitiesByUsers(ArrayList<Integer> userIds) throws SQLException
+    {
+        return null;
     }
 
     /**

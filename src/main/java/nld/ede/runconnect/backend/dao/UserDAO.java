@@ -1,7 +1,6 @@
 package nld.ede.runconnect.backend.dao;
 
 import nld.ede.runconnect.backend.domain.User;
-import nld.ede.runconnect.backend.service.dto.UserDTO;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
@@ -124,6 +123,36 @@ public class UserDAO implements IUserDAO
         }
 
         return null;
+    }
+
+    /**
+     * Gets all the following users based on the ID of the follower.
+     *
+     * @param userId The ID of the follower.
+     * @return A list of users to follow
+     * @throws SQLException Exception if SQL fails.
+     */
+    @Override
+    public ArrayList<Integer> getFollowingUsers(int userId) throws SQLException
+    {
+        String sql = "SELECT * FROM FOLLOWS WHERE FOLLOWERID = ?";
+
+        try (Connection connection = dataSource.getConnection()) {
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, userId);
+            resultSet = statement.executeQuery();
+            ArrayList<Integer> following = new ArrayList<>();
+
+            while (resultSet.next()) {
+                following.add(resultSet.getInt(2));
+            }
+
+            return following;
+        } catch (SQLException exception) {
+            throw exception;
+        } finally {
+            close(statement, resultSet);
+        }
     }
 
     /**

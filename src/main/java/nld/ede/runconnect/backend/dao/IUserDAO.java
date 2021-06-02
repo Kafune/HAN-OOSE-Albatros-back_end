@@ -17,6 +17,8 @@ public interface IUserDAO
 
     User getById(int userId) throws SQLException;
 
+    ArrayList<Integer> getFollowingUsers(int userId) throws SQLException;
+
     boolean toggleFollow(boolean follow, int followerId, int followeeId) throws SQLException;
 
     boolean isFollowing(int followerId, int followeeId) throws SQLException;
