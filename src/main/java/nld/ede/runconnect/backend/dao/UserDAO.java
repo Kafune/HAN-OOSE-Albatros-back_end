@@ -1,5 +1,6 @@
 package nld.ede.runconnect.backend.dao;
 
+import nld.ede.runconnect.backend.domain.Activity;
 import nld.ede.runconnect.backend.domain.User;
 
 import javax.annotation.Resource;
@@ -9,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import static nld.ede.runconnect.backend.dao.helpers.ConnectionHandler.close;
 
@@ -112,11 +114,11 @@ public class UserDAO implements IUserDAO
             statement = connection.prepareStatement(sql);
             statement.setInt(1, userId);
             resultSet = statement.executeQuery();
-
             if (resultSet.next()) {
-                return extractUser(resultSet);
+                return getActivitiesFromUser(resultSet);
             }
         } catch (SQLException exception) {
+            exception.printStackTrace();
             throw exception;
         } finally {
             close(statement, resultSet);
@@ -124,7 +126,6 @@ public class UserDAO implements IUserDAO
 
         return null;
     }
-
     /**
      * Gets all the following users based on the ID of the follower.
      *
@@ -153,6 +154,43 @@ public class UserDAO implements IUserDAO
         } finally {
             close(statement, resultSet);
         }
+    }
+
+    /**
+     * Gets all activities from users and combines it to send it off.
+     * @param rs resultset
+     * @return user
+     * @throws SQLException if an sql error occurs
+     */
+    public User getActivitiesFromUser(ResultSet rs) throws SQLException {
+        User user = new User();
+        user.setUserId(rs.getInt(1));
+        user.setFirstName(rs.getString(2));
+        user.setLastName(rs.getString(3));
+        user.setEmailAddress(rs.getString(4));
+        user.setUsername(rs.getString(5));
+        user.setTotalScore(rs.getInt(6));
+        user.setImageUrl(rs.getString(7));
+        user.setAdmin(rs.getBoolean(8));
+        List<Activity> activities = new ArrayList<Activity>();
+
+        try (Connection connection = dataSource.getConnection()) {
+            String sql = "SELECT * FROM activity WHERE USERID = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, rs.getInt(1));
+            ResultSet resultSet = statement.executeQuery();
+
+            while(resultSet.next()) {
+                activities.add(extractActivity(resultSet));
+            }
+        } catch (SQLException exception) {
+            throw exception;
+        } finally {
+            close(statement, resultSet);
+        }
+
+        user.setActivities(activities);
+        return user;
     }
 
     /**
@@ -224,6 +262,24 @@ public class UserDAO implements IUserDAO
         user.setImageUrl(rs.getString(7));
         user.setAdmin(rs.getBoolean(8));
         return user;
+    }
+
+    /**
+     * Extracts an activity from a result set.
+     * @param resultSet The result set.
+     * @return The extracted activity.
+     * @throws SQLException Exception if SQL fails.
+     */
+    public Activity extractActivity(ResultSet resultSet) throws SQLException {
+        Activity activity = new Activity();
+        activity.setActivityId(resultSet.getInt(1));
+        activity.setUserId(resultSet.getInt(2));
+        activity.setPoint(resultSet.getInt(3));
+        activity.setDuration(resultSet.getLong(4));
+        activity.setDistance(resultSet.getFloat(5));
+        activity.setRouteId(resultSet.getInt(6));
+
+        return activity;
     }
 
     /**

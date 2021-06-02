@@ -60,4 +60,12 @@ public class Activity {
     public void setDistance(float distance) {
         this.distance = distance;
     }
+
+    public int getActivityId() {
+        return activityId;
+    }
+
+    public void setActivityId(int activityId) {
+        this.activityId = activityId;
+    }
 }

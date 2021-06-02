@@ -114,7 +114,6 @@ public class Users
     @Path("get-by-id/{user-id}")
     public Response getById(@PathParam("user-id") int userId) throws SQLException {
         User user = userDAO.getById(userId);
-        // TODO: Get activity from the user and add it.
 
         if (user == null) {
             return Response.status(400).build();
