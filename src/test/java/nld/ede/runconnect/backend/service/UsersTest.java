@@ -1,6 +1,7 @@
 package nld.ede.runconnect.backend.service;
 
 import nld.ede.runconnect.backend.dao.UserDAO;
+import nld.ede.runconnect.backend.domain.Activity;
 import nld.ede.runconnect.backend.domain.User;
 import nld.ede.runconnect.backend.service.dto.UserDTO;
 import nld.ede.runconnect.backend.service.helpers.GoogleIdVerifier;
@@ -222,8 +223,62 @@ public class UsersTest
     }
 
     @Test
-    public void getFeedTest() {
-        // TODO: Implement test.
+    public void getFeedTest()
+    {
+        // Setup dummy following users.
+        ArrayList<Integer> followingUsers = new ArrayList<>();
+        followingUsers.add(1);
+        followingUsers.add(2);
+        followingUsers.add(3);
+
+        // Setup gotten activities.
+        ArrayList<Activity> activities = new ArrayList<>();
+        activities.add(new Activity());
+
+        try {
+            // Arrange
+            when(userDAOMock.getFollowingUsers(1)).thenReturn(followingUsers);
+            when(userDAOMock.getActivitiesByUsers(followingUsers)).thenReturn(activities);
+            sut.setUserDAO(userDAOMock);
+
+            // Act
+            Response response = sut.getFeed(1);
+
+            // Assert
+            assertEquals(response.getStatus(), 200);
+        }
+        catch (SQLException e) {
+            fail();
+        }
+    }
+
+    @Test
+    public void getFeedTestFail()
+    {
+        // Setup dummy following users.
+        ArrayList<Integer> followingUsers = new ArrayList<>();
+        followingUsers.add(1);
+        followingUsers.add(2);
+        followingUsers.add(3);
+
+        // Setup gotten activities (none).
+        ArrayList<Activity> activities = new ArrayList<>();
+
+        try {
+            // Arrange
+            when(userDAOMock.getFollowingUsers(1)).thenReturn(followingUsers);
+            when(userDAOMock.getActivitiesByUsers(followingUsers)).thenReturn(activities);
+            sut.setUserDAO(userDAOMock);
+
+            // Act
+            Response response = sut.getFeed(1);
+
+            // Assert
+            assertEquals(response.getStatus(), 400);
+        }
+        catch (SQLException e) {
+            fail();
+        }
     }
 
     @Test
