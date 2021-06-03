@@ -216,6 +216,21 @@ public class UsersTest
         }
     }
 
+    @Test
+    public void isFollowingTest() {
+        // TODO: Implement test.
+    }
+
+    @Test
+    public void getFeedTest() {
+        // TODO: Implement test.
+    }
+
+    @Test
+    public void getByIdTest() {
+        // TODO: Implement test.
+    }
+
     private User getUser() {
         User user = new User();
         user.setUserId(USER_ID);
@@ -229,6 +244,4 @@ public class UsersTest
 
         return user;
     }
-
-
 }
