@@ -356,7 +356,7 @@ public class UserDAOTest
     public void getActivitiesByUsersTest() {
         // TODO: Implement test.
     }
-    A
+
     @Test
     public void extractActivityTest() {
         // TODO: Implement test.
