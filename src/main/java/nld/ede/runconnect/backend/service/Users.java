@@ -63,6 +63,16 @@ public class Users
         return Response.status(400).build();
     }
 
+    @GET
+    @Path("{follower-id}/check-follows/{followee-id}")
+    public Response checkFollows(@PathParam("follower-id") int followerId, @PathParam("followee-id") int followeeId) throws SQLException {
+        if (userDAO.isFollowing(followerId, followeeId)) {
+            return Response.status(200).entity(true).build();
+        }
+
+        return Response.status(200).entity(false).build();
+    }
+
     /**
      * Unfollows a user based on a user ID.
      *
