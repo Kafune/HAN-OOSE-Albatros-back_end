@@ -336,4 +336,29 @@ public class UserDAOTest
             fail(e);
         }
     }
+
+    @Test
+    public void getByIdTest() {
+        // TODO: Implement test.
+    }
+
+    @Test
+    public void getFollowingUsersTest() {
+        // TODO: Implement test.
+    }
+
+    @Test
+    public void getActivitiesFromUserTest() {
+        // TODO: Implement test.
+    }
+
+    @Test
+    public void getActivitiesByUsersTest() {
+        // TODO: Implement test.
+    }
+    A
+    @Test
+    public void extractActivityTest() {
+        // TODO: Implement test.
+    }
 }
