@@ -64,8 +64,8 @@ public class Users
     }
 
     @GET
-    @Path("{follower-id}/check-follows/{followee-id}")
-    public Response checkFollows(@PathParam("follower-id") int followerId, @PathParam("followee-id") int followeeId) throws SQLException {
+    @Path("{follower-id}/is-following/{followee-id}")
+    public Response isFollowing(@PathParam("follower-id") int followerId, @PathParam("followee-id") int followeeId) throws SQLException {
         if (userDAO.isFollowing(followerId, followeeId)) {
             return Response.status(200).entity(true).build();
         }
