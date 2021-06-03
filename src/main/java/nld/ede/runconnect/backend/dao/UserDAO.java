@@ -230,6 +230,7 @@ public class UserDAO implements IUserDAO
             userIdString.append(userId).append(", ");
         }
 
+        // Trim the last ", " from the string to make the syntax work.
         userIdString = new StringBuilder(userIdString.substring(0, userIdString.length() - 2));
 
         String sql = String.format("SELECT * FROM ACTIVITY WHERE USERID IN (%s) ORDER BY DATE LIMIT 7", userIdString);
