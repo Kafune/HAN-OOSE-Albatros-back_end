@@ -220,6 +220,7 @@ public class DTOconverter {
         dto.setDistance(activity.getDistance());
         dto.setDuration(activity.getDuration());
         dto.setRouteId(activity.getRouteId());
+        dto.setDate(activity.getDateTime());
 
         return dto;
     }
