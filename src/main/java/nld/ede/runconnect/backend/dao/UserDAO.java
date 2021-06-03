@@ -215,15 +215,22 @@ public class UserDAO implements IUserDAO
         return false;
     }
 
-    public ArrayList<Activity> getActivitiesByUsers(ArrayList<Integer> userIds) throws SQLException
+    /**
+     * Get's the last 7 activities from all the users someone is following.
+     *
+     * @param userIds The ID's to check from.
+     * @return All of the activities sorted by date.
+     * @throws SQLException Exception if SQL fails.
+     */
+     public ArrayList<Activity> getActivitiesByUsers(ArrayList<Integer> userIds) throws SQLException
     {
-        String userIdString = "";
+        StringBuilder userIdString = new StringBuilder();
 
         for (Integer userId : userIds) {
-            userIdString += userId + ", ";
+            userIdString.append(userId).append(", ");
         }
 
-        userIdString = userIdString.substring(0, userIdString.length() - 2);
+        userIdString = new StringBuilder(userIdString.substring(0, userIdString.length() - 2));
 
         String sql = String.format("SELECT * FROM ACTIVITY WHERE USERID IN (%s) ORDER BY DATE LIMIT 7", userIdString);
 

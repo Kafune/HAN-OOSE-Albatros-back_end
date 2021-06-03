@@ -63,6 +63,14 @@ public class Users
         return Response.status(400).build();
     }
 
+    /**
+     * Checks if a user is already following some user.
+     *
+     * @param followerId The ID of the follower.
+     * @param followeeId The ID of the followee.
+     * @return A entity with true or false based on if already following.
+     * @throws SQLException Exception if SQL fails.
+     */
     @GET
     @Path("{follower-id}/is-following/{followee-id}")
     public Response isFollowing(@PathParam("follower-id") int followerId, @PathParam("followee-id") int followeeId) throws SQLException {
