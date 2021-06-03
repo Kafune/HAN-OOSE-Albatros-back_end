@@ -215,6 +215,7 @@ public class DTOconverter {
      */
     public static ActivityDTO activityDomainToDTO(Activity activity) {
         ActivityDTO dto = new ActivityDTO();
+        dto.setActivityId(activity.getActivityId());
         dto.setUserId(activity.getUserId());
         dto.setPoint(activity.getPoint());
         dto.setDistance(activity.getDistance());
@@ -248,6 +249,7 @@ public class DTOconverter {
      */
     public static Activity ActivityDTOToDomainActivity(ActivityDTO activityDTO) {
         Activity activity = new Activity();
+        activity.setActivityId(activityDTO.activityId);
         activity.setRouteId(activityDTO.routeId);
         activity.setUserId(1);
         activity.setPoint(activityDTO.point);

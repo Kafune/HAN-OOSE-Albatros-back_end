@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ActivityDTO {
+    public int activityId;
     public int routeId;
     public int userId;
     public int point;
@@ -11,6 +12,16 @@ public class ActivityDTO {
     public float distance;
     public List<SegmentDTO> segments = new ArrayList<>();
     public String date;
+
+    public int getActivityId()
+    {
+        return activityId;
+    }
+
+    public void setActivityId(int activityId)
+    {
+        this.activityId = activityId;
+    }
 
     public int getRouteId()
     {
