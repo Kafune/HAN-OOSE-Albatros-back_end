@@ -39,9 +39,9 @@ public class FirewallUsers implements IFirewall {
             return;
         }
 
-        // Path("/{follower-id}/check-follows/{followee-id}")
-        // Check follows
-        if (pathSegments.get(2).toString().equals("check-follows") && requestContext.getMethod().equals("GET") && tokenHashMap.doesExist(token)) {
+        // Path("/{follower-id}/is-following/{followee-id}")
+        // Is following
+        if (pathSegments.get(2).toString().equals("is-following") && requestContext.getMethod().equals("GET") && tokenHashMap.doesExist(token)) {
             return;
         }
 
