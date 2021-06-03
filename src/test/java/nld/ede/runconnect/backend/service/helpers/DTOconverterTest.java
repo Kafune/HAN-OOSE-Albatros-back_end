@@ -234,4 +234,13 @@ class DTOconverterTest {
 
     }
 
+    @Test
+    public void activityDomainToDTOTest() {
+        // TODO: Implement test.
+    }
+
+    @Test
+    public void activityDomainsToDTOTest() {
+        // TODO: Implement test.
+    }
 }
