@@ -379,7 +379,46 @@ public class UserDAOTest
 
     @Test
     public void getActivitiesByUsersTest() {
-        // TODO: Implement test.
+        ArrayList<Integer> userIds = new ArrayList<>();
+        userIds.add(1);
+        userIds.add(2);
+        StringBuilder userIdString = new StringBuilder();
+
+        for (Integer userId : userIds) {
+            userIdString.append(userId).append(", ");
+        }
+
+        // Trim the last ", " from the string to make the syntax work.
+        userIdString = new StringBuilder(userIdString.substring(0, userIdString.length() - 2));
+
+        String query = String.format("SELECT * FROM ACTIVITY WHERE USERID IN (%s) ORDER BY DATE LIMIT 7", userIdString);
+
+        try {
+            DataSource dataSource = mock(DataSource.class);
+            Connection connection = mock(Connection.class);
+            PreparedStatement preparedStatement = mock(PreparedStatement.class);
+            ResultSet resultSet = mock(ResultSet.class);
+
+
+            // Setup mocks.
+            when(dataSource.getConnection()).thenReturn(connection);
+            when(connection.prepareStatement(query)).thenReturn(preparedStatement);
+            when(preparedStatement.executeQuery()).thenReturn(resultSet);
+            when(resultSet.next()).thenReturn(false);
+
+
+            sut.setDatasource(dataSource);
+
+            // Act
+            sut.getActivitiesByUsers(userIds);
+
+            // Assert
+            verify(connection).prepareStatement(query);
+            verify(preparedStatement).executeQuery();
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail(e);
+        }
     }
 
     @Test

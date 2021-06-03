@@ -115,7 +115,6 @@ public class UserDAO implements IUserDAO
                 return getActivitiesFromUser(resultSet);
             }
         } catch (SQLException exception) {
-            exception.printStackTrace();
             throw exception;
         } finally {
             close(statement, resultSet);
