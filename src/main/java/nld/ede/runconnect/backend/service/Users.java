@@ -110,6 +110,11 @@ public class Users
     @Path("/{follower-id}/followee-activities")
     public Response getFeed(@PathParam("follower-id") int followerId) throws SQLException {
         ArrayList<Integer> followingUsers = userDAO.getFollowingUsers(followerId);
+
+        if (followingUsers.size() == 0) {
+            return Response.status(400).build();
+        }
+
         ArrayList<Activity> activities = userDAO.getActivitiesByUsers(followingUsers);
 
         if (activities.isEmpty()) {
