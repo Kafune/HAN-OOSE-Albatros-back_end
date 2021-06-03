@@ -12,8 +12,7 @@ import javax.ws.rs.core.Response;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class UsersTest
@@ -24,13 +23,15 @@ public class UsersTest
     private UserDAO userDAOMock;
 
     @BeforeEach
-    public void setup() {
+    public void setup()
+    {
         sut = new Users();
         userDAOMock = mock(UserDAO.class);
     }
 
     @Test
-    void findUserTest() {
+    void findUserTest()
+    {
         User user = getUser();
         String search = "Alras";
         ArrayList<User> usersReturn = new ArrayList<>();
@@ -53,13 +54,15 @@ public class UsersTest
             assertEquals(usersFromResponse.get(0).lastName, usersReturn.get(0).getLastName());
             assertEquals(usersFromResponse.get(0).imageUrl, usersReturn.get(0).getImageUrl());
             assertEquals(usersFromResponse.get(0).totalScore, usersReturn.get(0).getTotalScore());
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             fail();
         }
     }
 
     @Test
-    public void registerUserCallsMethodInDAOTest() {
+    public void registerUserCallsMethodInDAOTest()
+    {
         User user = getUser();
 
         try {
@@ -75,13 +78,15 @@ public class UsersTest
 
             verify(userDAOMock).registerUser(user);
 
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             fail();
         }
     }
 
     @Test
-    public void registerUserReturns201IfUserRegistered() {
+    public void registerUserReturns201IfUserRegistered()
+    {
         User user = getUser();
         try {
             GoogleIdVerifier googleIdVerifierMock = mock(GoogleIdVerifier.class);
@@ -96,13 +101,15 @@ public class UsersTest
             int actualResponseStatus = response.getStatus();
 
             assertEquals(201, actualResponseStatus);
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             fail();
         }
     }
 
     @Test
-    public void registerUserReturns200IfUserFoundInDatabase() {
+    public void registerUserReturns200IfUserFoundInDatabase()
+    {
         User user = getUser();
         try {
             GoogleIdVerifier googleIdVerifierMock = mock(GoogleIdVerifier.class);
@@ -126,12 +133,15 @@ public class UsersTest
             assertEquals(user.getUsername(), actualUserDTO.username);
             assertEquals(user.getTotalScore(), actualUserDTO.totalScore);
             assertEquals(user.getImageUrl(), actualUserDTO.imageUrl);
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             fail();
         }
     }
+
     @Test
-    public void registerUserReturns404IfIdNotExistsInGoogle() {
+    public void registerUserReturns404IfIdNotExistsInGoogle()
+    {
         User user = getUser();
         try {
             GoogleIdVerifier googleIdVerifierMock = mock(GoogleIdVerifier.class);
@@ -144,13 +154,15 @@ public class UsersTest
 
             assertEquals(404, actualResponseStatus);
 
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             fail();
         }
     }
 
     @Test
-    void followTestSuccess() {
+    void followTestSuccess()
+    {
         try {
             // Arrange
             when(userDAOMock.toggleFollow(true, 1, 2)).thenReturn(true);
@@ -161,13 +173,15 @@ public class UsersTest
 
             // Assert
             assertEquals(response.getStatus(), 200);
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             fail();
         }
     }
 
     @Test
-    void followTestFail() {
+    void followTestFail()
+    {
         try {
             // Arrange
             when(userDAOMock.toggleFollow(true, 1, 2)).thenReturn(false);
@@ -178,13 +192,15 @@ public class UsersTest
 
             // Assert
             assertEquals(response.getStatus(), 400);
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             fail();
         }
     }
 
     @Test
-    void unfollowTestSuccess() {
+    void unfollowTestSuccess()
+    {
         try {
             // Arrange
             when(userDAOMock.toggleFollow(false, 1, 2)).thenReturn(true);
@@ -195,13 +211,15 @@ public class UsersTest
 
             // Assert
             assertEquals(response.getStatus(), 200);
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             fail();
         }
     }
 
     @Test
-    void unfollowTestFail() {
+    void unfollowTestFail()
+    {
         try {
             // Arrange
             when(userDAOMock.toggleFollow(false, 1, 2)).thenReturn(false);
@@ -212,14 +230,45 @@ public class UsersTest
 
             // Assert
             assertEquals(response.getStatus(), 400);
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             fail();
         }
     }
 
     @Test
-    public void isFollowingTest() {
-        // TODO: Implement test.
+    public void isFollowingReturnsFalseTest()
+    {
+        try {
+            when(userDAOMock.isFollowing(1, 2)).thenReturn(false);
+            sut.setUserDAO(userDAOMock);
+
+            Response actualResponse = sut.isFollowing(1, 2);
+            boolean actualResult = (boolean) actualResponse.getEntity();
+
+            assertFalse(actualResult);
+            assertEquals(actualResponse.getStatus(), 200);
+        }
+        catch (Exception e) {
+            fail();
+        }
+    }
+    @Test
+    public void isFollowingReturnsTrueTest()
+    {
+        try {
+            when(userDAOMock.isFollowing(1, 2)).thenReturn(true);
+            sut.setUserDAO(userDAOMock);
+
+            Response actualResponse = sut.isFollowing(1, 2);
+            boolean actualResult = (boolean) actualResponse.getEntity();
+
+            assertTrue(actualResult);
+            assertEquals(actualResponse.getStatus(), 200);
+        }
+        catch (Exception e) {
+            fail();
+        }
     }
 
     @Test
@@ -282,11 +331,37 @@ public class UsersTest
     }
 
     @Test
-    public void getByIdTest() {
-        // TODO: Implement test.
+    public void getByIdReturns200Test()
+    {
+        User user = getUser();
+        try {
+            when(userDAOMock.getById(1)).thenReturn(user);
+            sut.setUserDAO((userDAOMock));
+            Response response = sut.getById(1);
+            assertEquals(response.getStatus(), 200);
+
+        }
+        catch (SQLException e) {
+            fail();
+        }
+    }
+    @Test
+    public void getByIdReturns400Test()
+    {
+        try {
+            when(userDAOMock.getById(1)).thenReturn(null);
+            sut.setUserDAO((userDAOMock));
+            Response response = sut.getById(1);
+            assertEquals(response.getStatus(), 400);
+
+        }
+        catch (SQLException e) {
+            fail();
+        }
     }
 
-    private User getUser() {
+    private User getUser()
+    {
         User user = new User();
         user.setUserId(USER_ID);
         user.setFirstName("Alrasheed");

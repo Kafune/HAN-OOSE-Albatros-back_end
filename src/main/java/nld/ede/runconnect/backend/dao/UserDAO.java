@@ -159,16 +159,8 @@ public class UserDAO implements IUserDAO
      * @throws SQLException if an sql error occurs
      */
     public User getActivitiesFromUser(ResultSet rs) throws SQLException {
-        User user = new User();
-        user.setUserId(rs.getInt(1));
-        user.setFirstName(rs.getString(2));
-        user.setLastName(rs.getString(3));
-        user.setEmailAddress(rs.getString(4));
-        user.setUsername(rs.getString(5));
-        user.setTotalScore(rs.getInt(6));
-        user.setImageUrl(rs.getString(7));
-        user.setAdmin(rs.getBoolean(8));
-        List<Activity> activities = new ArrayList<Activity>();
+        User user = extractUser(rs);
+        List<Activity> activities = new ArrayList<>();
 
         try (Connection connection = dataSource.getConnection()) {
             String sql = "SELECT * FROM ACTIVITY WHERE USERID = ?";

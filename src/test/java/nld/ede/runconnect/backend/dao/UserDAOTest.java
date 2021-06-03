@@ -338,7 +338,34 @@ public class UserDAOTest
 
     @Test
     public void getByIdTest() {
-        // TODO: Implement test.
+        String query = "SELECT * FROM `USER` WHERE USERID = ?";
+
+        try {
+            DataSource dataSource = mock(DataSource.class);
+            Connection connection = mock(Connection.class);
+            PreparedStatement preparedStatement = mock(PreparedStatement.class);
+            ResultSet resultSet = mock(ResultSet.class);
+
+
+            // Setup mocks.
+            when(dataSource.getConnection()).thenReturn(connection);
+            when(connection.prepareStatement(query)).thenReturn(preparedStatement);
+            when(preparedStatement.executeQuery()).thenReturn(resultSet);
+            when(resultSet.next()).thenReturn(false);
+
+            sut.setDatasource(dataSource);
+
+            // Act
+            sut.getById(1);
+
+            // Assert
+            verify(connection).prepareStatement(query);
+            verify(preparedStatement).executeQuery();
+            verify(preparedStatement).setInt(1, 1);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail(e);
+        }
     }
 
     @Test
@@ -374,7 +401,35 @@ public class UserDAOTest
 
     @Test
     public void getActivitiesFromUserTest() {
-        // TODO: Implement test.
+        String query = "SELECT * FROM ACTIVITY WHERE USERID = ?";
+        User user = new User();
+
+        try {
+            DataSource dataSource = mock(DataSource.class);
+            Connection connection = mock(Connection.class);
+            PreparedStatement preparedStatement = mock(PreparedStatement.class);
+            ResultSet resultSet = mock(ResultSet.class);
+            UserDAO userDAOSpy = spy(sut);
+
+            // Setup mocks.
+            when(dataSource.getConnection()).thenReturn(connection);
+            when(connection.prepareStatement(query)).thenReturn(preparedStatement);
+            when(preparedStatement.executeQuery()).thenReturn(resultSet);
+            when(resultSet.next()).thenReturn(false);
+            doReturn(user).when(userDAOSpy).extractUser(resultSet);
+
+            userDAOSpy.setDatasource(dataSource);
+
+            // Act
+            userDAOSpy.getActivitiesFromUser(resultSet);
+
+            // Assert
+            verify(connection).prepareStatement(query);
+            verify(preparedStatement).executeQuery();
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail(e);
+        }
     }
 
     @Test
