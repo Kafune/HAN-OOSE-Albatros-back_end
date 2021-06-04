@@ -57,7 +57,6 @@ public class FirewallRouter implements ContainerRequestFilter {
         } catch (SQLException throwables) {
             requestContext.abortWith(Response.status(Response.Status.INTERNAL_SERVER_ERROR).build());
         }
-
     }
     /**
      * Injects and sets the user DAO.

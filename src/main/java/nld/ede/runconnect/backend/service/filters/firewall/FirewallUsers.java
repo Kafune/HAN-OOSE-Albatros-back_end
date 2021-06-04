@@ -21,9 +21,27 @@ public class FirewallUsers implements IFirewall {
             return;
         }
 
+        // @Path("/{follower-id}/followee-activities")
+        // Get followee activities.
+        if (pathSegments.get(2).toString().equals("followee-activities") && tokenHashMap.doesExist(token)) {
+            return;
+        }
+
         // Path("/find/{search-value}")
         // searchForUser
         if (pathSegments.get(1).toString().equals("find") && tokenHashMap.doesExist(token)) {
+            return;
+        }
+
+        // Path("/{user-id}")
+        // Get user based on ID.
+        if (pathSegments.get(1).toString().equals("get-by-id") && requestContext.getMethod().equals("GET") && tokenHashMap.doesExist(token)) {
+            return;
+        }
+
+        // Path("/{follower-id}/is-following/{followee-id}")
+        // Is following
+        if (pathSegments.get(2).toString().equals("is-following") && requestContext.getMethod().equals("GET") && tokenHashMap.doesExist(token)) {
             return;
         }
 

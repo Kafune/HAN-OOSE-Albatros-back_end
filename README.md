@@ -288,7 +288,6 @@ url:    /users/find/{search-value}
 method: GET
 ```
 
-
 It will expect a search string like `Henk Janss` in the search-value path parameter.
 
 It will return a list of User DTOs with JSON. If none, an empty array.
@@ -340,7 +339,7 @@ It will perform a body containing a complete object of the form
 
 Follow a user based on own ID and followee ID.
 ```
-url:    /users/{follower-id}/follow/{followee-id}
+url:    /users/{follower-id}/follows/{followee-id}
 method: POST
 ```
 
@@ -348,8 +347,25 @@ It will return a status 200 if successful, status 400 if not successful.
 
 Unfollow a user based on own ID and followee ID.
 ```
-url:    /users/{follower-id}/unfollow/{followee-id}
-method: POST
+url:    /users/{follower-id}/follows/{followee-id}
+method: DELETE
 ```
 
 It will return a status 200 if successful, status 400 if not successful.
+
+Gets all user information based on user id.
+
+```
+url:    /users/get-by-id/{user-id}
+method: GET
+```
+
+It will return a status 200 if successful, status 400 if not successful. It will return the user domain if successful
+and it will return no entity if not.
+
+Get a user feed based on your user id.
+```
+url:    /users/{follower-id}/followee-activities
+method: GET
+```
+This gives a list of the 7 last activities based on the people who the follower follows.

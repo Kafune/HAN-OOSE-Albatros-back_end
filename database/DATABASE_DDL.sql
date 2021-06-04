@@ -25,6 +25,7 @@ create table ACTIVITY
     DURATION             bigint not null,
     DISTANCE             double not null,
     ROUTEID              int,
+    DATE DATETIME DEFAULT CURRENT_TIMESTAMP,
     primary key (ACTIVITYID),
     unique key activity_unique (USERID, POINT, DURATION, DISTANCE)
 );

@@ -1,15 +1,13 @@
 package nld.ede.runconnect.backend.dao;
 
+import nld.ede.runconnect.backend.domain.Activity;
 import nld.ede.runconnect.backend.domain.User;
-import nld.ede.runconnect.backend.service.dto.UserDTO;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 import static nld.ede.runconnect.backend.dao.helpers.ConnectionHandler.close;
 
@@ -100,6 +98,90 @@ public class UserDAO implements IUserDAO
     }
 
     /**
+     * Get's a user domain based on it's ID.
+     *
+     * @param userId The ID of the searchable user.
+     * @return The user if found. Null if not found.
+     * @throws SQLException Exception if SQL fails.
+     */
+    public User getById(int userId) throws SQLException {
+        String sql = "SELECT * FROM `USER` WHERE USERID = ?";
+
+        try (Connection connection = dataSource.getConnection()) {
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, userId);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return getActivitiesFromUser(resultSet);
+            }
+        } catch (SQLException exception) {
+            throw exception;
+        } finally {
+            close(statement, resultSet);
+        }
+
+        return null;
+    }
+    /**
+     * Gets all the following users based on the ID of the follower.
+     *
+     * @param userId The ID of the follower.
+     * @return A list of users to follow
+     * @throws SQLException Exception if SQL fails.
+     */
+    @Override
+    public ArrayList<Integer> getFollowingUsers(int userId) throws SQLException
+    {
+        String sql = "SELECT * FROM FOLLOWS WHERE FOLLOWERID = ?";
+
+        try (Connection connection = dataSource.getConnection()) {
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, userId);
+            resultSet = statement.executeQuery();
+            ArrayList<Integer> following = new ArrayList<>();
+
+            while (resultSet.next()) {
+                following.add(resultSet.getInt(2));
+            }
+
+            return following;
+        } catch (SQLException exception) {
+            throw exception;
+        } finally {
+            close(statement, resultSet);
+        }
+    }
+
+    /**
+     * Gets all activities from users and combines it to send it off.
+     * @param rs resultset
+     * @return user
+     * @throws SQLException if an sql error occurs
+     */
+    public User getActivitiesFromUser(ResultSet rs) throws SQLException {
+        User user = extractUser(rs);
+        List<Activity> activities = new ArrayList<>();
+
+        try (Connection connection = dataSource.getConnection()) {
+            String sql = "SELECT * FROM ACTIVITY WHERE USERID = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, rs.getInt(1));
+            ResultSet resultSet = statement.executeQuery();
+
+            while(resultSet.next()) {
+                activities.add(extractActivity(resultSet));
+            }
+        } catch (SQLException exception) {
+            throw exception;
+        } finally {
+            close(statement, resultSet);
+        }
+
+        user.setActivities(activities);
+        return user;
+    }
+
+    /**
      * Checks if a user exists in the database.
      * @param user The user to check.
      * @return If the user exists
@@ -122,6 +204,44 @@ public class UserDAO implements IUserDAO
             close(statement, resultSet);
         }
         return false;
+    }
+
+    /**
+     * Get's the last 7 activities from all the users someone is following.
+     *
+     * @param userIds The ID's to check from.
+     * @return All of the activities sorted by date.
+     * @throws SQLException Exception if SQL fails.
+     */
+     public ArrayList<Activity> getActivitiesByUsers(ArrayList<Integer> userIds) throws SQLException
+    {
+        StringBuilder userIdString = new StringBuilder();
+
+        for (Integer userId : userIds) {
+            userIdString.append(userId).append(", ");
+        }
+
+        // Trim the last ", " from the string to make the syntax work.
+        userIdString = new StringBuilder(userIdString.substring(0, userIdString.length() - 2));
+
+        String sql = String.format("SELECT * FROM ACTIVITY WHERE USERID IN (%s) ORDER BY DATE LIMIT 7", userIdString);
+
+        try (Connection connection = dataSource.getConnection()) {
+            statement = connection.prepareStatement(sql);
+
+            ResultSet resultSet = statement.executeQuery();
+            ArrayList<Activity> activities = new ArrayList<>();
+
+            while (resultSet.next()) {
+                activities.add(extractActivity(resultSet));
+            }
+
+            return activities;
+        } catch (SQLException exception) {
+            throw exception;
+        } finally {
+            close(statement, null);
+        }
     }
 
     /**
@@ -168,6 +288,25 @@ public class UserDAO implements IUserDAO
         user.setImageUrl(rs.getString(7));
         user.setAdmin(rs.getBoolean(8));
         return user;
+    }
+
+    /**
+     * Extracts an activity from a result set.
+     * @param resultSet The result set.
+     * @return The extracted activity.
+     * @throws SQLException Exception if SQL fails.
+     */
+    public Activity extractActivity(ResultSet resultSet) throws SQLException {
+        Activity activity = new Activity();
+        activity.setActivityId(resultSet.getInt(1));
+        activity.setUserId(resultSet.getInt(2));
+        activity.setPoint(resultSet.getInt(3));
+        activity.setDuration(resultSet.getLong(4));
+        activity.setDistance(resultSet.getFloat(5));
+        activity.setRouteId(resultSet.getInt(6));
+        activity.setDateTime(resultSet.getDate(7).toString());
+
+        return activity;
     }
 
     /**

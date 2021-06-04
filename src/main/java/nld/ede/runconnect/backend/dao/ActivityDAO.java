@@ -3,7 +3,6 @@ package nld.ede.runconnect.backend.dao;
 import nld.ede.runconnect.backend.domain.Activity;
 import nld.ede.runconnect.backend.domain.Segment;
 
-
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.sql.*;
