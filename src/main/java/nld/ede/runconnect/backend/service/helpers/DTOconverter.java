@@ -215,13 +215,13 @@ public class DTOconverter {
      */
     public static ActivityDTO activityDomainToDTO(Activity activity) {
         ActivityDTO dto = new ActivityDTO();
-        dto.setActivityId(activity.getActivityId());
-        dto.setUserId(activity.getUserId());
-        dto.setPoint(activity.getPoint());
-        dto.setDistance(activity.getDistance());
-        dto.setDuration(activity.getDuration());
-        dto.setRouteId(activity.getRouteId());
-        dto.setDate(activity.getDateTime());
+        dto.activityId = activity.getActivityId();
+        dto.userId = activity.getUserId();
+        dto.point = activity.getPoint();
+        dto.distance = activity.getDistance();
+        dto.duration = activity.getDuration();
+        dto.routeId = activity.getRouteId();
+        dto.date = activity.getDateTime();
 
         return dto;
     }
