@@ -233,5 +233,4 @@ class DTOconverterTest {
         assertEquals(routeDTO.distance, response.getDistance());
 
     }
-
 }

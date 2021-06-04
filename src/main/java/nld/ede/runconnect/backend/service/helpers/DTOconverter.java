@@ -215,8 +215,44 @@ public class DTOconverter {
         userDTO.totalScore = user.getTotalScore();
         userDTO.imageUrl = user.getImageUrl();
         userDTO.a61646d696e = user.isAdmin();
+        userDTO.activities = user.getActivities();
 
         return userDTO;
+    }
+
+    /**
+     * Maps an Activity domain to a Activity DTO.
+     *
+     * @param activity The activity domain to convert.
+     * @return The activity DTO.
+     */
+    public static ActivityDTO activityDomainToDTO(Activity activity) {
+        ActivityDTO dto = new ActivityDTO();
+        dto.activityId = activity.getActivityId();
+        dto.userId = activity.getUserId();
+        dto.point = activity.getPoint();
+        dto.distance = activity.getDistance();
+        dto.duration = activity.getDuration();
+        dto.routeId = activity.getRouteId();
+        dto.date = activity.getDateTime();
+
+        return dto;
+    }
+
+    /**
+     * Maps a list of Activity domains to a list of Activity DTOs.
+     *
+     * @param activities The activities to convert.
+     * @return The list of activity domains.
+     */
+    public static ArrayList<ActivityDTO> activityDomainsToDTO(ArrayList<Activity> activities) {
+        ArrayList<ActivityDTO> dtos = new ArrayList<>();
+
+        for (Activity activity : activities) {
+            dtos.add(activityDomainToDTO(activity));
+        }
+
+        return dtos;
     }
 
     /**
@@ -227,6 +263,7 @@ public class DTOconverter {
      */
     public static Activity ActivityDTOToDomainActivity(ActivityDTO activityDTO) {
         Activity activity = new Activity();
+        activity.setActivityId(activityDTO.activityId);
         activity.setRouteId(activityDTO.routeId);
         activity.setUserId(activityDTO.userId);
         activity.setPoint(activityDTO.point);

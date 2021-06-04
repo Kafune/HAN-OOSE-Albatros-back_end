@@ -67,7 +67,7 @@ SELECT SEGMENTID INTO segmentId2 FROM segment WHERE STARTCOORD = startId AND END
 
 
 INSERT INTO activityinsegment (SEGMENTID, ACTIVITYID, SEQUENCENR) VALUES (segmentId2, activity_Id, sequence_nr);
-update user u set u.TOTALSCORE = u.TOTALSCORE + point where u.USERID = id;
+update user u set u.TOTALSCORE = point where u.USERID = id;
 
         END$$
 

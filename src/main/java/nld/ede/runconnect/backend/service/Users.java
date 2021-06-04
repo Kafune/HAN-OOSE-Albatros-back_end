@@ -1,6 +1,7 @@
 package nld.ede.runconnect.backend.service;
 
 import nld.ede.runconnect.backend.dao.IUserDAO;
+import nld.ede.runconnect.backend.domain.Activity;
 import nld.ede.runconnect.backend.domain.User;
 import nld.ede.runconnect.backend.service.dto.UserDTO;
 import nld.ede.runconnect.backend.service.helpers.DTOconverter;
@@ -63,6 +64,24 @@ public class Users
     }
 
     /**
+     * Checks if a user is already following some user.
+     *
+     * @param followerId The ID of the follower.
+     * @param followeeId The ID of the followee.
+     * @return A entity with true or false based on if already following.
+     * @throws SQLException Exception if SQL fails.
+     */
+    @GET
+    @Path("{follower-id}/is-following/{followee-id}")
+    public Response isFollowing(@PathParam("follower-id") int followerId, @PathParam("followee-id") int followeeId) throws SQLException {
+        if (userDAO.isFollowing(followerId, followeeId)) {
+            return Response.status(200).entity(true).build();
+        }
+
+        return Response.status(200).entity(false).build();
+    }
+
+    /**
      * Unfollows a user based on a user ID.
      *
      * @param followerId The user to follow the followee in the path parameter.
@@ -78,6 +97,50 @@ public class Users
         }
 
         return Response.status(400).build();
+    }
+
+    /**
+     * Get's a feed of activities from users the user is following.
+     *
+     * @param followerId The user to follow the followee in the path parameter.
+     * @return A response with status code 200 if successful, 400 if not successful.
+     * @throws SQLException Exception if SQL fails.
+     */
+    @GET
+    @Path("/{follower-id}/followee-activities")
+    public Response getFeed(@PathParam("follower-id") int followerId) throws SQLException {
+        ArrayList<Integer> followingUsers = userDAO.getFollowingUsers(followerId);
+
+        if (followingUsers.size() == 0) {
+            return Response.status(400).build();
+        }
+
+        ArrayList<Activity> activities = userDAO.getActivitiesByUsers(followingUsers);
+
+        if (activities.isEmpty()) {
+            return Response.status(400).build();
+        }
+
+        return Response.status(200).entity(DTOconverter.activityDomainsToDTO(activities)).build();
+    }
+
+    /**
+     * Get's user information based on user ID.
+     *
+     * @param userId The ID of the searchable user.
+     * @return A response with status code 200 if successful, 400 if not successful.
+     * @throws SQLException Exception if SQL fails.
+     */
+    @GET
+    @Path("get-by-id/{user-id}")
+    public Response getById(@PathParam("user-id") int userId) throws SQLException {
+        User user = userDAO.getById(userId);
+
+        if (user == null) {
+            return Response.status(400).build();
+        }
+
+        return Response.status(200).entity(DTOconverter.domainToUserDTO(user)).build();
     }
 
     /**

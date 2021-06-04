@@ -10,6 +10,8 @@ public class Activity {
     private int point;
     private float distance;
     private long duration;
+    private String dateTime;
+
     private List<Segment> segments = new ArrayList<>();
 
     public List<Segment> getSegments() {
@@ -22,6 +24,16 @@ public class Activity {
 
     public int getRouteId() {
         return routeId;
+    }
+
+    public String getDateTime()
+    {
+        return dateTime;
+    }
+
+    public void setDateTime(String dateTime)
+    {
+        this.dateTime = dateTime;
     }
 
     public void setRouteId(int routeId) {
