@@ -64,7 +64,6 @@ public class Activity {
         this.duration = duration;
     }
 
-
     public float getDistance() {
         return distance;
     }

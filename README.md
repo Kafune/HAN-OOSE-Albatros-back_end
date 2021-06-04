@@ -6,39 +6,36 @@
 Beschrijving
 
 ## table of contents
-
 1. [Authors](#authors)
 2. [setup](#setup)
 3. [API](#API)<br>
-   3.1 [Methods used](#Methods-used)<br>
-   3.2 [Response codes](#Response-codes)<br>
-   3.3 [Endpoints](#Endpoints)<br>
-   3.3.1 [Login](#Login)<br>
+    3.1 [Methods used](#Methods-used)<br>
+    3.2 [Response codes](#Response-codes)<br>
+    3.3 [Endpoints](#Endpoints)<br>
+        3.3.1 [Login](#Login)<br>
+
+        
 
 ## Authors
-
 * **R. Boudewijn** - [nxttx](https://github.com/nxttx)
 * **M. Yasin**
 * **K. Li** - [Kafune](https://github.com/Kafune)
 
 ## setup
-
 To get the database working run the following scripts:
-
 1. DATABASE_DDL
 2. DATABASE_DML
 3. DATABASE_SP
 
 ## API
 
-In general the API must conform the standards of a RESTFull API. It will use HTTP methods and expects HTTP statuscodes
-in its response.
+In general the API must conform the standards of a RESTFull API. It will use HTTP methods and expects HTTP statuscodes in its response.
 
 ### Methods used
 
 * GET : In case of acquiring one, or multiple resources.
 * POST: In case of creating a resource.
-* PUT: In case of modifying a resource.
+* PUT: In case of modifying  a resource.
 * DELETE: In case of deleting a resource.
 
 ### Response codes
@@ -47,15 +44,13 @@ The client will expect the following respond codes to be used
 
 * 200: OK. A response to a successful GET, PUT or DELETE.
 * 201: Resource has been created. A response to a successful POST.
-* 400: Bad Request. Something is wrong with the request. This could be due to a missing query-parameter for the token.
-* 401: Unauthorized. Authorization has failed. This can happen if the user tried to log in, but supplied an invalid
-  username/password.
-* 403: Forbidden. The request was valid, but you have requested a resource for which are not authorized. This will
-  probably mean you have provided a token that is invalid.
+* 400: Bad Request. Something is wrong with the request. This could be due to
+  a missing query-parameter for the token.
+* 401: Unauthorized. Authorization has failed. This can happen if the user tried to log in, but supplied an invalid username/password.
+* 403: Forbidden. The request was valid, but you have requested a resource for which are not authorized. This will probably mean you have provided a token that is invalid.
 * 404: Not found. You have requested an endpoint that is not available.
 
 ### Endpoints
-
 The following endpoints are implemented
 
 #### helloworld
@@ -77,11 +72,11 @@ It will expect a response containing an object of the form
 #### Routes
 
 Adds a route.
-
 ```
 url:    /routes
 method: POST
 ```
+
 
 It will expect a body containing an object of the form
 
@@ -127,7 +122,6 @@ It will expect a body containing an object of the form
 ```
 
 Get all routes.
-
 ```
 url:    /routes
 method: GET
@@ -153,9 +147,7 @@ It will perform a body containing a complete list of routes
     }
 ]
 ```
-
 Get all segments that belong to a route.
-
 ```
 url:    /segments/:id
 method: GET
@@ -218,49 +210,13 @@ It will perform a body containing a complete list of segments that belong to a r
 ]
 ```
 
-#### Registration
-
-```
-url:    /registration
-method: POST
-```
-
-It will expect a body containing an object of the form
-
-```
-{ 
-  "firstName": "Mo",
-  "lastName": "Yasin",
-  "emailAddress": "ags@",
-  "username": "Mohammad Yasin",
-  "googleId": "sdw3232dsssdsd",
-  "imageUrl": "url/fotos"
-}
-```
-
-It will perform a body containing a complete object of the form
-
-```
-{
-    "imageUrl": "url/fotos",
-    "emailAddress": "ags@",
-    "firstName": "Mo",
-    "googleId": "sdw3232dsssdsd",
-    "lastName": "Yasin",
-    "totalScore": 0,
-    "userId": 10,
-    "username": "Mohammad Yasin"
-}
-```
-
 #### Activities
-
 Add a new activity
-
 ```
 url:    /activities
 method: POST
 ```
+
 
 It will expect a body containing an object of the form
 
@@ -299,11 +255,34 @@ It will expect a body containing an object of the form
 }
 routeId mag null zijn
 ```
+Get an activity based on a userId.
+```
+url:    /activities/user/{userId}
+method: GET
+```
+It will expect a path parameter of the type int.
+This parameter is the id of an existing user.
+
+It will perform a body containing a complete list of activities that belong to a user
+``` 
+[
+    {
+        "activityId": 1,
+        "distance": 3.2,
+        "duration": 32,
+        "point": 1,
+        "routeId": 0,
+        "segments": [],
+        "userId": 1
+    }
+]
+``` 
+
+
+
 
 #### Users
-
 Search for a user based on a search string.
-
 ```
 url:    /users/find/{search-value}
 method: GET
@@ -312,7 +291,6 @@ method: GET
 It will expect a search string like `Henk Janss` in the search-value path parameter.
 
 It will return a list of User DTOs with JSON. If none, an empty array.
-
 ```
 [
     {
@@ -326,9 +304,40 @@ It will return a list of User DTOs with JSON. If none, an empty array.
     }
 ]
 ```
+Register a user 
+```
+url:    /users
+method: POST
+```
+
+
+It will expect a body containing an object of the form
+
+```
+{ 
+  "firstName": "Mo",
+  "lastName": "Yasin",
+  "emailAddress": "ags@",
+  "username": "Mohammad Yasin",
+  "googleId": "sdw3232dsssdsd",
+  "imageUrl": "url/fotos"
+}
+```
+It will perform a body containing a complete object of the form
+
+```
+{
+    "imageUrl": "url/fotos",
+    "emailAddress": "ags@",
+    "firstName": "Mo",
+    "googleId": "sdw3232dsssdsd",
+    "lastName": "Yasin",
+    "totalScore": 0,
+    "userId": 10,
+    "username": "Mohammad Yasin"
+}
 
 Follow a user based on own ID and followee ID.
-
 ```
 url:    /users/{follower-id}/follows/{followee-id}
 method: POST
@@ -337,7 +346,6 @@ method: POST
 It will return a status 200 if successful, status 400 if not successful.
 
 Unfollow a user based on own ID and followee ID.
-
 ```
 url:    /users/{follower-id}/follows/{followee-id}
 method: DELETE

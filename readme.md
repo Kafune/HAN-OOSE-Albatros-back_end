@@ -209,39 +209,7 @@ It will perform a body containing a complete list of segments that belong to a r
     }
 ]
 ```
-#### Registration
-```
-url:    /registration
-method: POST
-```
 
-
-It will expect a body containing an object of the form
-
-```
-{ 
-  "firstName": "Mo",
-  "lastName": "Yasin",
-  "emailAddress": "ags@",
-  "username": "Mohammad Yasin",
-  "googleId": "sdw3232dsssdsd",
-  "imageUrl": "url/fotos"
-}
-```
-It will perform a body containing a complete object of the form
-
-```
-{
-    "imageUrl": "url/fotos",
-    "emailAddress": "ags@",
-    "firstName": "Mo",
-    "googleId": "sdw3232dsssdsd",
-    "lastName": "Yasin",
-    "totalScore": 0,
-    "userId": 10,
-    "username": "Mohammad Yasin"
-}
-```
 #### Activities
 Add a new activity
 ```
@@ -287,6 +255,31 @@ It will expect a body containing an object of the form
 }
 routeId mag null zijn
 ```
+Get an activity based on a userId.
+```
+url:    /activities/user/{userId}
+method: GET
+```
+It will expect a path parameter of the type int.
+This parameter is the id of an existing user.
+
+It will perform a body containing a complete list of activities that belong to a user
+``` 
+[
+    {
+        "activityId": 1,
+        "distance": 3.2,
+        "duration": 32,
+        "point": 1,
+        "routeId": 0,
+        "segments": [],
+        "userId": 1
+    }
+]
+``` 
+
+
+
 
 #### Users
 Search for a user based on a search string.
@@ -294,6 +287,7 @@ Search for a user based on a search string.
 url:    /users/find/{search-value}
 method: GET
 ```
+
 
 It will expect a search string like `Henk Janss` in the search-value path parameter.
 
@@ -311,6 +305,38 @@ It will return a list of User DTOs with JSON. If none, an empty array.
     }
 ]
 ```
+Register a user 
+```
+url:    /users
+method: POST
+```
+
+
+It will expect a body containing an object of the form
+
+```
+{ 
+  "firstName": "Mo",
+  "lastName": "Yasin",
+  "emailAddress": "ags@",
+  "username": "Mohammad Yasin",
+  "googleId": "sdw3232dsssdsd",
+  "imageUrl": "url/fotos"
+}
+```
+It will perform a body containing a complete object of the form
+
+```
+{
+    "imageUrl": "url/fotos",
+    "emailAddress": "ags@",
+    "firstName": "Mo",
+    "googleId": "sdw3232dsssdsd",
+    "lastName": "Yasin",
+    "totalScore": 0,
+    "userId": 10,
+    "username": "Mohammad Yasin"
+}
 
 Follow a user based on own ID and followee ID.
 ```

@@ -10,6 +10,7 @@ public class ActivityDTO {
     public int point;
     public long duration;
     public float distance;
+    public int activityId;
     public List<SegmentDTO> segments = new ArrayList<>();
     public String date;
 }

@@ -9,7 +9,7 @@ import java.util.List;
 public interface IFirewall {
 
     /**
-     * This method handles the firewall of every route. Make sure you open secure every endpoint and add in the final
+     * This method handles the firewall of every route. Make sure you secure every endpoint and add in the final
      * line of this method always a :
      * 'requestContext.abortWith(Response.status(Response.Status.NOT_FOUND).build());'
      * This way, the status code 404 will stay intact. To let the request go to the equal endpoint you'll need to use a
