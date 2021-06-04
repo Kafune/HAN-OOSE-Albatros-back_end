@@ -20,6 +20,7 @@ Beschrijving
 * **R. Boudewijn** - [nxttx](https://github.com/nxttx)
 * **M. Yasin**
 * **K. Li** - [Kafune](https://github.com/Kafune)
+* **N. Bosman** - [niels-bosman](https://github.com/niels-bosman)
 
 ## setup
 To get the database working run the following scripts:
