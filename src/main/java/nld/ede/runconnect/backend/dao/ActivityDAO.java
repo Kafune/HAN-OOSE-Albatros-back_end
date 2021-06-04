@@ -6,7 +6,6 @@ import nld.ede.runconnect.backend.domain.Segment;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.sql.*;
-import java.util.ArrayList;
 
 import static nld.ede.runconnect.backend.dao.helpers.ConnectionHandler.close;
 
