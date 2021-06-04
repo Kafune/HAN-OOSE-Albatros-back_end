@@ -354,3 +354,10 @@ method: GET
 
 It will return a status 200 if successful, status 400 if not successful. It will return the user domain if successful
 and it will return no entity if not.
+
+Get a user feed based on your user id.
+```
+url:    /users/{follower-id}/followee-activities
+method: GET
+```
+This gives a list of the 7 last activities based on the people who the follower follows.
