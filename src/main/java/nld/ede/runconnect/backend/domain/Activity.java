@@ -1,7 +1,6 @@
 package nld.ede.runconnect.backend.domain;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Activity {
