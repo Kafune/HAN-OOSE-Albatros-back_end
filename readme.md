@@ -21,6 +21,7 @@ Beschrijving
 * **M. Yasin**
 * **K. Li** - [Kafune](https://github.com/Kafune)
 * **N. Bosman** - [niels-bosman](https://github.com/niels-bosman)
+* **P. Roelofs** - [patrick-roelofs](https://github.com/patrickroelofs)
 
 ## setup
 To get the database working run the following scripts:
