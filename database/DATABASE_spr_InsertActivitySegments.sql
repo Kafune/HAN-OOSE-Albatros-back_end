@@ -1,6 +1,6 @@
 DROP PROCEDURE if exists spr_InsertActivitySegments ;
         DELIMITER $$
-CREATE PROCEDURE spr_InsertActivitySegments (IN userId int,
+CREATE PROCEDURE spr_InsertActivitySegments (IN id int,
                                       IN point INT,
                                       IN duration bigint,
                                       IN distance double,
@@ -20,7 +20,7 @@ BEGIN
     SELECT ACTIVITYID
         INTO activity_Id
         FROM activity a
-        WHERE a.USERID = userId
+        WHERE a.USERID = id
             AND a.POINT = point
             AND a.DURATION = duration
             AND a.DISTANCE = distance;
@@ -67,7 +67,7 @@ SELECT SEGMENTID INTO segmentId2 FROM segment WHERE STARTCOORD = startId AND END
 
 
 INSERT INTO activityinsegment (SEGMENTID, ACTIVITYID, SEQUENCENR) VALUES (segmentId2, activity_Id, sequence_nr);
-
+update user u set u.TOTALSCORE = point where u.USERID = id;
 
         END$$
 

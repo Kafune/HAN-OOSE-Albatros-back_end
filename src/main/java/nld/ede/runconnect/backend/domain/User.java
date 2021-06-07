@@ -1,6 +1,8 @@
 package nld.ede.runconnect.backend.domain;
 
 
+import java.util.ArrayList;
+import java.util.List;
 
 public class User {
     private int userId;
@@ -11,6 +13,8 @@ public class User {
     private int totalScore;
     private String imageUrl;
     private String googleId;
+    private boolean admin;
+    private List<Activity> activities = new ArrayList<>();
 
     public String getGoogleId() {
         return googleId;
@@ -74,5 +78,21 @@ public class User {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
+    }
+
+    public List<Activity> getActivities() {
+        return activities;
+    }
+
+    public void setActivities(List<Activity> activities) {
+        this.activities = activities;
     }
 }

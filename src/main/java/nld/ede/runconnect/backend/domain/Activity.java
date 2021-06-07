@@ -10,6 +10,8 @@ public class Activity {
     private int point;
     private float distance;
     private long duration;
+    private String dateTime;
+
     private List<Segment> segments = new ArrayList<>();
 
     public List<Segment> getSegments() {
@@ -20,10 +22,18 @@ public class Activity {
         this.segments = segments;
     }
 
-
-
     public int getRouteId() {
         return routeId;
+    }
+
+    public String getDateTime()
+    {
+        return dateTime;
+    }
+
+    public void setDateTime(String dateTime)
+    {
+        this.dateTime = dateTime;
     }
 
     public void setRouteId(int routeId) {
@@ -54,12 +64,19 @@ public class Activity {
         this.duration = duration;
     }
 
-
     public float getDistance() {
         return distance;
     }
 
     public void setDistance(float distance) {
         this.distance = distance;
+    }
+
+    public int getActivityId() {
+        return activityId;
+    }
+
+    public void setActivityId(int activityId) {
+        this.activityId = activityId;
     }
 }

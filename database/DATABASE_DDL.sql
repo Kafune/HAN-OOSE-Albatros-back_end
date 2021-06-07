@@ -3,7 +3,7 @@
 /* Created on:     19-5-2021 14:40:54                           */
 /*==============================================================*/
 
-
+DROP TABLE IF EXISTS FOLLOWS;
 DROP TABLE IF EXISTS IMAGE;
 DROP TABLE IF EXISTS ACTIVITYINSEGMENT;
 DROP TABLE IF EXISTS ACTIVITY;
@@ -25,7 +25,9 @@ create table ACTIVITY
     DURATION             bigint not null,
     DISTANCE             double not null,
     ROUTEID              int,
-    primary key (ACTIVITYID)
+    DATE DATETIME DEFAULT CURRENT_TIMESTAMP,
+    primary key (ACTIVITYID),
+    unique key activity_unique (USERID, POINT, DURATION, DISTANCE)
 );
 
 /*==============================================================*/
@@ -49,7 +51,7 @@ create table COORDINATES
     LONGITUDE            double not null,
     ALTITUDE             int not null,
     primary key (COORDINATESID),
-    unique key AK_KEY_2 (LATITUDE, LONGITUDE, ALTITUDE)
+    unique key coordinates_unique (LATITUDE, LONGITUDE, ALTITUDE)
 );
 
 /*==============================================================*/
@@ -120,9 +122,20 @@ create table `USER`
     E_MAILADRES          varchar(254) not null,
     USERNAME             varchar(150) not null,
     TOTALSCORE           int not null default 0,
-    IMAGE_URL             varchar(2083),
+    IMAGE_URL            varchar(2083),
+    ADMIN                BOOLEAN default 0,
     primary key (USERID),
-    unique key AK_AK_EMAILADRES_USERNAME (E_MAILADRES, USERNAME)
+    unique key user_email_unique (E_MAILADRES)
+);
+
+/*==============================================================/
+/* Table: FOLLOWS                                               /
+/==============================================================*/
+create table FOLLOWS
+(
+    FOLLOWERID           int not null,
+    FOLLOWEEID           int not null,
+    primary key (FOLLOWEEID, FOLLOWERID)
 );
 
 alter table ACTIVITY add constraint FK_FK_ACTIVITY_ROUTE foreign key (ROUTEID)
@@ -158,3 +171,8 @@ alter table SEGMENTINROUTE add constraint FK_FK_SEGMENTINROUTE_ROUTE foreign key
 alter table SEGMENTINROUTE add constraint FK_FK_SEGMENTINROUTE_SEGMENT foreign key (SEGMENTID)
     references SEGMENT (SEGMENTID) on delete cascade on update cascade;
 
+alter table FOLLOWS add constraint FK_FOLLOWS_FOLLOWEEID_USER foreign key (FOLLOWEEID)
+    references USER (USERID);
+
+alter table FOLLOWS add constraint FK_FOLLOWS_FOLLOWERID_USER foreign key (FOLLOWERID)
+    references USER (USERID);

@@ -20,6 +20,8 @@ Beschrijving
 * **R. Boudewijn** - [nxttx](https://github.com/nxttx)
 * **M. Yasin**
 * **K. Li** - [Kafune](https://github.com/Kafune)
+* **N. Bosman** - [niels-bosman](https://github.com/niels-bosman)
+* **P. Roelofs** - [patrick-roelofs](https://github.com/patrickroelofs)
 
 ## setup
 To get the database working run the following scripts:
@@ -209,39 +211,7 @@ It will perform a body containing a complete list of segments that belong to a r
     }
 ]
 ```
-#### Registration
-```
-url:    /registration
-method: POST
-```
 
-
-It will expect a body containing an object of the form
-
-```
-{ 
-  "firstName": "Mo",
-  "lastName": "Yasin",
-  "emailAddress": "ags@",
-  "username": "Mohammad Yasin",
-  "googleId": "sdw3232dsssdsd",
-  "imageUrl": "url/fotos"
-}
-```
-It will perform a body containing a complete object of the form
-
-```
-{
-    "imageUrl": "url/fotos",
-    "emailAddress": "ags@",
-    "firstName": "Mo",
-    "googleId": "sdw3232dsssdsd",
-    "lastName": "Yasin",
-    "totalScore": 0,
-    "userId": 10,
-    "username": "Mohammad Yasin"
-}
-```
 #### Activities
 Add a new activity
 ```
@@ -287,3 +257,101 @@ It will expect a body containing an object of the form
 }
 routeId mag null zijn
 ```
+Get an activity based on a userId.
+```
+url:    /activities/user/{userId}
+method: GET
+```
+It will expect a path parameter of the type int.
+This parameter is the id of an existing user.
+
+It will perform a body containing a complete list of activities that belong to a user
+``` 
+[
+    {
+        "activityId": 1,
+        "distance": 3.2,
+        "duration": 32,
+        "point": 1,
+        "routeId": 0,
+        "segments": [],
+        "userId": 1
+    }
+]
+``` 
+
+
+
+
+#### Users
+Search for a user based on a search string.
+```
+url:    /users/find/{search-value}
+method: GET
+```
+
+
+It will expect a search string like `Henk Janss` in the search-value path parameter.
+
+It will return a list of User DTOs with JSON. If none, an empty array.
+```
+[
+    {
+        "emailAddress": "dasasfas@gmail.com",
+        "firstName": "Henk",
+        "imageUrl": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImQzZmZiYjhhZGUwMWJiNGZhMmYyNWNmYjEwOGNjZWI4ODM0MDZkYWMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIxMDQ5MzYyOTEzODE0LWlkcXU1cjhmZG8wbG8zNTlzaDVvMW5pM2ZwcjR1bGJvLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiMTA0OTM2MjkxMzgxNC1xNmpuN2U3azNjYWtnbWZrNjUyMmk5dHBiZXRjdjRoNy5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjExMjQ2MzE3MDgyOTk2ODY4MjYzOSIsImVtYWlsIjoibmllbHNib3NtYW4zMzNAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsIm5hbWUiOiJOaWVscyBCb3NtYW4iLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EtL0FPaDE0R2c2YkFPUm8xMWswOUphUnhIdGdyS3RIZ19Fd3dKTnhlMW50YUhtR3c9czk2LWMiLCJnaXZlbl9uYW1lIjoiTmllbHMiLCJmYW1pbHlfbmFtZSI6IkJvc21hbiIsImxvY2FsZSI6Im5sIiwiaWF0IjoxNjIxNTEyNDY4LCJleHAiOjE2MjE1MTYwNjh9.n6O5TYEyHpk8_8FnLcyy4ISZ1_4ZxkEjTxA6PMKhmf_AiA1YSpwYFKmzYLneli8E8zRDHbHjusRTw-R6Yx2aqqVzu-5aVwGsMCV4RV1LcA6VV0i7x27Fwaaxc6WjWs5UJ2f7_pvOwlKcOsgABRxjgbiqJzaiHKVjGUyy1K89zAIPqKTlOM8h8CMPG9ATj7H5dNLWgeIsoO_NjJLTmJu2p1Q-yW06ONJ2DtrL7bFMBVkDDJcoN-PqOhQJuTm0va-EBV_Kp7xIfO9FjjAfhR7JhM-XubnPKYzU30ydplTGFtBsBrn367xaRx_NUPzrLIQiH2zCR-QLyfAil-HVLv5rcw",
+        "lastName": "Janssen",
+        "totalScore": 321,
+        "userId": 11,
+        "username": "Henk Janssen"
+    }
+]
+```
+Register a user 
+```
+url:    /users
+method: POST
+```
+
+
+It will expect a body containing an object of the form
+
+```
+{ 
+  "firstName": "Mo",
+  "lastName": "Yasin",
+  "emailAddress": "ags@",
+  "username": "Mohammad Yasin",
+  "googleId": "sdw3232dsssdsd",
+  "imageUrl": "url/fotos"
+}
+```
+It will perform a body containing a complete object of the form
+
+```
+{
+    "imageUrl": "url/fotos",
+    "emailAddress": "ags@",
+    "firstName": "Mo",
+    "googleId": "sdw3232dsssdsd",
+    "lastName": "Yasin",
+    "totalScore": 0,
+    "userId": 10,
+    "username": "Mohammad Yasin"
+}
+
+Follow a user based on own ID and followee ID.
+```
+url:    /users/{follower-id}/follow/{followee-id}
+method: POST
+```
+
+It will return a status 200 if successful, status 400 if not successful.
+
+Unfollow a user based on own ID and followee ID.
+```
+url:    /users/{follower-id}/unfollow/{followee-id}
+method: POST
+```
+
+It will return a status 200 if successful, status 400 if not successful.

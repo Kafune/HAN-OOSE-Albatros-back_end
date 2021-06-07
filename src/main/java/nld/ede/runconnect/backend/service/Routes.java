@@ -21,6 +21,12 @@ public class Routes {
     private IRouteDAO routesDAO;
 
 
+    /**
+     * Adds a route.
+     * @param RequestBody The route to add as a body.
+     * @return The response code.
+     * @throws SQLException Exception if SQL fails.
+     */
     @POST
     @Path("/")
     public Response makeRoute(String RequestBody) throws SQLException {
@@ -36,6 +42,11 @@ public class Routes {
         return Response.status(201).build();
     }
 
+    /**
+     * Finds all of the routes from the database.
+     * @return The response code with body.
+     * @throws SQLException Exception if SQL fails.
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response findAllRoutes() throws SQLException {
@@ -54,6 +65,10 @@ public class Routes {
     }
 
 
+    /**
+     * Injects and sets the route DAO.
+     * @param routesDAO The DAO.
+     */
     @Inject
     public void setRoutesDAO(IRouteDAO routesDAO) {
         this.routesDAO = routesDAO;

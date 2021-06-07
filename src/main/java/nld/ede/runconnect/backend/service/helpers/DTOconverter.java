@@ -11,6 +11,13 @@ import java.util.List;
 public class DTOconverter {
     private static final Gson JSON = new Gson();
 
+    /**
+     * Maps JSON to a route DTO.
+     *
+     * @param JSONObject The given JSON data.
+     * @return The mapped route DTO.
+     * @throws JsonSyntaxException Exception if fromJson fails.
+     */
     public static RouteDTO JSONToRouteDTO(String JSONObject) throws JsonSyntaxException {
         RouteDTO newRoute;
         newRoute = JSON.fromJson(JSONObject, RouteDTO.class);
@@ -18,10 +25,23 @@ public class DTOconverter {
         return newRoute;
     }
 
+    /**
+     * Maps JSON to an activity DTO.
+     *
+     * @param JSONObject The given JSON.
+     * @return The mapped activity DTO.
+     * @throws JsonSyntaxException Exception if fromJson fails.
+     */
     public static ActivityDTO JSONToActivityDTO(String JSONObject) throws JsonSyntaxException {
         return JSON.fromJson(JSONObject, ActivityDTO.class);
     }
 
+    /**
+     * Converts a domain to a route DTO.
+     *
+     * @param route The domain.
+     * @return The route DTO.
+     */
     public static RouteDTO domainToRouteDTO(Route route) {
         RouteDTO routeDTO = new RouteDTO();
         routeDTO.routeId = route.getRouteId();
@@ -31,6 +51,12 @@ public class DTOconverter {
         return routeDTO;
     }
 
+    /**
+     * Converts a segment domain to a segment DTO.
+     *
+     * @param segment The domain.
+     * @return The DTO.
+     */
     public static SegmentDTO domainToSegmentDTO(Segment segment) {
         SegmentDTO segmentDTO = new SegmentDTO();
         segmentDTO.id = segment.getId();
@@ -42,6 +68,12 @@ public class DTOconverter {
         return segmentDTO;
     }
 
+    /**
+     * Converts a segment domain to a segment DTO.
+     *
+     * @param segment The domain.
+     * @return The DTO.
+     */
     private static POIDTO domainTOPoiDTO(Segment segment) {
         POIDTO poiDTO = new POIDTO();
         if (segment.getPOI().getDescription() != null) {
@@ -52,6 +84,12 @@ public class DTOconverter {
 
     }
 
+    /**
+     * Converts an item domain to a item DTO.
+     *
+     * @param item The domain.
+     * @return The domain.
+     */
     public static CoordinateDTO domainToEndCoordinateDTO(Segment item) {
         //End coordinate of segment
         CoordinateDTO endCoordinateDTO = new CoordinateDTO();
@@ -63,6 +101,12 @@ public class DTOconverter {
         return endCoordinateDTO;
     }
 
+    /**
+     * Converts a segment domain to a start coordinate DTO.
+     *
+     * @param item The segment domain.
+     * @return The start coordinate DTO.
+     */
     public static CoordinateDTO domainToStartCoordinateDTO(Segment item) {
         //Start coordinate of segment
         CoordinateDTO startCoordinateDTO = new CoordinateDTO();
@@ -74,6 +118,12 @@ public class DTOconverter {
         return startCoordinateDTO;
     }
 
+    /**
+     * Converts a route DTO to a route domain.
+     *
+     * @param routeDTO The DTO.
+     * @return The domain.
+     */
     public static Route RouteDTOToDomainRoute(RouteDTO routeDTO) {
         Route route = new Route();
         route.setName(routeDTO.name);
@@ -88,17 +138,29 @@ public class DTOconverter {
         return route;
     }
 
+    /**
+     * Converts a segment DTO to a segment domain.
+     *
+     * @param segmentDTO The DTO.
+     * @return The domain.
+     */
     public static Segment SegmentDTOToDomainSegment(SegmentDTO segmentDTO) {
         Segment segment = new Segment();
         segment.setId(segmentDTO.id);
         segment.setStartCoordinate(CoordinateDTOToDomainCoordinate(segmentDTO.startCoordinate));
         segment.setEndCoordinate(CoordinateDTOToDomainCoordinate(segmentDTO.endCoordinate));
-        if (!(segmentDTO.poi == null)) {
+        if (segmentDTO.poi != null) {
             segment.setPOI(POIDTOToDomainPOI(segmentDTO.poi));
         }
         return segment;
     }
 
+    /**
+     * Converts a coordinate DTO to a coordinate domain.
+     *
+     * @param coordinateDTO The DTO.
+     * @return The domain.
+     */
     public static Coordinate CoordinateDTOToDomainCoordinate(CoordinateDTO coordinateDTO) {
         Coordinate coordinate = new Coordinate();
         coordinate.setLongitude(coordinateDTO.longitude);
@@ -107,6 +169,12 @@ public class DTOconverter {
         return coordinate;
     }
 
+    /**
+     * Converts a POI DTO to a POI domain.
+     *
+     * @param poiDTO The DTO.
+     * @return The domain.
+     */
     public static POI POIDTOToDomainPOI(POIDTO poiDTO) {
         POI poi = new POI();
         poi.setId(poiDTO.id);
@@ -115,6 +183,28 @@ public class DTOconverter {
         return poi;
     }
 
+    /**
+     * Converts a list of user domains to a list of user DTOs.
+     *
+     * @param users The user domains to convert.
+     * @return The DTOs.
+     */
+    public static ArrayList<UserDTO> domainsToUserDTOs(ArrayList<User> users) {
+        ArrayList<UserDTO> userDTOs = new ArrayList<>();
+
+        for (User user : users) {
+            userDTOs.add(domainToUserDTO(user));
+        }
+
+        return userDTOs;
+    }
+
+    /**
+     * Converts a user domain to a user DTO.
+     *
+     * @param user The domain
+     * @return The DTO.
+     */
     public static UserDTO domainToUserDTO(User user) {
         UserDTO userDTO = new UserDTO();
         userDTO.userId = user.getUserId();
@@ -124,20 +214,99 @@ public class DTOconverter {
         userDTO.username = user.getUsername();
         userDTO.totalScore = user.getTotalScore();
         userDTO.imageUrl = user.getImageUrl();
+        userDTO.a61646d696e = user.isAdmin();
+        userDTO.activities = user.getActivities();
 
         return userDTO;
     }
 
+    /**
+     * Maps an Activity domain to a Activity DTO.
+     *
+     * @param activity The activity domain to convert.
+     * @return The activity DTO.
+     */
+    public static ActivityDTO activityDomainToDTO(Activity activity) {
+        ActivityDTO dto = new ActivityDTO();
+        dto.activityId = activity.getActivityId();
+        dto.userId = activity.getUserId();
+        dto.point = activity.getPoint();
+        dto.distance = activity.getDistance();
+        dto.duration = activity.getDuration();
+        dto.routeId = activity.getRouteId();
+        dto.date = activity.getDateTime();
+
+        return dto;
+    }
+
+    /**
+     * Maps a list of Activity domains to a list of Activity DTOs.
+     *
+     * @param activities The activities to convert.
+     * @return The list of activity domains.
+     */
+    public static ArrayList<ActivityDTO> activityDomainsToDTO(ArrayList<Activity> activities) {
+        ArrayList<ActivityDTO> dtos = new ArrayList<>();
+
+        for (Activity activity : activities) {
+            dtos.add(activityDomainToDTO(activity));
+        }
+
+        return dtos;
+    }
+
+    /**
+     * Converts an activity DTO to an activity domain.
+     *
+     * @param activityDTO The DTO.
+     * @return The domain.
+     */
     public static Activity ActivityDTOToDomainActivity(ActivityDTO activityDTO) {
         Activity activity = new Activity();
+        activity.setActivityId(activityDTO.activityId);
         activity.setRouteId(activityDTO.routeId);
-        activity.setUserId(1);
+        activity.setUserId(activityDTO.userId);
         activity.setPoint(activityDTO.point);
         activity.setDuration(activityDTO.duration);
         activity.setDistance(activityDTO.distance);
-        for (SegmentDTO segmentDTO: activityDTO.segments) {
+        for (SegmentDTO segmentDTO : activityDTO.segments) {
             activity.getSegments().add(SegmentDTOToDomainSegment(segmentDTO));
         }
         return activity;
+    }
+
+    /**
+     * Converts a list of Activity domain to a list of ActivityDTO.
+     *
+     * @param activities domain list
+     * @return the DTO list
+     */
+    public static ArrayList<ActivityDTO> domainsToActivityDTOs(List<Activity> activities) {
+        ArrayList<ActivityDTO> activityDTOS = new ArrayList<>();
+
+        for (Activity activity : activities) {
+            activityDTOS.add(domainToActivityDTO(activity));
+        }
+
+        return activityDTOS;
+    }
+
+    /**
+     * Converts an Activity domain to ActivityDTO.
+     *
+     * @param activity domain
+     * @return the DTO
+     */
+
+    private static ActivityDTO domainToActivityDTO(Activity activity) {
+        ActivityDTO activityDTO = new ActivityDTO();
+        activityDTO.routeId = activity.getRouteId();
+        activityDTO.activityId = activity.getActivityId();
+        activityDTO.distance = activity.getDistance();
+        activityDTO.duration = activity.getDuration();
+        activityDTO.point = activity.getPoint();
+        activityDTO.userId = activity.getUserId();
+
+        return activityDTO;
     }
 }

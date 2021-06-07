@@ -19,9 +19,14 @@ import java.util.List;
 
 @Path("segments")
 public class Segments {
-
     private ISegmentDAO segmentDAO;
 
+    /**
+     * Finds all the segments of a specific route.
+     * @param id The route ID.
+     * @return The response code with body.
+     * @throws SQLException Exception if SQL fails.
+     */
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -39,6 +44,10 @@ public class Segments {
     }
 
 
+    /**
+     * Injects and sets the segment DAO.
+     * @param segmentDAO The DAO.
+     */
     @Inject
     public void setSegmentDAO(ISegmentDAO segmentDAO) {
         this.segmentDAO = segmentDAO;
