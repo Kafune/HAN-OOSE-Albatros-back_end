@@ -5,15 +5,6 @@ INSERT INTO run_connect.user (USERID, FIRSTNAME, LASTNAME, E_MAILADRES, USERNAME
 INSERT INTO run_connect.user (USERID, FIRSTNAME, LASTNAME, E_MAILADRES, USERNAME, TOTALSCORE, IMAGE_URL, ADMIN) VALUES (75, 'Kachung', 'Li', 'KL@email.com', 'Kachung Li', 5, 'https://lh3.googleusercontent.com/ogw/ADea4I5joTMvwREIJJORnKazk3L7ymAQ_WR_uv_4NFft=s83-c-mo', 0);
 INSERT INTO run_connect.user (USERID, FIRSTNAME, LASTNAME, E_MAILADRES, USERNAME, TOTALSCORE, IMAGE_URL, ADMIN) VALUES (12, 'Niels', 'Bosman', 'NB@email.com', 'Niels Bosman', 68, 'https://lh3.googleusercontent.com/ogw/ADea4I6SUuoqKWnu1VsRHYuM36rQUaElVcdZxUprTQpvhg=s83-c-mo', 0);
 
-# Activities
-INSERT INTO run_connect.activity (USERID, POINT, DURATION, DISTANCE, ROUTEID, DATE) VALUES (15, 10, 250178, 2.55, 1, '2021-05-24 13:40:06');
-INSERT INTO run_connect.activity (USERID, POINT, DURATION, DISTANCE, ROUTEID, DATE) VALUES (34, 50, 1550178, 5.55, 1, '2021-05-26 13:40:07');
-INSERT INTO run_connect.activity (USERID, POINT, DURATION, DISTANCE, ROUTEID, DATE) VALUES (34, 20, 450178, 4.55, 1, '2021-05-14 13:40:08');
-INSERT INTO run_connect.activity (USERID, POINT, DURATION, DISTANCE, ROUTEID, DATE) VALUES (34, 30, 850178, 2.55, 1, '2021-05-16 13:40:09');
-INSERT INTO run_connect.activity (USERID, POINT, DURATION, DISTANCE, ROUTEID, DATE) VALUES (66, 60, 250178, 7.55, 1, '2021-05-19 13:40:10');
-INSERT INTO run_connect.activity (USERID, POINT, DURATION, DISTANCE, ROUTEID, DATE) VALUES (75, 40, 350178, 1.55, 1, '2021-05-21 13:40:11');
-INSERT INTO run_connect.activity (USERID, POINT, DURATION, DISTANCE, ROUTEID, DATE) VALUES (12, 100, 650355, 4.55, 1, '2021-05-21 13:40:12');
-
 # routes
 INSERT INTO run_connect.route (ROUTEID, NAME, DISTANCE, DESCRIPTION) VALUES (1, 'Driesprongroute', 5, 'Startpunt is de parkeerplaats aan de Wekeromseweg 1, 6718 SC Ede. Een prachtige route door het westelijke deel van het Edese Bos rond de Kouseband.');
 INSERT INTO run_connect.route (ROUTEID, NAME, DISTANCE, DESCRIPTION) VALUES (3, 'Korte wandeling door het bos', 1, 'Mooie wandeling die door het bos van Ede loopt. Tijdens het wandelen loopt u delen door het bos en naast een prachtig stuk Ede''se heide. ');
@@ -355,3 +346,14 @@ INSERT INTO run_connect.segmentinroute (ROUTEID, SEGMENTID, SEQUENCENR) VALUES (
 INSERT INTO run_connect.segmentinroute (ROUTEID, SEGMENTID, SEQUENCENR) VALUES (3, 112, 0);
 INSERT INTO run_connect.segmentinroute (ROUTEID, SEGMENTID, SEQUENCENR) VALUES (3, 113, 1);
 
+
+
+
+# Activities
+INSERT INTO run_connect.activity (USERID, POINT, DURATION, DISTANCE, ROUTEID, DATE) VALUES (15, 10, 250178, 2.55, 1, '2021-05-24 13:40:06');
+INSERT INTO run_connect.activity (USERID, POINT, DURATION, DISTANCE, ROUTEID, DATE) VALUES (34, 50, 1550178, 5.55, 1, '2021-05-26 13:40:07');
+INSERT INTO run_connect.activity (USERID, POINT, DURATION, DISTANCE, ROUTEID, DATE) VALUES (34, 20, 450178, 4.55, 1, '2021-05-14 13:40:08');
+INSERT INTO run_connect.activity (USERID, POINT, DURATION, DISTANCE, ROUTEID, DATE) VALUES (34, 30, 850178, 2.55, 1, '2021-05-16 13:40:09');
+INSERT INTO run_connect.activity (USERID, POINT, DURATION, DISTANCE, ROUTEID, DATE) VALUES (66, 60, 250178, 7.55, 1, '2021-05-19 13:40:10');
+INSERT INTO run_connect.activity (USERID, POINT, DURATION, DISTANCE, ROUTEID, DATE) VALUES (75, 40, 350178, 1.55, 1, '2021-05-21 13:40:11');
+INSERT INTO run_connect.activity (USERID, POINT, DURATION, DISTANCE, ROUTEID, DATE) VALUES (12, 100, 650355, 4.55, 1, '2021-05-21 13:40:12');
