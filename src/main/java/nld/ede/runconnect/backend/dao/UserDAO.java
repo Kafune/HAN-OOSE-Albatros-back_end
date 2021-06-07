@@ -164,9 +164,9 @@ public class UserDAO implements IUserDAO
 
         try (Connection connection = dataSource.getConnection()) {
             String sql = "SELECT * FROM ACTIVITY WHERE USERID = ?";
-            PreparedStatement statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(sql);
             statement.setInt(1, rs.getInt(1));
-            ResultSet resultSet = statement.executeQuery();
+            resultSet = statement.executeQuery();
 
             while(resultSet.next()) {
                 activities.add(extractActivity(resultSet));
@@ -229,7 +229,7 @@ public class UserDAO implements IUserDAO
         try (Connection connection = dataSource.getConnection()) {
             statement = connection.prepareStatement(sql);
 
-            ResultSet resultSet = statement.executeQuery();
+            resultSet = statement.executeQuery();
             ArrayList<Activity> activities = new ArrayList<>();
 
             while (resultSet.next()) {
